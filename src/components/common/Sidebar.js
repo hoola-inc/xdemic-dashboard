@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
-
+import { NavLink } from 'react-router-dom';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -25,7 +25,7 @@ class Sidebar extends React.Component {
                     </Menu.Item>
                     <Menu.Item key="2">
                         <Icon type="desktop" />
-                        <span>Option 2</span>
+                        <span><NavLink to="/school">School</NavLink></span>
                     </Menu.Item>
                     <SubMenu
                         key="sub1"

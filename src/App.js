@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import components
 import Course from './components/course/Course';
 import CourseDetail from './components/course/CourseDetail';
+import School from "./components/school/School";
 
 
 
@@ -24,6 +25,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/" exact component={Course} />
           <Route path="/coursedetail" exact component={CourseDetail} />
+          <Route path="/school" exact component={School} />
         </Switch>
       </BrowserRouter>
     );
