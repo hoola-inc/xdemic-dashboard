@@ -24,8 +24,11 @@ class Sidebar extends React.Component {
                         <span>Courses</span>
                     </Menu.Item>
                     <Menu.Item key="2">
-                        <Icon type="desktop" />
-                        <span><NavLink to="/school">School</NavLink></span>
+                        <NavLink to="/school">
+                            <Icon type="desktop" />
+                            <span>School</span>
+                        </NavLink>
+
                     </Menu.Item>
                     <SubMenu
                         key="sub1"

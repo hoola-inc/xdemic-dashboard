@@ -10,7 +10,7 @@ function onChangeDate(dates, dateStrings) {
     console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 }
 
-class CreateCourseInstanceModal extends React.Component {
+class SchoolRegisterModal extends React.Component {
     state = { visible: false };
     constructor(props) {
         super(props);
@@ -114,4 +114,4 @@ class CreateCourseInstanceModal extends React.Component {
     }
 }
 
-export default CreateCourseInstanceModal; 
+export default SchoolRegisterModal; 
