@@ -1,14 +1,5 @@
 import React from 'react';
 import { Modal, Button, Form, Input, DatePicker } from 'antd';
-import moment from 'moment';
-
-
-const { RangePicker } = DatePicker;
-
-function onChangeDate(dates, dateStrings) {
-    console.log('From: ', dates[0], ', to: ', dates[1]);
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-}
 
 class SchoolRegisterModal extends React.Component {
     state = { visible: false };
@@ -50,63 +41,30 @@ class SchoolRegisterModal extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <Form>
-                        <Form.Item label="Course Name">
+                        <Form.Item label="school Name">
                             <Input
-                                placeholder="enter course name"
+                                placeholder="enter school name"
                                 allowClear />
                         </Form.Item>
 
-                        <Form.Item label="Course Code">
+                        <Form.Item label="School Logo">
                             <Input
-                                placeholder="enter course code"
+                                placeholder="enter school logo"
                                 allowClear />
                         </Form.Item>
 
-                        <Form.Item label="Course Description">
+                        <Form.Item label="School Contact Info">
                             <Input
-                                placeholder="enter course description"
+                                placeholder="enter school contact info"
                                 allowClear />
                         </Form.Item>
 
-                        <Form.Item label="Course Grading Schema">
+                        <Form.Item label="School Branded Url">
                             <Input
-                                placeholder="enter course grading schema"
+                                placeholder="school branded url"
                                 allowClear />
                         </Form.Item>
 
-                        <Form.Item label="Course Tags">
-                            <Input
-                                placeholder="enter course tags"
-                                allowClear />
-                        </Form.Item>
-
-                        <Form.Item label="Course Issuer">
-                            <Input
-                                placeholder="enter course issuer"
-                                allowClear />
-                        </Form.Item>
-
-                        <Form.Item label="Course Alignment">
-                            <Input
-                                placeholder="enter course allignment"
-                                allowClear />
-                        </Form.Item>
-
-                        <Form.Item label="Course Name">
-                            <Input
-                                placeholder="enter course tags"
-                                allowClear />
-                        </Form.Item>
-
-                        <Form.Item label="Select Date">
-                            <RangePicker
-                                ranges={{
-                                    Today: [moment(), moment()],
-                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                }}
-                                onChange={onChangeDate}
-                            />
-                        </Form.Item>
                     </Form>
                 </Modal>
             </div>

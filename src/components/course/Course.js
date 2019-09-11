@@ -1,7 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { Layout, Table, Tag } from 'antd';
+import { Layout, Table } from 'antd';
 import Swal from 'sweetalert2';
 import Sidebar from '../common/Sidebar';
 import CreateCourseModal from '../ant-modal/CreateCourseModal';

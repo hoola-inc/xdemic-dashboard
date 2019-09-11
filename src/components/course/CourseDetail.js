@@ -21,21 +21,21 @@ const columns = [
         title: 'Course Tags',
         key: 'course_tags',
         dataIndex: 'course_tags',
-        render: tags => (
-            <span>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'pink';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </span>
-        )
+        // render: tags => (
+        //     <span>
+        //         {tags.map(tag => {
+        //             let color = tag.length > 5 ? 'geekblue' : 'green';
+        //             if (tag === 'loser') {
+        //                 color = 'pink';
+        //             }
+        //             return (
+        //                 <Tag color={color} key={tag}>
+        //                     {tag.toUpperCase()}
+        //                 </Tag>
+        //             );
+        //         })}
+        //     </span>
+        // )
     },
     {
         title: 'Course Description',
@@ -70,26 +70,38 @@ const columns = [
     }
 ];
 
-const data = [
-    {
-        key: '1',
-        course_name: 'asd',
-        course_code: 'asd',
-        course_tags: ['nice', 'developer'],
-        course_description: 'asdasd',
-        course_grading_schema: 'asdasd',
-        course_issuer: 'asdasd',
-        course_allignment: 'asdasdsa'
-    }
-];
+
 
 class CourseDetil extends React.Component {
+
+
     constructor(props) {
         super(props);
-        console.log(this.props.location.state.detail);
+        this.state = {
+            anArray: []
+        }
     }
 
-    courseObj = {};
+    componentDidMount() {
+        this.tableData();
+    }
+
+    tableData = () => {
+        let courseDetailData = [];
+        courseDetailData.push({
+            key: 1,
+            course_name: this.props.location.state.detail.course_name,
+            course_code: this.props.location.state.detail.course_code,
+            course_tags: this.props.location.state.detail.course_tags,
+            course_description: this.props.location.state.detail.course_description,
+            course_grading_schema: this.props.location.state.detail.course_grading_schema,
+            course_issuer: this.props.location.state.detail.course_issuer,
+            course_allignment: this.props.location.state.detail.course_allignment
+        });
+        this.setState({
+            anArray: courseDetailData
+        })
+    }
 
     render() {
         return (
@@ -98,7 +110,7 @@ class CourseDetil extends React.Component {
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }} />
                     <CreateCourseInstanceModal />
-                    <Table columns={columns} dataSource={data} onRow={(record, rowIndex) => {
+                    <Table columns={columns} dataSource={this.state.anArray} onRow={(record, rowIndex) => {
                         return {
                             onClick: event => { }
                         };

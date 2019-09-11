@@ -20,15 +20,16 @@ class Sidebar extends React.Component {
                 <div className="logo" />
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="1">
-                        <Icon type="pie-chart" />
-                        <span>Courses</span>
+                        <NavLink to="/">
+                            <Icon type="pie-chart" />
+                            <span>Courses</span>
+                        </NavLink>
                     </Menu.Item>
                     <Menu.Item key="2">
                         <NavLink to="/school">
                             <Icon type="desktop" />
                             <span>School</span>
                         </NavLink>
-
                     </Menu.Item>
                     <SubMenu
                         key="sub1"

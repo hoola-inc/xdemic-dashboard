@@ -71,6 +71,9 @@ class CreateCourseModal extends React.Component {
                 else {
                     Swal.fire('Oho...', 'Something went wrong!', 'error');
                 }
+            })
+            .catch(err => {
+                Swal.fire('Error', 'An error occured', 'error');
             });
     }
 
