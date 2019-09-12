@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../common/Sidebar';
-import { Layout, Table, Tag } from 'antd';
+import { Layout, Table, Tag, Row, Col, Card } from 'antd';
 import CreateCourseInstanceModal from '../ant-modal/CreateCourseInstanceModal'
 
 const { Header, Footer } = Layout;
@@ -105,21 +105,84 @@ class CourseDetil extends React.Component {
 
     render() {
         return (
-            <Layout style={{ minHeight: '100vh' }}>
-                <Sidebar />
-                <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }} />
-                    <CreateCourseInstanceModal />
-                    <Table columns={columns} dataSource={this.state.anArray} onRow={(record, rowIndex) => {
-                        return {
-                            onClick: event => { }
-                        };
-                    }}>
-                    </Table>
-                    <Footer style={{ textAlign: 'center' }}>Hoola Tech ©2019</Footer>
-                </Layout>
+            // <Layout style={{ minHeight: '100vh' }}>
+            //     <Sidebar />
+            //     <Layout>
+            //         <Header style={{ background: '#fff', padding: 0 }} />
+            //         <CreateCourseInstanceModal />
+            //         <Table columns={columns} dataSource={this.state.anArray} onRow={(record, rowIndex) => {
+            //             return {
+            //                 onClick: event => { }
+            //             };
+            //         }}>
+            //         </Table>
+            //         <Footer style={{ textAlign: 'center' }}>Hoola Tech ©2019</Footer>
+            //     </Layout>
 
-            </Layout>
+            // </Layout>
+            <div>
+                <Layout style={{ minHeight: '100vh' }}>
+                    <Sidebar />
+                    <Layout>
+                        <Header style={{ background: '#fff', padding: 0 }} />
+                        <div style={{ background: '#ECECEC', padding: '30px' }}>
+                            <Row gutter={16}>
+                                <Col span={24}>
+                                    <Card title="Card Detail" bordered={false}>
+                                        <Table columns={columns} dataSource={this.state.anArray} onRow={(record, rowIndex) => {
+                                            return {
+                                                onClick: event => { }
+                                            };
+                                        }} pagination={false} >
+                                        </Table>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </div>
+
+                        <div style={{ background: '#ECECEC', padding: '30px', marginTop: "20px" }}>
+                            <Row gutter={16}>
+                                <Col span={8}>
+                                    <Card title="Card Instance" bordered={false}>
+                                        Course Detail
+        </Card>
+                                </Col>
+                                <Col span={8}>
+                                    <Card title="Card Instance" bordered={false}>
+                                        Course Detail
+        </Card>
+                                </Col>
+                                <Col span={8}>
+                                    <Card title="Card Instance" bordered={false}>
+                                        Course Detail
+        </Card>
+                                </Col>
+                            </Row>
+                        </div>
+
+                        <div style={{ background: '#ECECEC', padding: '30px', marginTop: "20px" }}>
+                            <Row gutter={16}>
+                                <Col span={8}>
+                                    <Card title="Card Instance" bordered={false}>
+                                        Course Detail
+        </Card>
+                                </Col>
+                                <Col span={8}>
+                                    <Card title="Card Instance" bordered={false}>
+                                        Course Detail
+        </Card>
+                                </Col>
+                                <Col span={8}>
+                                    <Card title="Card Instance" bordered={false}>
+                                        Course Detail
+        </Card>
+                                </Col>
+                            </Row>
+                        </div>
+
+                    </Layout>
+                </Layout>
+            </div>
         );
     }
 }
