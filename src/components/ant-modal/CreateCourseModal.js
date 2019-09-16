@@ -12,6 +12,10 @@ function onChangeDate(dates, dateStrings) {
 }
 
 class CreateCourseModal extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
     state = {
         visible: false,
         loading: false,

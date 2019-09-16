@@ -5,6 +5,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+#Firebase
+.firebaserc
+.firebase
+.idea
+firebase.json
+
 # Runtime data
 pids
 *.pid

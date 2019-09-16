@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -21,31 +21,45 @@ class Sidebar extends React.Component {
                     Logo
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item key="1">
-                        <NavLink to="/">
+                    <Menu.Item key="/">
+                        <Link to="/">
                             <Icon type="pie-chart" />
-                            <span>Courses</span>
-                        </NavLink>
+                            <span>Home</span>
+                        </Link>
                     </Menu.Item>
-                    <Menu.Item key="2">
-                        <NavLink to="/school">
+                    <Menu.Item key="/school">
+                        <Link to="/school">
                             <Icon type="desktop" />
                             <span>School</span>
-                        </NavLink>
+                        </Link>
                     </Menu.Item>
-                    <SubMenu
+
+                    <Menu.Item key="/student">
+                        <Link to="/student">
+                            <Icon type="user"></Icon>
+                            <span>Student</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/home">
+                        <Link to="/course">
+                            <Icon type="user"></Icon>
+                            <span>Courses</span>
+                        </Link>
+                    </Menu.Item>
+
+                    {/* <SubMenu
                         key="sub1"
                         title={
                             <span>
                                 <Icon type="user" />
-                                <span>User</span>
+                                <span>Student</span>
                             </span>
                         }
                     >
                         <Menu.Item key="3">Tom</Menu.Item>
                         <Menu.Item key="4">Bill</Menu.Item>
                         <Menu.Item key="5">Alex</Menu.Item>
-                    </SubMenu>
+                    </SubMenu> */}
                     <SubMenu
                         key="sub2"
                         title={

@@ -1,9 +1,18 @@
 import React from 'react';
 import Sidebar from '../common/Sidebar';
-import { Layout, Table, Tag, Row, Col, Card } from 'antd';
+import { Layout, Table, Tag, Row, Col, Card, List, Typography } from 'antd';
 import CreateCourseInstanceModal from '../ant-modal/CreateCourseInstanceModal'
 
 const { Header, Footer } = Layout;
+
+
+const data = [
+    'Racing car sprays burning fuel into crowd.',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.',
+];
 
 const columns = [
     {
@@ -163,22 +172,41 @@ class CourseDetil extends React.Component {
                         <div style={{ background: '#ECECEC', padding: '30px', marginTop: "20px" }}>
                             <Row gutter={16}>
                                 <Col span={8}>
-                                    <Card title="Card Instance" bordered={false}>
-                                        Course Detail
-        </Card>
+                                    <h3 style={{ margin: '16px 0' }}>Small Size</h3>
+                                    <List
+                                        size="small"
+                                        header={<div>Header</div>}
+                                        footer={<div>Footer</div>}
+                                        bordered
+                                        dataSource={data}
+                                        renderItem={item => <List.Item>{item}</List.Item>}
+                                    />
                                 </Col>
                                 <Col span={8}>
-                                    <Card title="Card Instance" bordered={false}>
-                                        Course Detail
-        </Card>
+                                    <h3 style={{ margin: '16px 0' }}>Small Size</h3>
+                                    <List
+                                        size="small"
+                                        header={<div>Header</div>}
+                                        footer={<div>Footer</div>}
+                                        bordered
+                                        dataSource={data}
+                                        renderItem={item => <List.Item>{item}</List.Item>}
+                                    />
                                 </Col>
                                 <Col span={8}>
-                                    <Card title="Card Instance" bordered={false}>
-                                        Course Detail
-        </Card>
+                                    <h3 style={{ margin: '16px 0' }}>Small Size</h3>
+                                    <List
+                                        size="small"
+                                        header={<div>Header</div>}
+                                        footer={<div>Footer</div>}
+                                        bordered
+                                        dataSource={data}
+                                        renderItem={item => <List.Item>{item}</List.Item>}
+                                    />
                                 </Col>
                             </Row>
                         </div>
+
 
                     </Layout>
                 </Layout>
