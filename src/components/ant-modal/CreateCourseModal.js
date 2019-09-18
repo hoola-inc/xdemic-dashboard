@@ -20,13 +20,14 @@ class CreateCourseModal extends React.Component {
         visible: false,
         loading: false,
         iconLoading: false,
-        course_name: '',
-        course_code: '',
-        course_description: '',
-        course_grading_schema: '',
-        course_tags: '',
-        course_issuer: '',
-        course_allignment: ''
+        name: '',
+        creditUnitType: '',
+        creditUniteValue: '',
+        ctid: '',
+        subjectWebpage: '',
+        prerequisite: '',
+        uri: '',
+        courseCode: ''
     };
 
     showModal = () => {
@@ -66,23 +67,28 @@ class CreateCourseModal extends React.Component {
     }
 
     sendCourse = () => {
-        axios.post('https://xdemic-badger-service.herokuapp.com/course', this.state.course_obj)
+        axios.post('https://xdemic-api.herokuapp.com/course', this.state)
             .then(res => {
                 if (res.data.status) {
                     this.setState({ loading: false });
+                    this.handleCancel();
                     Swal.fire('Course', 'created and live on url', 'success');
                 }
                 else {
-                    Swal.fire('Oho...', 'Something went wrong!', 'error');
+                    this.setState({ loading: false });
+                    this.handleCancel();
+                    Swal.fire('Oho...', 'An Error Occured', 'error');
                 }
             })
             .catch(err => {
+                this.setState({ loading: false });
+                this.handleCancel();
                 Swal.fire('Error', 'An error occured', 'error');
             });
     }
 
     render() {
-        const { course_name, course_code, course_description, course_grading_schema, course_tags, course_issuer, course_allignment } = this.state;
+        const { name, creditUnitType, creditUniteValue, ctid, subjectWebpage, prerequisite, uri, courseCode } = this.state;
 
         return (
             <div>
@@ -100,65 +106,74 @@ class CreateCourseModal extends React.Component {
                             <Input
                                 placeholder="enter course name"
                                 allowClear
-                                name="course_name"
-                                value={course_name}
+                                name="name"
+                                value={name}
                                 onChange={this.changeHandler}
                             />
+                        </Form.Item>
+
+                        <Form.Item label="Course Credit Unit Type">
+                            <Input
+                                placeholder="enter credit unit type"
+                                allowClear
+                                name="creditUnitType"
+                                value={creditUnitType}
+                                onChange={this.changeHandler} />
+                        </Form.Item>
+
+                        <Form.Item label="Course Credit Unite Value">
+                            <Input
+                                placeholder="enter credit unite value"
+                                allowClear
+                                name="creditUniteValue"
+                                value={creditUniteValue}
+                                onChange={this.changeHandler}
+                            />
+                        </Form.Item>
+
+                        <Form.Item label="Course Ctid">
+                            <Input
+                                placeholder="enter course ctid"
+                                allowClear
+                                name="ctid"
+                                value={ctid}
+                                onChange={this.changeHandler}
+                            />
+                        </Form.Item>
+
+                        <Form.Item label="Course Subject Web Page">
+                            <Input
+                                placeholder="enter course subject web page"
+                                allowClear
+                                name="subjectWebpage"
+                                value={subjectWebpage}
+                                onChange={this.changeHandler} />
+                        </Form.Item>
+
+                        <Form.Item label="Course Pre Requisite">
+                            <Input
+                                placeholder="enter pre requisite"
+                                allowClear
+                                name="prerequisite"
+                                value={prerequisite}
+                                onChange={this.changeHandler} />
+                        </Form.Item>
+
+                        <Form.Item label="Course Uri">
+                            <Input
+                                placeholder="enter course uri"
+                                allowClear
+                                name="uri"
+                                value={uri}
+                                onChange={this.changeHandler} />
                         </Form.Item>
 
                         <Form.Item label="Course Code">
                             <Input
-                                placeholder="enter course code"
+                                placeholder="enter Course Code"
                                 allowClear
-                                name="course_code"
-                                value={course_code}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
-
-                        <Form.Item label="Course Description">
-                            <Input
-                                placeholder="enter course description"
-                                allowClear
-                                name="course_description"
-                                value={course_description}
-                                onChange={this.changeHandler}
-                            />
-                        </Form.Item>
-
-                        <Form.Item label="Course Grading Schema">
-                            <Input
-                                placeholder="enter course grading schema"
-                                allowClear
-                                name="course_grading_schema"
-                                value={course_grading_schema}
-                                onChange={this.changeHandler}
-                            />
-                        </Form.Item>
-
-                        <Form.Item label="Course Tags">
-                            <Input
-                                placeholder="enter course tags"
-                                allowClear
-                                name="course_tags"
-                                value={course_tags}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
-
-                        <Form.Item label="Course Issuer">
-                            <Input
-                                placeholder="enter course issuer"
-                                allowClear
-                                name="course_issuer"
-                                value={course_issuer}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
-
-                        <Form.Item label="Course Alignment">
-                            <Input
-                                placeholder="enter course alignment"
-                                allowClear
-                                name="course_allignment"
-                                value={course_allignment}
+                                name="courseCode"
+                                value={courseCode}
                                 onChange={this.changeHandler} />
                         </Form.Item>
 

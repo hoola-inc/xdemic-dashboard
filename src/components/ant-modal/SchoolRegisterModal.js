@@ -1,25 +1,34 @@
 import React from 'react';
-import { Modal, Button, Form, Input, DatePicker } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Modal, Button, Input, Form, DatePicker } from 'antd';
+import moment from 'moment';
 
-const { TextArea } = Input;
+const { RangePicker } = DatePicker;
+
+function onChangeDate(dates, dateStrings) {
+    console.log('From: ', dates[0], ', to: ', dates[1]);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+}
 
 class SchoolModal extends React.Component {
 
     constructor(props) {
         super(props);
     }
-
     state = {
         visible: false,
+        loading: false,
+        iconLoading: false,
         name: '',
-        address: '',
-        email: '',
         subjectWebpage: '',
+        address: '',
+        offers: '',
         agentSectorType: '',
         agentType: '',
-        description: ''
+        email: '',
+        did: '',
+        telephone: ''
     };
 
     showModal = () => {
@@ -29,17 +38,23 @@ class SchoolModal extends React.Component {
     };
 
     handleOk = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
     };
 
     handleCancel = e => {
-        console.log(e);
         this.setState({
             visible: false,
         });
+    };
+
+    enterLoading = () => {
+        this.setState({ loading: true });
+    };
+
+    enterIconLoading = () => {
+        this.setState({ iconLoading: true });
     };
 
     changeHandler = e => {
@@ -48,17 +63,21 @@ class SchoolModal extends React.Component {
 
     submitHandler = e => {
         e.preventDefault();
-        this.createNewSchool();
+        this.enterLoading();
+        this.sendCourse();
     }
 
-    createNewSchool = () => {
-        axios.post('https://xdemic-badger-service.herokuapp.com/school', this.state)
+    sendCourse = () => {
+        console.log(this.state);
+        axios.post('https://xdemic-api.herokuapp.com/school', this.state)
             .then(res => {
+                console.log(res);
                 if (res.data.status) {
+                    this.setState({ loading: false });
                     Swal.fire('Course', 'created and live on url', 'success');
                 }
                 else {
-                    Swal.fire('Oho...', 'Something went wrong!', 'error');
+                    Swal.fire('Oho...', 'Something went wrong!', 'info');
                 }
             })
             .catch(err => {
@@ -67,16 +86,15 @@ class SchoolModal extends React.Component {
     }
 
     render() {
-
-        const { name, address, email, subjectWebpage, agentSectorType, agentType, description } = this.state;
+        const { name, subjectWebpage, address, offers, agentSectorType, agentType, email, telephone } = this.state;
 
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>
-                    Create New Course Instance
+                <Button type="primary" style={{ float: "right" }} onClick={this.showModal}>
+                    New School
         </Button>
                 <Modal
-                    title="Basic Modal"
+                    title="Enter Course Detail"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -85,78 +103,90 @@ class SchoolModal extends React.Component {
                         <Form.Item label="School Name">
                             <Input
                                 placeholder="enter school name"
+                                allowClear
                                 name="name"
                                 value={name}
-                                onChange={this.changehandler}
-                                allowClear
-                            />
-                        </Form.Item>
-
-                        {/* <Form.Item label="School Address">
-                            <Input
-                                placeholder="enter school address"
-                                name="address"
-                                value={address}
-                                onChange={this.changehandler}
-                            />
-                        </Form.Item>
-
-                        <Form.Item label="School Email">
-                            <Input
-                                placeholder="enter school email"
-                                name="email"
-                                value={email}
-                                onChange={this.changehandler}
+                                onChange={this.changeHandler}
                             />
                         </Form.Item>
 
                         <Form.Item label="School Subject Webpage">
                             <Input
-                                placeholder="school subject web page"
+                                placeholder="enter school webpage"
+                                allowClear
                                 name="subjectWebpage"
                                 value={subjectWebpage}
-                                onChange={this.changehandler}
+                                onChange={this.changeHandler} />
+                        </Form.Item>
+
+                        <Form.Item label="School Address">
+                            <Input
+                                placeholder="enter school address"
+                                allowClear
+                                name="address"
+                                value={address}
+                                onChange={this.changeHandler}
+                            />
+                        </Form.Item>
+
+                        <Form.Item label="School Offers">
+                            <Input
+                                placeholder="enter school offers"
+                                allowClear
+                                name="offers"
+                                value={offers}
+                                onChange={this.changeHandler}
                             />
                         </Form.Item>
 
                         <Form.Item label="School Agent Sector Type">
                             <Input
-                                placeholder="enter agent sector type"
+                                placeholder="enter school agent sector type"
+                                allowClear
                                 name="agentSectorType"
                                 value={agentSectorType}
-                                onChange={this.changehandler}
-                            />
+                                onChange={this.changeHandler} />
                         </Form.Item>
 
                         <Form.Item label="School Agent Type">
                             <Input
-                                placeholder="enter agent type"
+                                placeholder="enter school agent type"
+                                allowClear
                                 name="agentType"
                                 value={agentType}
-                                onChange={this.changehandler}
-                            />
+                                onChange={this.changeHandler} />
                         </Form.Item>
 
-                        <Form.Item label="School Description">
-                            <TextArea rows={4}
-                                placeholder="enter school description"
-                                name="description"
-                                value={description}
-                                onChange={this.changehandler}
-                            />
-                        </Form.Item> */}
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.submitHandler}>
-                                Submit
-                            </Button>
+                        <Form.Item label="School Email">
+                            <Input
+                                placeholder="enter school email"
+                                allowClear
+                                name="email"
+                                value={email}
+                                onChange={this.changeHandler} />
                         </Form.Item>
+
+                        <Form.Item label="School Telephone">
+                            <Input
+                                placeholder="enter school telephone"
+                                allowClear
+                                name="telephone"
+                                value={telephone}
+                                onChange={this.changeHandler} />
+                        </Form.Item>
+
+                        <Button type="primary" loading={this.state.loading} onClick={this.submitHandler} ghost >
+                            Submit
+                    </Button>
 
                     </Form>
                 </Modal>
             </div>
+
         );
     }
 }
+
 
 const SchoolRegisterModal = Form.create()(SchoolModal);
 
