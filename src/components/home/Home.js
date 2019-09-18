@@ -5,8 +5,9 @@ import CredentialsChart from "../../charts/CredentialsChart";
 import SemesterChart from "../../charts/SemesterChart";
 import CoursesChart from "../../charts/CoursesChart";
 import StudentChart from "../../charts/StudentsChart"
+import Headers from '../common/Header';
 
-const { Header, Footer } = Layout;
+const { Footer } = Layout;
 
 
 const data = [];
@@ -17,7 +18,7 @@ class Home extends React.Component {
             <Layout style={{ minHeight: '100vh' }}>
                 <Sidebar />
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }} />
+                    <Headers />
 
 
                     <div style={{ background: '#ECECEC', padding: '30px', marginTop: "20px" }}>

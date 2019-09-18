@@ -92,15 +92,15 @@ class Course extends React.Component {
         },
         {
             title: 'Send Credentials',
-            key: 'sendCredentials',
-            dataIndex: 'sendCredentials',
+            key: 'x',
+            dataIndex: '',
             render: () => (
                 <span>
-                    <Button type="primary" loading={this.state.loading} onClick={this.sendCredentials} ghost >
+                    <Button type="primary" loading={this.state.loading} id={this.state.courseArray[0].key}  onClick={ (e) => this.sendCredentials(e) } ghost >
                         {this.buttonText}
                     </Button>
                 </span>
-            )
+            ) 
         }
     ];
 
@@ -108,8 +108,9 @@ class Course extends React.Component {
         this.getAllCourses();
     }
 
-    sendCredentials = () => {
+    sendCredentials = (e) => {
         this.enterLoading();
+        console.log(e);
         axios.post('https://xdemic-api.herokuapp.com/credentials', {
             courseUrl: "https://xdemic-api.herokuapp.com/httpcourse"
         })
@@ -143,7 +144,7 @@ class Course extends React.Component {
                             prerequisite: e.prerequisite,
                             uri: '',
                             courseCode: e.courseCode,
-                            sendCredentials: ''
+                            sendCredentials: e._id
                         })
                     });
                     // setting state
@@ -341,7 +342,7 @@ class Course extends React.Component {
 
                                 <Button type="primary" loading={this.state.loading} onClick={this.submitHandler} ghost >
                                     Submit
-                    </Button>
+                                </Button>
 
                             </Form>
                         </Modal>
@@ -361,7 +362,6 @@ class Course extends React.Component {
                     <Table columns={this.columns} dataSource={this.state.courseArray} pagination={{ pageSize: 5 }} onRow={(record, rowIndex) => {
                         return {
                             onClick: event => {
-                                //todo change here ...
                                 // this.props.history.push({
                                 //     pathname: '/coursedetail',
                                 //     state: { detail: this.courseDataArray[rowIndex] }

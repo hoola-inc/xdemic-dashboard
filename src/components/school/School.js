@@ -100,7 +100,7 @@ class School extends React.Component {
                             agentType: e.agentType,
                             email: e.email,
                             did: e.did,
-                            telephone: e.telephone,
+                            telephone: e.telephone
                         })
                     });
                     // setting state
@@ -159,10 +159,14 @@ class School extends React.Component {
     sendSchool = () => {
         axios.post('https://xdemic-api.herokuapp.com/school', this.state)
             .then(res => {
+                console.log(res);
                 if (res.data.status) {
                     this.setState({ loading: false });
                     this.handleCancel();
-                    this.getSchools();
+                    this.setState({
+                        schoolArray: [...this.state.schoolArray, res.data.data]
+                    })
+
                     Swal.fire('School', 'created', 'success');
                 }
                 else {
@@ -174,7 +178,7 @@ class School extends React.Component {
             .catch(err => {
                 this.setState({ loading: false });
                 this.handleCancel();
-                Swal.fire('Error', 'An error occured', 'error');
+                Swal.fire('Error', err.message, 'error');
             });
     }
 
@@ -287,7 +291,7 @@ class School extends React.Component {
 
 
 
-                    <Table dataSource={this.state.schoolArray} columns={columns} pagination={false} />
+                    <Table dataSource={this.state.schoolArray} columns={columns} pagination={{ pageSize: 15 }} />
 
                     <Footer style={{ textAlign: 'center' }}>Hoola Tech ©2019</Footer>
                 </Layout>
