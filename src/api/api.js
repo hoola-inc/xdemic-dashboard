@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://localhost:9090');
+const socket = openSocket('https://xdemic-api.herokuapp.com');
 
 function subscribeToTimer(cb) {
     socket.on('timer', timestamp => cb(null, timestamp));

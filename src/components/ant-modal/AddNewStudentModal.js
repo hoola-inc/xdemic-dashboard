@@ -2,14 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Modal, Button, Input, Form, DatePicker } from 'antd';
-import moment from 'moment';
-
-const { RangePicker } = DatePicker;
-
-function onChangeDate(dates, dateStrings) {
-    console.log('From: ', dates[0], ', to: ', dates[1]);
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-}
 
 class AddNewStudentModal extends React.Component {
 
@@ -56,6 +48,7 @@ class AddNewStudentModal extends React.Component {
     submitHandler = e => {
         e.preventDefault();
         this.enterLoading();
+        // this.handleSubmit()
         this.sendCourse();
     }
 
@@ -78,14 +71,23 @@ class AddNewStudentModal extends React.Component {
             });
     }
 
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+            }
+        });
+    };
+
     render() {
         const { email } = this.state;
-
+        const { getFieldDecorator } = this.props.form;
         return (
             <div>
-                <Button type="primary" style={{ float: "right" }} onClick={this.showModal}>
-                    Add New Student
-        </Button>
+                <Button block size="small" onClick={this.showModal}>
+                    +
+                </Button>
                 <Modal
                     title="Enter Course Detail"
                     visible={this.state.visible}
@@ -94,13 +96,17 @@ class AddNewStudentModal extends React.Component {
                 >
                     <Form onSubmit={this.submitHandler}>
                         <Form.Item label="Student Email">
-                            <Input
-                                placeholder="enter student email"
-                                allowClear
-                                name="email"
-                                value={email}
-                                onChange={this.changeHandler}
-                            />
+                            {getFieldDecorator('email', {
+                                rules: [{ required: true, message: 'Please input student email!' }],
+                            })(
+                                <Input
+                                    placeholder="enter student email"
+                                    allowClear
+                                    name="email"
+                                    value={email}
+                                    onChange={this.changeHandler}
+                                />
+                            )}
                         </Form.Item>
 
 
