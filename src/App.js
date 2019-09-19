@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import components
-import Course from './components/course/Course';
+import Course from './components/course/CoursesCard';
 import CourseDetail from './components/course/CourseDetail';
 import School from "./components/school/School";
 import Student from "./components/student/StudentStepForm";

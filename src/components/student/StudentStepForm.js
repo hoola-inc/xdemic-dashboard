@@ -117,11 +117,11 @@ const routes = [
     },
     {
         path: 'first',
-        breadcrumbName: 'Dashboard',
+        breadcrumbName: 'StudentForm',
     },
     {
         path: 'second',
-        breadcrumbName: 'Workplace',
+        breadcrumbName: 'StudentStepForm',
     },
 ];
 
@@ -148,17 +148,7 @@ const content = (
     <div className="content">
         <Paragraph>
             <small>
-                School Address, City, Country
-            </small>
-        </Paragraph>
-        <Paragraph>
-            <small>
-                Phone, Email
-            </small>
-        </Paragraph>
-        <Paragraph>
-            <small>
-                Website
+                Follow the steps to register student
             </small>
         </Paragraph>
 
@@ -185,11 +175,15 @@ class StudentStepForm extends React.Component {
         this.setState({ current });
     }
 
+    doneMethod = () => {
+        message.success('Processing complete!');
+        this.props.history.push('/');
+    }
+
 
     render() {
 
         const { current } = this.state;
-        const { size } = this.state;
 
         return (
             <Layout style={{ minHeight: '100vh' }}>
@@ -199,7 +193,7 @@ class StudentStepForm extends React.Component {
 
                     <PageHeader
                         style={{ marginTop: "50px" }}
-                        title="Credentials Dashboard"
+                        title="Student Detail"
                         avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
                         breadcrumb={{ routes }}
                     >
@@ -209,7 +203,7 @@ class StudentStepForm extends React.Component {
                     </PageHeader>
 
                     <Row gutter={16} style={{ marginTop: "25px" }}>
-                        <Col span={8} offset={8}>
+                        <Col span={10} offset={6}>
                             <Card>
                                 <div>
                                     <Steps current={current}>
@@ -232,7 +226,7 @@ class StudentStepForm extends React.Component {
                                         </Button>
                                         )}
                                         {current === steps.length - 1 && (
-                                            <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                                            <Button type="primary" onClick={this.doneMethod}>
                                                 Done
                                         </Button>
                                         )}

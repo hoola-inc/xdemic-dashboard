@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
         return (
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                 <div className="logo"> 
-                    Logo
+                    <img src='../../assets/img/logo.png'></img>
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="/">
