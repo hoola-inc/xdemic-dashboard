@@ -11,7 +11,7 @@ function onChangeDate(dates, dateStrings) {
     console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 }
 
-class CreateCourseModal extends React.Component {
+class CreateNewCourseModal extends React.Component {
 
     constructor(props) {
         super(props);
@@ -89,11 +89,12 @@ class CreateCourseModal extends React.Component {
 
     render() {
         const { name, creditUnitType, creditUniteValue, ctid, subjectWebpage, prerequisite, uri, courseCode } = this.state;
+        const { getFieldDecorator } = this.props.form;
 
         return (
             <div>
-                <Button type="primary" style={{ float: "right" }} onClick={this.showModal}>
-                    New Course
+                <Button block size="small" onClick={this.showModal}>
+                    +
         </Button>
                 <Modal
                     title="Enter Course Detail"
@@ -103,13 +104,24 @@ class CreateCourseModal extends React.Component {
                 >
                     <Form onSubmit={this.submitHandler}>
                         <Form.Item label="Course Name">
-                            <Input
-                                placeholder="enter course name"
-                                allowClear
-                                name="name"
-                                value={name}
-                                onChange={this.changeHandler}
-                            />
+                            {
+                                getFieldDecorator('foo', {
+                                    rules: [{
+                                        required: true,
+                                        message: 'this field is required'
+                                    }]
+                                })
+                                    (
+                                        <Input
+                                            placeholder="enter course name"
+                                            allowClear
+                                            require
+                                            name="name"
+                                            value={name}
+                                            onChange={this.changeHandler}
+                                        />
+                                    )
+                            }
                         </Form.Item>
 
                         <Form.Item label="Course Credit Unit Type">
@@ -198,5 +210,7 @@ class CreateCourseModal extends React.Component {
         );
     }
 }
+
+const CreateCourseModal = Form.create()(CreateNewCourseModal);
 
 export default CreateCourseModal;

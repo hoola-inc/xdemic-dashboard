@@ -135,12 +135,12 @@ const columns = [
         dataIndex: 'name',
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
+        title: 'Credit Unit Type',
+        dataIndex: 'creditUnitType',
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
+        title: 'Credit Unite Value',
+        dataIndex: 'creditUniteValue',
     },
 ];
 
@@ -149,8 +149,8 @@ for (let i = 0; i < 46; i++) {
     data.push({
         key: i,
         name: `Edward King ${i}`,
-        age: 32,
-        address: `London, Park Lane no. ${i}`,
+        creditUniteValue: 32,
+        creditUniteValue: `London, Park Lane no. ${i}`,
     });
 }
 

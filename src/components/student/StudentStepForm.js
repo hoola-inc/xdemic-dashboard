@@ -22,7 +22,7 @@ const data = [
     }
 ];
 
-var reactNode = <div><li>PhoneNumber: foo</li> <li>Email: foo</li> <li>Dob: 1-1-1991</li> <li>Class: foo</li></div>;
+const reactNode = <div><li>PhoneNumber: foo</li> <li>Email: foo</li> <li>Dob: 1-1-1991</li> <li>Class: foo</li></div>;
 
 
 const steps = [
@@ -31,31 +31,35 @@ const steps = [
         content:
             <div style={{ marginTop: '20px' }}>
                 <Form>
-                    <Form.Item label="Enter Student Name">
+                    <Form.Item label="Student Name">
                         <Input
                             placeholder="enter student name"
                             allowClear
+                            disabled
                         />
                     </Form.Item>
 
-                    <Form.Item label="Enter Student Email">
+                    <Form.Item label="Student Email">
                         <Input
                             placeholder="enter student email"
                             allowClear
+                            disabled
                         />
                     </Form.Item>
 
-                    <Form.Item label="Enter Student Phone Number">
+                    <Form.Item label="Student Phone Number">
                         <Input
                             placeholder="enter student phone number"
                             allowClear
+                            disabled
                         />
                     </Form.Item>
 
-                    <Form.Item label="Enter Student Data Of Birth">
+                    <Form.Item label="Student Data Of Birth">
                         <Input
                             placeholder="enter student DOB"
                             allowClear
+                            disabled
                         />
                     </Form.Item>
 
@@ -177,7 +181,11 @@ class StudentStepForm extends React.Component {
 
     doneMethod = () => {
         message.success('Processing complete!');
-        this.props.history.push('/');
+        // this.props.history.push('/');
+    }
+
+    closeModel = () => {
+        console.log('close model');
     }
 
 
@@ -186,12 +194,57 @@ class StudentStepForm extends React.Component {
         const { current } = this.state;
 
         return (
-            <Layout style={{ minHeight: '100vh' }}>
-                <Sidebar />
-                <Layout>
-                    <Header />
 
-                    <PageHeader
+
+            <div>
+            <Row gutter={16}>
+                <Col span={24}>
+                    <Card>
+                        <div>
+                            <Steps current={current}>
+                                {/* {steps.map(item => (
+                                            <Step key={item.title} title={item.title} />
+                                        ))} */}
+                                <Step title="first step">
+
+                                </Step>
+                                <Step title="second step"></Step>
+                                <Step title="third step"></Step>
+                            </Steps>
+                            <div className="steps-content">
+                                {steps[current].content}
+                            </div>
+                            <div className="steps-action" style={{ marginTop: "30px" }}>
+                                {current < steps.length - 1 && (
+                                    <Button type="primary" onClick={() => this.next()}>
+                                        Next
+                                        </Button>
+                                )}
+                                {current === steps.length - 1 && (
+                                    <Button type="primary" onClick={this.doneMethod}>
+                                        Done
+                                        </Button>
+                                )}
+                                {current > 0 && (
+                                    <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+                                        Previous
+                                        </Button>
+                                )}
+                            </div>
+                        </div>
+                    </Card>
+                </Col>
+            </Row>
+
+        </div>
+        );
+
+            // <Layout style={{ minHeight: '100vh' }}>
+            {/* <Sidebar /> */ }
+                // <Layout>
+                    {/* <Header /> */ }
+
+        {/* <PageHeader
                         style={{ marginTop: "50px" }}
                         title="Student Detail"
                         avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
@@ -200,50 +253,11 @@ class StudentStepForm extends React.Component {
                         <Content>
                             {content}
                         </Content>
-                    </PageHeader>
+                    </PageHeader> */}
 
-                    <Row gutter={16} style={{ marginTop: "25px" }}>
-                        <Col span={10} offset={6}>
-                            <Card>
-                                <div>
-                                    <Steps current={current}>
-                                        {/* {steps.map(item => (
-                                            <Step key={item.title} title={item.title} />
-                                        ))} */}
-                                        <Step title="first step">
-
-                                        </Step>
-                                        <Step title="second step"></Step>
-                                        <Step title="third step"></Step>
-                                    </Steps>
-                                    <div className="steps-content">
-                                        {steps[current].content}
-                                    </div>
-                                    <div className="steps-action" style={{ marginTop: "30px" }}>
-                                        {current < steps.length - 1 && (
-                                            <Button type="primary" onClick={() => this.next()}>
-                                                Next
-                                        </Button>
-                                        )}
-                                        {current === steps.length - 1 && (
-                                            <Button type="primary" onClick={this.doneMethod}>
-                                                Done
-                                        </Button>
-                                        )}
-                                        {current > 0 && (
-                                            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                                                Previous
-                                        </Button>
-                                        )}
-                                    </div>
-                                </div>
-                            </Card>
-                        </Col>
-                    </Row>
-
-                </Layout>
-            </Layout>
-        );
+        {/* </Layout> */ }
+        {/* </Layout> */ }
+        
     }
 }
 

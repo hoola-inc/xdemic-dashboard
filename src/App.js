@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Course from './components/course/CoursesCard';
 import CourseDetail from './components/course/CourseDetail';
 import School from "./components/school/School";
-import Student from "./components/student/StudentStepForm";
+import Student from "./components/student/Student";
 import Home from "./components/home/Home";
 
 

@@ -40,8 +40,8 @@ class CreateCourseInstanceModal extends React.Component {
     render() {
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>
-                    Create New Course Instance
+                <Button block size="small" onClick={this.showModal}>
+                    +
         </Button>
                 <Modal
                     title="Basic Modal"

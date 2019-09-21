@@ -1,8 +1,10 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/img/logo.png';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
+
 
 class Sidebar extends React.Component {
     state = {
@@ -17,8 +19,8 @@ class Sidebar extends React.Component {
     render() {
         return (
             <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                <div className="logo"> 
-                    <img src='../../assets/img/logo.png'></img>
+                <div style={{height: 32, background: '#ffffff', margin: 16}}>
+                    {/* <img className="ant-menu-item" src={logo} /> */}
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="/">

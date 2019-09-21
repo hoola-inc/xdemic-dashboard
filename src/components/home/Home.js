@@ -7,6 +7,8 @@ import CoursesChart from "../../charts/CoursesChart";
 import StudentChart from "../../charts/StudentsChart"
 import Headers from '../common/Header';
 import AddNewStudent from '../ant-modal/AddNewStudentModal';
+import AddNewCourse from '../ant-modal/CreateCourseModal';
+import AddNewCourseCredentials from '../ant-modal/CreateCourseInstanceModal';
 
 const { Footer } = Layout;
 
@@ -156,7 +158,8 @@ class Home extends React.Component {
                                                 </small>
                                             </h4>
                                             <div style={{ marginTop: '20px' }}>
-                                                <Button block size="small">+</Button>
+                                                {/* <Button block size="small">+</Button> */}
+                                                <AddNewCourse />
                                             </div>
                                         </Col>
                                         <Col span={8}>
@@ -168,7 +171,8 @@ class Home extends React.Component {
                                                 </small>
                                             </h4>
                                             <div style={{ marginTop: '20px' }}>
-                                                <Button block size="small">+</Button>
+                                                {/* <Button block size="small">+</Button> */}
+                                                <AddNewCourseCredentials />
                                             </div>
                                         </Col>
                                     </Card>
