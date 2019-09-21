@@ -2,6 +2,8 @@ import React from 'react';
 import { Layout, Steps, Button, message, PageHeader, Typography, Row, Col, Card, Form, Input, Select, List, Avatar } from 'antd';
 import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
+import axios from 'axios';
+
 const { Step } = Steps;
 const { Paragraph } = Typography;
 const { Option } = Select;
@@ -21,98 +23,6 @@ const data = [
         title: 'Student XYZ',
     }
 ];
-
-const reactNode = <div><li>PhoneNumber: foo</li> <li>Email: foo</li> <li>Dob: 1-1-1991</li> <li>Class: foo</li></div>;
-
-
-const steps = [
-    {
-        title: 'First',
-        content:
-            <div style={{ marginTop: '20px' }}>
-                <Form>
-                    <Form.Item label="Student Name">
-                        <Input
-                            placeholder="enter student name"
-                            allowClear
-                            disabled
-                        />
-                    </Form.Item>
-
-                    <Form.Item label="Student Email">
-                        <Input
-                            placeholder="enter student email"
-                            allowClear
-                            disabled
-                        />
-                    </Form.Item>
-
-                    <Form.Item label="Student Phone Number">
-                        <Input
-                            placeholder="enter student phone number"
-                            allowClear
-                            disabled
-                        />
-                    </Form.Item>
-
-                    <Form.Item label="Student Data Of Birth">
-                        <Input
-                            placeholder="enter student DOB"
-                            allowClear
-                            disabled
-                        />
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Select size='default' defaultValue="Select Class" onChange={handleChange} style={{ width: 200 }}>
-                            {children}
-                        </Select>
-                    </Form.Item>
-                </Form>
-            </div>
-
-    },
-    {
-        title: 'Second',
-        content:
-            <div style={{ marginTop: '20px' }}>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                title={<a href="#">{item.title}</a>}
-                                description={reactNode}
-                            />
-                        </List.Item>
-                    )}
-                />,
-            </div>
-    },
-    {
-        title: 'Last',
-        content: <div style={{ marginTop: '20px' }}>
-            <List
-                itemLayout="horizontal"
-                dataSource={data}
-                renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<a href="#">{item.title}</a>}
-                            description="Has been registered"
-                        />
-                    </List.Item>
-                )}
-            />,
-        </div>,
-    },
-];
-
-
-
 
 const routes = [
     {
@@ -166,8 +76,40 @@ class StudentStepForm extends React.Component {
         this.state = {
             current: 0,
             size: 'default',
+            name: '',
+            email: '',
+            phone: '',
+            dob: ''
         };
     }
+
+
+    componentDidMount() {
+        // get all student
+
+        axios.get('https://xdemic-api.herokuapp.com/student')
+            .then(res => {
+                if (res.data.status) {
+
+                    this.setState({
+                        name: res.data.data[0].name,
+                        email: res.data.data[0].email,
+                        phone: res.data.data[0].phone,
+                        dob: res.data.data[0].dob
+                    })
+
+                } else {
+                    message.info('no record found');
+                }
+
+
+            })
+            .catch(err => {
+                message.error(`an error occured ${err.message}`);
+            })
+    }
+
+    reactNode = <div><li>PhoneNumber: foo</li> <li>Email: foo</li> <li>Dob: 1-1-1991</li> <li>Class: foo</li></div>;
 
     next() {
         const current = this.state.current + 1;
@@ -189,6 +131,99 @@ class StudentStepForm extends React.Component {
     }
 
 
+    steps = [
+        {
+            title: 'First',
+            content:
+                <div style={{ marginTop: '20px' }}>
+                    <Form>
+                        <Form.Item label="Student Name">
+                            <Input
+                                placeholder="enter student name"
+                                value={this.state.name}
+                                allowClear
+                                disabled
+                            />
+                        </Form.Item>
+
+                        <Form.Item label="Student Email">
+                            <Input
+                                placeholder="enter student email"
+                                allowClear
+                                disabled
+                                value={this.state.email}
+                            />
+                        </Form.Item>
+
+                        <Form.Item label="Student Phone Number">
+                            <Input
+                                placeholder="enter student phone number"
+                                allowClear
+                                disabled
+                                value={this.state.phone}
+                            />
+                        </Form.Item>
+
+                        <Form.Item label="Student Data Of Birth">
+                            <Input
+                                placeholder="enter student DOB"
+                                allowClear
+                                disabled
+                                value={this.state.dob}
+                            />
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Select size='default' defaultValue="Select Class" onChange={handleChange} style={{ width: 200 }}>
+                                {children}
+                            </Select>
+                        </Form.Item>
+                    </Form>
+                </div>
+
+        },
+        {
+            title: 'Second',
+            content:
+                <div style={{ marginTop: '20px' }}>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                    title={<a href="#">{item.title}</a>}
+                                    description={this.reactNode}
+                                />
+                            </List.Item>
+                        )}
+                    />,
+                </div>
+        },
+        {
+            title: 'Last',
+            content: <div style={{ marginTop: '20px' }}>
+                <List
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={item => (
+                        <List.Item>
+                            <List.Item.Meta
+                                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                title={<a href="#">{item.title}</a>}
+                                description="Has been registered"
+                            />
+                        </List.Item>
+                    )}
+                />,
+            </div>,
+        },
+    ];
+
+
+
+
     render() {
 
         const { current } = this.state;
@@ -197,52 +232,52 @@ class StudentStepForm extends React.Component {
 
 
             <div>
-            <Row gutter={16}>
-                <Col span={24}>
-                    <Card>
-                        <div>
-                            <Steps current={current}>
-                                {/* {steps.map(item => (
+                <Row gutter={16}>
+                    <Col span={24}>
+                        <Card>
+                            <div>
+                                <Steps current={current}>
+                                    {/* {steps.map(item => (
                                             <Step key={item.title} title={item.title} />
                                         ))} */}
-                                <Step title="first step">
+                                    <Step title="first step">
 
-                                </Step>
-                                <Step title="second step"></Step>
-                                <Step title="third step"></Step>
-                            </Steps>
-                            <div className="steps-content">
-                                {steps[current].content}
+                                    </Step>
+                                    <Step title="second step"></Step>
+                                    <Step title="third step"></Step>
+                                </Steps>
+                                <div className="steps-content">
+                                    {this.steps[current].content}
+                                </div>
+                                <div className="steps-action" style={{ marginTop: "30px" }}>
+                                    {current < this.steps.length - 1 && (
+                                        <Button type="primary" onClick={() => this.next()}>
+                                            Next
+                                        </Button>
+                                    )}
+                                    {current === this.steps.length - 1 && (
+                                        <Button type="primary" onClick={this.doneMethod}>
+                                            Done
+                                        </Button>
+                                    )}
+                                    {current > 0 && (
+                                        <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+                                            Previous
+                                        </Button>
+                                    )}
+                                </div>
                             </div>
-                            <div className="steps-action" style={{ marginTop: "30px" }}>
-                                {current < steps.length - 1 && (
-                                    <Button type="primary" onClick={() => this.next()}>
-                                        Next
-                                        </Button>
-                                )}
-                                {current === steps.length - 1 && (
-                                    <Button type="primary" onClick={this.doneMethod}>
-                                        Done
-                                        </Button>
-                                )}
-                                {current > 0 && (
-                                    <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                                        Previous
-                                        </Button>
-                                )}
-                            </div>
-                        </div>
-                    </Card>
-                </Col>
-            </Row>
+                        </Card>
+                    </Col>
+                </Row>
 
-        </div>
+            </div>
         );
 
-            // <Layout style={{ minHeight: '100vh' }}>
-            {/* <Sidebar /> */ }
-                // <Layout>
-                    {/* <Header /> */ }
+        // <Layout style={{ minHeight: '100vh' }}>
+        {/* <Sidebar /> */ }
+        // <Layout>
+        {/* <Header /> */ }
 
         {/* <PageHeader
                         style={{ marginTop: "50px" }}
@@ -257,7 +292,7 @@ class StudentStepForm extends React.Component {
 
         {/* </Layout> */ }
         {/* </Layout> */ }
-        
+
     }
 }
 

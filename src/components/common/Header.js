@@ -30,6 +30,9 @@ class Headers extends React.Component {
         super(props);
     }
 
+
+
+
     componentDidMount() {
         const { endpoint } = this.state;
         const socket = socketIOClient(endpoint);

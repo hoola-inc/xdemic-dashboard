@@ -3,7 +3,7 @@ import Sidebar from '../common/Sidebar';
 import Header from "../common/Header";
 import Footer from '../common/Footer';
 import { Link } from 'react-router-dom';
-import { Card, Layout, PageHeader, Row, Typography, Col, Input } from 'antd';
+import { Card, Layout, PageHeader, Row, Typography, Col, Input, Spin } from 'antd';
 import axios from 'axios';
 import Swal from "sweetalert2";
 
@@ -75,20 +75,17 @@ class CoursesCard extends React.Component {
         axios.get('https://xdemic-api.herokuapp.com/courses')
             .then(res => {
                 if (res.data.status) {
-                    console.log(res.data.data);
-                    const length = res.data.data.length;
-
                     res.data.data.forEach(element => {
                         coursesArray.push(
-                                <Link to="/coursedetail">
-                                    <Card
-                                        hoverable
-                                        style={{ width: 400 }}
-                                        cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                    >
-                                        <Meta title={element.name} description={element.coursesCode} />
-                                    </Card>
-                                </Link>
+                            <Link to="/coursedetail">
+                                <Card
+                                    hoverable
+                                    style={{ width: 400 }}
+                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
+                                >
+                                    <Meta title={element.name} description={element.courseCode} />
+                                </Card>
+                            </Link>
                         )
                         this.setState({
                             data: coursesArray
@@ -134,11 +131,9 @@ class CoursesCard extends React.Component {
 
                     <div style={{ marginTop: 25 }}>
                         <Row gutter={16}>
-
-                            {
-                                this.state.data.map(courses => <Col span={4} offset={1}> {courses} </Col>)
-                            }
-
+                                {
+                                    this.state.data.map(courses => <Col span={4} offset={1}> {courses} </Col>)
+                                }
                         </Row>
                     </div>
 

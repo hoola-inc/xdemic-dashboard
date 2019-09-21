@@ -146,6 +146,10 @@ const columns = [
     {
         title: 'Date of birth',
         dataIndex: 'dob'
+    },
+    {
+        title: 'Grades',
+        dataIndex: 'grades'
     }
 ];
 const data = [];
@@ -280,7 +284,11 @@ class CourseDetail extends React.Component {
                                     <div style={{ marginBottom: 16 }}>
                                         <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
                                             Send Course
-                            </Button>
+                                        </Button>
+
+                                        <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading} style={{marginLeft: 5}}>
+                                            Enroll Student
+                                        </Button>
                                         <span style={{ marginLeft: 8 }}>
                                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                                         </span>
