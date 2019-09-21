@@ -4,6 +4,8 @@ import Header from "../common/Header";
 import Footer from '../common/Footer';
 import { Link } from 'react-router-dom';
 import { Card, Layout, PageHeader, Row, Typography, Col, Input } from 'antd';
+import axios from 'axios';
+import Swal from "sweetalert2";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -60,6 +62,48 @@ const routes = [
 // );
 
 class CoursesCard extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+    }
+
+    componentDidMount() {
+        let coursesArray = [];
+        axios.get('https://xdemic-api.herokuapp.com/courses')
+            .then(res => {
+                if (res.data.status) {
+                    console.log(res.data.data);
+                    const length = res.data.data.length;
+
+                    res.data.data.forEach(element => {
+                        coursesArray.push(
+                                <Link to="/coursedetail">
+                                    <Card
+                                        hoverable
+                                        style={{ width: 400 }}
+                                        cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
+                                    >
+                                        <Meta title={element.name} description={element.coursesCode} />
+                                    </Card>
+                                </Link>
+                        )
+                        this.setState({
+                            data: coursesArray
+                        })
+                    })
+                } else {
+                    Swal.fire('oho', 'no record found', 'info');
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
+    }
+
+
     render() {
         return (
             <Layout style={{ minHeight: '100vh' }}>
@@ -90,86 +134,10 @@ class CoursesCard extends React.Component {
 
                     <div style={{ marginTop: 25 }}>
                         <Row gutter={16}>
-                            <Col span={5} offset={2}>
-                                <Link to="/coursedetail">
-                                    <Card
-                                        hoverable
-                                        style={{ width: 400 }}
-                                        cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                    >
-                                        <Meta title="Networking" description="Learn with us" />
-                                    </Card>
-                                </Link>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
 
-                        </Row>
-                    </div>
-
-                    <div style={{ marginTop: 25 }}>
-                        <Row gutter={16}>
-                            <Col span={5} offset={2}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title="Networking" description="Learn with us" />
-                                </Card>
-                            </Col>
+                            {
+                                this.state.data.map(courses => <Col span={4} offset={1}> {courses} </Col>)
+                            }
 
                         </Row>
                     </div>

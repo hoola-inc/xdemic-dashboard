@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, PageHeader, Col, Row, Input, Card, Button } from 'antd';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const { Search } = Input;
 
@@ -70,12 +71,14 @@ class StudentHelper extends React.Component {
                     this.setState({
                         studentsArray: data
                     })
+                } else {
+                    Swal.fire('oho', 'no record found', 'info');
                 }
 
 
             })
             .catch(err => {
-                console.log(err.message);
+                Swal.fire('Error', err.message, 'error');
             })
     }
 
@@ -133,8 +136,12 @@ class StudentHelper extends React.Component {
                             <Col span={20} offset={2}>
                                 <div style={{ marginBottom: 16 }}>
                                     <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                        Send Course Credentials
-                            </Button>
+                                        Graduate
+                                    </Button>
+
+                                    <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading} style={{marginLeft: 5}}>
+                                        Expell
+                                    </Button>
                                     <span style={{ marginLeft: 8 }}>
                                         {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                                     </span>

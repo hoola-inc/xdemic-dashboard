@@ -2,7 +2,8 @@ import React from 'react';
 import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
 import { Layout, Table, Tag, Row, Col, Card, Input, Typography, Menu, Button, Dropdown, Icon, PageHeader } from 'antd';
-
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const { Paragraph } = Typography;
 const { Search } = Input;
@@ -135,15 +136,18 @@ const columns = [
         dataIndex: 'name',
     },
     {
-        title: 'Credit Unit Type',
-        dataIndex: 'creditUnitType',
+        title: 'phone',
+        dataIndex: 'phone',
     },
     {
-        title: 'Credit Unite Value',
-        dataIndex: 'creditUniteValue',
+        title: 'Email',
+        dataIndex: 'email',
     },
+    {
+        title: 'Date of birth',
+        dataIndex: 'dob'
+    }
 ];
-
 const data = [];
 for (let i = 0; i < 46; i++) {
     data.push({
@@ -164,7 +168,39 @@ class CourseDetail extends React.Component {
             anArray: [],
             selectedRowKeys: [], // Check here to configure the default column
             loading: false,
+            studentsArray: []
         }
+    }
+
+
+    componentDidMount() {
+        let data = [];
+        axios.get('https://xdemic-api.herokuapp.com/student')
+            .then(res => {
+                console.log('here');
+                if (res.data.status) {
+                    res.data.data.map((e, i) => {
+                        data.push({
+                            key: i,
+                            name: e.name,
+                            phone: e.phone,
+                            email: e.email,
+                            dob: e.dob
+                        })
+                    })
+
+                    this.setState({
+                        studentsArray: data
+                    })
+
+                    console.log(this.state.studentsArray);
+                } else {
+                    Swal.fire('oho', 'no record found', 'info');
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
     }
 
     start = () => {
@@ -249,7 +285,7 @@ class CourseDetail extends React.Component {
                                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                                         </span>
                                     </div>
-                                    <Table rowSelection={rowSelection} columns={columns} dataSource={data} bordered={true}/>
+                                    <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.studentsArray} bordered={true} />
                                 </Col>
                             </Row>
                         </Card>
