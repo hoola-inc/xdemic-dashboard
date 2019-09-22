@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
-import { Layout, Table, Tag, Row, Col, Card, Input, Typography, Menu, Button, Dropdown, Icon, PageHeader } from 'antd';
+import { Layout, Table, Tag, Row, Col, Card, Input, Typography, Menu, Button, Dropdown, Icon, PageHeader, Modal, message } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -48,6 +48,30 @@ const DropdownMenu = () => {
         </Dropdown>
     );
 };
+
+
+const enrollStudentColumn = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+    },
+    {
+        title: 'phone',
+        dataIndex: 'phone',
+    },
+    {
+        title: 'Email',
+        dataIndex: 'email',
+    },
+    {
+        title: 'Date of birth',
+        dataIndex: 'dob'
+    },
+    {
+        title: 'Grades',
+        dataIndex: 'grades'
+    }
+];
 
 const routes = [
     {
@@ -130,28 +154,7 @@ const Content = ({ children, extraContent }) => {
     );
 };
 
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-    },
-    {
-        title: 'phone',
-        dataIndex: 'phone',
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-    },
-    {
-        title: 'Date of birth',
-        dataIndex: 'dob'
-    },
-    {
-        title: 'Grades',
-        dataIndex: 'grades'
-    }
-];
+
 const data = [];
 for (let i = 0; i < 46; i++) {
     data.push({
@@ -172,12 +175,168 @@ class CourseDetail extends React.Component {
             anArray: [],
             selectedRowKeys: [], // Check here to configure the default column
             loading: false,
-            studentsArray: []
+            visible: false,
+            studentsArray: [],
+            courseId: '',
+            courseArray: [{
+                name: ''
+            }],
+            enrollStudents: [],
+            studentKey: ''
         }
+        this.addStudent = this.addStudent.bind(this);
+
     }
 
 
     componentDidMount() {
+        const courseId = this.props.location.state.data;
+        this.setState({
+            courseId: courseId
+        })
+        this.getenrolledStudents(courseId);
+        this.getCourseById(courseId);
+        this.getAllStudents();
+    }
+
+    columns = [
+        {
+            title: 'Name',
+            dataIndex: 'name',
+        },
+        {
+            title: 'phone',
+            dataIndex: 'phone',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+        },
+        {
+            title: 'Date of birth',
+            dataIndex: 'dob'
+        },
+        {
+            title: 'Grades',
+            dataIndex: 'grades'
+        },
+        {
+            title: 'Add Student To course',
+            dataIndex: 'addStudentToCourse',
+            render: () => <a onClick={this.addStudent}>Add Student</a>,
+    
+        }
+    ];
+
+    addStudent() {
+        const studentId = this.state.studentsArray[0].key;
+        axios.put(`https://xdemic-api.herokuapp.com/student/${studentId}`, {
+            courseId: this.state.courseId
+        })
+        .then(res => {
+            if(res.data.status) {
+                this.handleCancel();
+                this.getenrolledStudents(this.state.courseId);
+                Swal.fire('Student', 'enrolled successfully', 'success');
+            } 
+        })
+        .catch(err => {
+            Swal.fire('Error', err.message, 'error');
+        })
+    }
+
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleOk = e => {
+        console.log(e);
+
+        
+
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+
+    start = () => {
+        this.setState({ loading: true });
+        // ajax request after empty completing
+        // setTimeout(() => {
+        //     this.setState({
+        //         selectedRowKeys: [],
+        //         loading: false,
+        //     });
+        // }, 1000);
+
+        axios.post('https://xdemic-api.herokuapp.com/credentials', {
+            vc: ["https://xdemic-api.herokuapp.com/httpcourse"]
+        })
+        .then(res => {
+            if(res.data.status) {
+                Swal.fire('Sucessfully', 'sent credentials on xdmic mobile app', 'success');
+                this.setState({
+                    selectedRowKeys: [],
+                    loading: false
+                })
+            }
+        })
+        .catch(err => {
+            Swal.fire('Error', err.message, 'error');
+        })
+    };
+
+    onSelectChange = selectedRowKeys => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
+    getenrolledStudents(id) {
+        axios.get(`https://xdemic-api.herokuapp.com/enrollstudents/${id}`)
+        .then(res => {
+            if(res.data.status) {
+                this.setState({
+                    enrollStudents: res.data.data
+                })
+            } else {
+                message.info('no student enroll');
+            }
+        })
+        .catch(err => {
+            Swal.fire('Error', 'an error occured', 'error')
+        })
+    }
+
+    getCourseById(id) {
+        axios.get(`https://xdemic-api.herokuapp.com/course/${id}`)
+            .then(res => {
+                console.log('here');
+                if (res.data.status) {
+                    this.setState({
+                        courseArray: res.data.data
+                    })
+                    console.log(this.state.courseArray);
+                }
+                else {
+                    Swal.fire('oho', 'no record found', 'info');
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            });
+    }
+
+    getAllStudents() {
         let data = [];
         axios.get('https://xdemic-api.herokuapp.com/student')
             .then(res => {
@@ -185,43 +344,28 @@ class CourseDetail extends React.Component {
                 if (res.data.status) {
                     res.data.data.map((e, i) => {
                         data.push({
-                            key: i,
+                            key: e._id,
                             name: e.name,
                             phone: e.phone,
                             email: e.email,
                             dob: e.dob
-                        })
-                    })
-
+                        });
+                    });
                     this.setState({
-                        studentsArray: data
-                    })
-
-                    console.log(this.state.studentsArray);
-                } else {
+                        studentsArray: data,
+                        courseObj: this.props.location.state.data.courseObj
+                    });
+                }
+                else {
                     Swal.fire('oho', 'no record found', 'info');
                 }
             })
             .catch(err => {
                 Swal.fire('Error', err.message, 'error');
-            })
+            });
     }
 
-    start = () => {
-        this.setState({ loading: true });
-        // ajax request after empty completing
-        setTimeout(() => {
-            this.setState({
-                selectedRowKeys: [],
-                loading: false,
-            });
-        }, 1000);
-    };
 
-    onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        this.setState({ selectedRowKeys });
-    };
 
     render() {
 
@@ -239,9 +383,23 @@ class CourseDetail extends React.Component {
                 <Layout>
                     <Header />
 
+
+                    {/* Modal */}
+                    <Modal
+                        title="Basic Modal"
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        closable={false}
+                        width={1500}
+                    >
+                        <Table columns={this.columns} dataSource={this.state.studentsArray} bordered={true} />
+                    </Modal>
+                    {/* End here */}
+
                     <div style={{ marginTop: 25 }}>
                         <PageHeader
-                            title="Course Name"
+                            title={this.state.courseArray[0].name}
                             subTitle="This is a subtitle"
                             tags={<Tag color="blue">Running</Tag>}
                             avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
@@ -286,14 +444,14 @@ class CourseDetail extends React.Component {
                                             Send Course
                                         </Button>
 
-                                        <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading} style={{marginLeft: 5}}>
+                                        <Button type="primary" style={{ marginLeft: 5 }} onClick={this.showModal}>
                                             Enroll Student
                                         </Button>
                                         <span style={{ marginLeft: 8 }}>
                                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                                         </span>
                                     </div>
-                                    <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.studentsArray} bordered={true} />
+                                    <Table rowSelection={rowSelection} columns={enrollStudentColumn} dataSource={this.state.enrollStudents} bordered={true} />
                                 </Col>
                             </Row>
                         </Card>

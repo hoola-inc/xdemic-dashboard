@@ -79,37 +79,41 @@ class StudentStepForm extends React.Component {
             name: '',
             email: '',
             phone: '',
-            dob: ''
+            dob: '',
+            studentArray: []
         };
+
+        this.getAllStudents = this.getAllStudents.bind(this);
     }
 
 
     componentDidMount() {
         // get all student
 
-        axios.get('https://xdemic-api.herokuapp.com/student')
-            .then(res => {
-                if (res.data.status) {
-
-                    this.setState({
-                        name: res.data.data[0].name,
-                        email: res.data.data[0].email,
-                        phone: res.data.data[0].phone,
-                        dob: res.data.data[0].dob
-                    })
-
-                } else {
-                    message.info('no record found');
-                }
-
-
-            })
-            .catch(err => {
-                message.error(`an error occured ${err.message}`);
-            })
+        this.getAllStudents();
     }
 
     reactNode = <div><li>PhoneNumber: foo</li> <li>Email: foo</li> <li>Dob: 1-1-1991</li> <li>Class: foo</li></div>;
+
+    getAllStudents() {
+        axios.get('https://xdemic-api.herokuapp.com/student')
+            .then(res => {
+                if (res.data.status) {
+                    console.log(res.data.data);
+                    this.setState({
+                        studentArray: res.data.data
+                    })
+
+                    console.log(this.state.studentArray);
+                }
+                else {
+                    message.info('no record found');
+                }
+            })
+            .catch(err => {
+                message.error(`an error occured ${err.message}`);
+            });
+    }
 
     next() {
         const current = this.state.current + 1;
@@ -140,7 +144,7 @@ class StudentStepForm extends React.Component {
                         <Form.Item label="Student Name">
                             <Input
                                 placeholder="enter student name"
-                                value={this.state.name}
+                                value='hamza'
                                 allowClear
                                 disabled
                             />
@@ -151,7 +155,7 @@ class StudentStepForm extends React.Component {
                                 placeholder="enter student email"
                                 allowClear
                                 disabled
-                                value={this.state.email}
+                                value='mhikram1@gmail.com'
                             />
                         </Form.Item>
 
@@ -160,7 +164,7 @@ class StudentStepForm extends React.Component {
                                 placeholder="enter student phone number"
                                 allowClear
                                 disabled
-                                value={this.state.phone}
+                                // value={this.state.phone}
                             />
                         </Form.Item>
 
@@ -169,7 +173,7 @@ class StudentStepForm extends React.Component {
                                 placeholder="enter student DOB"
                                 allowClear
                                 disabled
-                                value={this.state.dob}
+                                // value={this.state.dob}
                             />
                         </Form.Item>
 

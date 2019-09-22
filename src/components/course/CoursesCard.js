@@ -3,7 +3,7 @@ import Sidebar from '../common/Sidebar';
 import Header from "../common/Header";
 import Footer from '../common/Footer';
 import { Link } from 'react-router-dom';
-import { Card, Layout, PageHeader, Row, Typography, Col, Input, Spin } from 'antd';
+import { Card, Layout, PageHeader, Row, Typography, Col, Input, Spin, Button, message } from 'antd';
 import axios from 'axios';
 import Swal from "sweetalert2";
 
@@ -65,6 +65,8 @@ class CoursesCard extends React.Component {
 
     constructor(props) {
         super(props);
+        this.courseDetail = this.courseDetail.bind(this)
+
         this.state = {
             data: []
         }
@@ -76,28 +78,39 @@ class CoursesCard extends React.Component {
             .then(res => {
                 if (res.data.status) {
                     res.data.data.forEach(element => {
+                        console.log(element);
                         coursesArray.push(
-                            <Link to="/coursedetail">
-                                <Card
-                                    hoverable
-                                    style={{ width: 400 }}
-                                    cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
-                                >
-                                    <Meta title={element.name} description={element.courseCode} />
-                                </Card>
-                            </Link>
+                            <Card
+                                hoverable
+                                style={{ width: 400 }}
+                                cover={<img alt="example" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/studies_education_learning_2.jpeg?wOM8J.O9eo2h744k51I38HwkiykDIiMh" />}
+                            >
+                                <Meta title={element.name} description={element.courseCode} />
+
+                                <Button type="primary" value={element._id} size="small" style={{ marginTop: 10 }} onClick={(e) =>this.courseDetail(e)}>More</Button>
+
+                            </Card>
                         )
                         this.setState({
                             data: coursesArray
                         })
                     })
                 } else {
-                    Swal.fire('oho', 'no record found', 'info');
+                    message.info('no record found');
                 }
             })
             .catch(err => {
                 Swal.fire('Error', err.message, 'error');
             })
+    }
+
+
+    courseDetail(e) {
+        const id = e.target.value;
+        this.props.history.push({
+            pathname: '/coursedetail',
+            state: { data: id }
+        })
     }
 
 
@@ -131,9 +144,9 @@ class CoursesCard extends React.Component {
 
                     <div style={{ marginTop: 25 }}>
                         <Row gutter={16}>
-                                {
-                                    this.state.data.map(courses => <Col span={4} offset={1}> {courses} </Col>)
-                                }
+                            {
+                                this.state.data.map(courses => <Col span={4} offset={1}> {courses} </Col>)
+                            }
                         </Row>
                     </div>
 
