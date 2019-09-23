@@ -1,12 +1,13 @@
 import React from 'react';
 import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
-import { Layout, Table, Tag, Row, Col, Card, Input, Typography, Menu, Button, Dropdown, Icon, PageHeader, Modal, message } from 'antd';
+import { Layout, Table, Tag, Row, Col, Card, Input, Typography, Menu, Button, Dropdown, Icon, PageHeader, Modal, message, Select } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const { Paragraph } = Typography;
 const { Search } = Input;
+const { Option } = Select;
 
 const menu = (
     <Menu>
@@ -27,6 +28,14 @@ const menu = (
         </Menu.Item>
     </Menu>
 );
+
+function handleChange(value) {
+    console.log(`selected ${value}`);
+
+    if(value == 'C') {
+        message.info('Grade C Selected');
+    }
+}
 
 const DropdownMenu = () => {
     return (
@@ -69,7 +78,19 @@ const enrollStudentColumn = [
     },
     {
         title: 'Grades',
-        dataIndex: 'grades'
+        dataIndex: 'grades',
+        value: '2',
+        render: () => {
+            return <Select defaultValue="A" style={{ width: 500 }} onChange={handleChange}>
+                <Option value="asdf" >A</Option>
+                <Option value="ww" >B</Option>
+                <Option value="C">
+                    C
+                </Option>
+                <Option value="ad" >D</Option>
+                <Option value="zc" >F</Option>
+            </Select>
+        }
     }
 ];
 
@@ -126,7 +147,8 @@ const content = (
             />
             <IconLink
                 src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
-                text="HTTPS"
+                text='Https'
+
             />
             <IconLink
                 src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
@@ -224,7 +246,7 @@ class CourseDetail extends React.Component {
             title: 'Add Student To course',
             dataIndex: 'addStudentToCourse',
             render: () => <a onClick={this.addStudent}>Add Student</a>,
-    
+
         }
     ];
 
@@ -233,16 +255,16 @@ class CourseDetail extends React.Component {
         axios.put(`https://xdemic-api.herokuapp.com/student/${studentId}`, {
             courseId: this.state.courseId
         })
-        .then(res => {
-            if(res.data.status) {
-                this.handleCancel();
-                this.getenrolledStudents(this.state.courseId);
-                Swal.fire('Student', 'enrolled successfully', 'success');
-            } 
-        })
-        .catch(err => {
-            Swal.fire('Error', err.message, 'error');
-        })
+            .then(res => {
+                if (res.data.status) {
+                    this.handleCancel();
+                    this.getenrolledStudents(this.state.courseId);
+                    Swal.fire('Student', 'enrolled successfully', 'success');
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
     }
 
 
@@ -255,7 +277,7 @@ class CourseDetail extends React.Component {
     handleOk = e => {
         console.log(e);
 
-        
+
 
         this.setState({
             visible: false,
@@ -282,18 +304,18 @@ class CourseDetail extends React.Component {
         axios.post('https://xdemic-api.herokuapp.com/credentials', {
             vc: ["https://xdemic-api.herokuapp.com/httpcourse"]
         })
-        .then(res => {
-            if(res.data.status) {
-                Swal.fire('Sucessfully', 'sent credentials on xdmic mobile app', 'success');
-                this.setState({
-                    selectedRowKeys: [],
-                    loading: false
-                })
-            }
-        })
-        .catch(err => {
-            Swal.fire('Error', err.message, 'error');
-        })
+            .then(res => {
+                if (res.data.status) {
+                    Swal.fire('Sucessfully', 'sent credentials on xdmic mobile app', 'success');
+                    this.setState({
+                        selectedRowKeys: [],
+                        loading: false
+                    })
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
     };
 
     onSelectChange = selectedRowKeys => {
@@ -303,18 +325,18 @@ class CourseDetail extends React.Component {
 
     getenrolledStudents(id) {
         axios.get(`https://xdemic-api.herokuapp.com/enrollstudents/${id}`)
-        .then(res => {
-            if(res.data.status) {
-                this.setState({
-                    enrollStudents: res.data.data
-                })
-            } else {
-                message.info('no student enroll');
-            }
-        })
-        .catch(err => {
-            Swal.fire('Error', 'an error occured', 'error')
-        })
+            .then(res => {
+                if (res.data.status) {
+                    this.setState({
+                        enrollStudents: res.data.data
+                    })
+                } else {
+                    message.info('no student enroll');
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', 'an error occured', 'error')
+            })
     }
 
     getCourseById(id) {
