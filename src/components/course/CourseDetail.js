@@ -29,13 +29,6 @@ const menu = (
     </Menu>
 );
 
-function handleChange(value) {
-    console.log(`selected ${value}`);
-
-    if(value == 'C') {
-        message.info('Grade C Selected');
-    }
-}
 
 const DropdownMenu = () => {
     return (
@@ -59,40 +52,7 @@ const DropdownMenu = () => {
 };
 
 
-const enrollStudentColumn = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-    },
-    {
-        title: 'phone',
-        dataIndex: 'phone',
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-    },
-    {
-        title: 'Date of birth',
-        dataIndex: 'dob'
-    },
-    {
-        title: 'Grades',
-        dataIndex: 'grades',
-        value: '2',
-        render: () => {
-            return <Select defaultValue="A" style={{ width: 500 }} onChange={handleChange}>
-                <Option value="asdf" >A</Option>
-                <Option value="ww" >B</Option>
-                <Option value="C">
-                    C
-                </Option>
-                <Option value="ad" >D</Option>
-                <Option value="zc" >F</Option>
-            </Select>
-        }
-    }
-];
+
 
 const routes = [
     {
@@ -199,7 +159,7 @@ class CourseDetail extends React.Component {
             loading: false,
             visible: false,
             studentsArray: [],
-            courseId: '',
+            courseId: this.props.location.state.data || '',
             courseArray: [{
                 name: ''
             }],
@@ -207,8 +167,10 @@ class CourseDetail extends React.Component {
             studentKey: ''
         }
         this.addStudent = this.addStudent.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
     }
+
 
 
     componentDidMount() {
@@ -220,6 +182,64 @@ class CourseDetail extends React.Component {
         this.getCourseById(courseId);
         this.getAllStudents();
     }
+
+    enrollStudentColumn = [
+        {
+            title: 'Name',
+            dataIndex: 'name',
+        },
+        {
+            title: 'phone',
+            dataIndex: 'phone',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+        },
+        {
+            title: 'Date of birth',
+            dataIndex: 'dob'
+        },
+        {
+            title: 'Grades',
+            dataIndex: 'grades',
+            value: '2',
+            render: () => {
+                return <Select defaultValue="A" style={{ width: 500 }} onChange={this.handleChange}>
+                    <Option value="asdf" >A</Option>
+                    <Option value="ww" >B</Option>
+                    <Option value="C">
+                        C
+                    </Option>
+                    <Option value="ad" >D</Option>
+                    <Option value="zc" >F</Option>
+                </Select>
+            }
+        }
+    ];
+
+
+    handleChange(value) {
+        console.log(`selected ${value}`);
+
+        if (value == 'C') {
+            console.log(this.state.courseId);
+            axios.put(`https://xdemic-api.herokuapp.com/student/${this.state.courseId}`, {
+                courseGrade: "C"
+            })
+                .then(res => {
+                    if (res.data.status) {
+                        message.info('grade upated');
+                    } else {
+                        message.info('grade not updated')
+                    }
+                })
+                .catch(err => {
+                    message.error(err.message);
+                })
+        }
+    }
+
 
     columns = [
         {
@@ -473,7 +493,7 @@ class CourseDetail extends React.Component {
                                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                                         </span>
                                     </div>
-                                    <Table rowSelection={rowSelection} columns={enrollStudentColumn} dataSource={this.state.enrollStudents} bordered={true} />
+                                    <Table rowSelection={rowSelection} columns={this.enrollStudentColumn} dataSource={this.state.enrollStudents} bordered={true} />
                                 </Col>
                             </Row>
                         </Card>
