@@ -80,10 +80,13 @@ class StudentStepForm extends React.Component {
             email: '',
             phone: '',
             dob: '',
-            studentArray: []
+            studentArray: [{
+                name: 'xyz'
+            }]
         };
 
         this.getAllStudents = this.getAllStudents.bind(this);
+        this.doneMethod = this.doneMethod.bind(this);
     }
 
 
@@ -93,18 +96,17 @@ class StudentStepForm extends React.Component {
         this.getAllStudents();
     }
 
-    reactNode = <div><li>PhoneNumber: foo</li> <li>Email: foo</li> <li>Dob: 1-1-1991</li> <li>Class: foo</li></div>;
+    // reactNode = <div><li>PhoneNumber: {this.state.studentArray[0].phone}</li> <li>Dob: {this.state.studentArray[0].dob}</li></div>;
 
     getAllStudents() {
         axios.get('https://xdemic-api.herokuapp.com/student')
             .then(res => {
                 if (res.data.status) {
-                    console.log(res.data.data);
+                    console.log(this.state.studentArray[0].name);
                     this.setState({
                         studentArray: res.data.data
-                    })
-
-                    console.log(this.state.studentArray);
+                    });
+                    console.log(this.state.studentArray[0].name);
                 }
                 else {
                     message.info('no record found');
@@ -125,37 +127,28 @@ class StudentStepForm extends React.Component {
         this.setState({ current });
     }
 
-    doneMethod = () => {
+    doneMethod = (e) => {
+        console.log(e.target.value);
         message.success('Processing complete!');
-        // this.props.history.push('/');
+
     }
 
     closeModel = () => {
         console.log('close model');
     }
 
-
     steps = [
         {
             title: 'First',
-            content:
-                <div style={{ marginTop: '20px' }}>
+            content: (name, phone, dob) => {
+                return <div style={{ marginTop: '20px' }}>
                     <Form>
                         <Form.Item label="Student Name">
                             <Input
                                 placeholder="enter student name"
-                                value='hamza'
+                                value={name}
                                 allowClear
                                 disabled
-                            />
-                        </Form.Item>
-
-                        <Form.Item label="Student Email">
-                            <Input
-                                placeholder="enter student email"
-                                allowClear
-                                disabled
-                                value='mhikram1@gmail.com'
                             />
                         </Form.Item>
 
@@ -163,8 +156,9 @@ class StudentStepForm extends React.Component {
                             <Input
                                 placeholder="enter student phone number"
                                 allowClear
+                                value={phone}
                                 disabled
-                                // value={this.state.phone}
+                            // value={this.state.phone}
                             />
                         </Form.Item>
 
@@ -172,8 +166,9 @@ class StudentStepForm extends React.Component {
                             <Input
                                 placeholder="enter student DOB"
                                 allowClear
+                                value={dob}
                                 disabled
-                                // value={this.state.dob}
+                            // value={this.state.dob}
                             />
                         </Form.Item>
 
@@ -184,12 +179,13 @@ class StudentStepForm extends React.Component {
                         </Form.Item>
                     </Form>
                 </div>
+            }
 
         },
         {
             title: 'Second',
-            content:
-                <div style={{ marginTop: '20px' }}>
+            content: (name, phone, dob) => {
+                return <div style={{ marginTop: '20px' }}>
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
@@ -197,31 +193,34 @@ class StudentStepForm extends React.Component {
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<a href="#">{item.title}</a>}
-                                    description={this.reactNode}
+                                    title={<a href="#">{name}</a>}
+                                    description={'Phone: ' + phone}
                                 />
                             </List.Item>
                         )}
                     />,
-                </div>
+            </div>
+            }
         },
         {
             title: 'Last',
-            content: <div style={{ marginTop: '20px' }}>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                title={<a href="#">{item.title}</a>}
-                                description="Has been registered"
-                            />
-                        </List.Item>
-                    )}
-                />,
-            </div>,
+            content: (name, phone, dob) => {
+                return <div style={{ marginTop: '20px' }}>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                    title={<a href="#">{name}</a>}
+                                    description="Has been registered"
+                                />
+                            </List.Item>
+                        )}
+                    />,
+            </div>
+            }
         },
     ];
 
@@ -233,7 +232,6 @@ class StudentStepForm extends React.Component {
         const { current } = this.state;
 
         return (
-
 
             <div>
                 <Row gutter={16}>
@@ -251,7 +249,7 @@ class StudentStepForm extends React.Component {
                                     <Step title="third step"></Step>
                                 </Steps>
                                 <div className="steps-content">
-                                    {this.steps[current].content}
+                                    {this.steps[current].content(this.state.studentArray[0].name, this.state.studentArray[0].phone, this.state.studentArray[0].dob)}
                                 </div>
                                 <div className="steps-action" style={{ marginTop: "30px" }}>
                                     {current < this.steps.length - 1 && (
@@ -260,7 +258,7 @@ class StudentStepForm extends React.Component {
                                         </Button>
                                     )}
                                     {current === this.steps.length - 1 && (
-                                        <Button type="primary" onClick={this.doneMethod}>
+                                        <Button type="primary" value="done" onClick={(e) => this.doneMethod(e)}>
                                             Done
                                         </Button>
                                     )}
@@ -274,8 +272,8 @@ class StudentStepForm extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-
             </div>
+
         );
 
         // <Layout style={{ minHeight: '100vh' }}>

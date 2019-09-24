@@ -62,7 +62,7 @@ class Sidebar extends React.Component {
                         <Menu.Item key="4">Bill</Menu.Item>
                         <Menu.Item key="5">Alex</Menu.Item>
                     </SubMenu> */}
-                    <SubMenu
+                    {/* <SubMenu
                         key="sub2"
                         title={
                             <span>
@@ -77,7 +77,7 @@ class Sidebar extends React.Component {
                     <Menu.Item key="9">
                         <Icon type="file" />
                         <span>File</span>
-                    </Menu.Item>
+                    </Menu.Item> */}
                 </Menu>
             </Sider>
         );

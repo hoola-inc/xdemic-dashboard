@@ -7,13 +7,14 @@ class AddNewStudentModal extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false,
+            loading: false,
+            iconLoading: false,
+            email: '',
+        };
+
     }
-    state = {
-        visible: false,
-        loading: false,
-        iconLoading: false,
-        email: '',
-    };
 
     showModal = () => {
         this.setState({
@@ -67,7 +68,9 @@ class AddNewStudentModal extends React.Component {
                 }
             })
             .catch(err => {
-                Swal.fire('Error', 'An error occured', 'error');
+                Swal.fire('Error', err.message, 'error');
+                this.setState({ loading: false });
+                this.handle.onCancel();
             });
     }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, PageHeader, Menu, Dropdown, Icon, Button, Tag, Typography, Row, Col, Card, Divider } from 'antd';
+import { Layout, PageHeader, Menu, Dropdown, Icon, Button, Tag, Typography, Row, Col, Card, Divider, message } from 'antd';
 import Sidebar from "../common/Sidebar";
 import CredentialsChart from "../../charts/CredentialsChart";
 import SemesterChart from "../../charts/SemesterChart";
@@ -9,6 +9,8 @@ import Headers from '../common/Header';
 import AddNewStudent from '../ant-modal/AddNewStudentModal';
 import AddNewCourse from '../ant-modal/CreateCourseModal';
 import AddNewCourseCredentials from '../ant-modal/CreateCourseInstanceModal';
+import axios from 'axios';
+import Swal from "sweetalert2";
 
 const { Footer } = Layout;
 
@@ -70,27 +72,6 @@ const routes = [
     },
 ];
 
-const content = (
-    <div className="content">
-        <Paragraph>
-            <small>
-                School Address, City, Country
-            </small>
-        </Paragraph>
-        <Paragraph>
-            <small>
-                Phone, Email
-            </small>
-        </Paragraph>
-        <Paragraph>
-            <small>
-                Website
-            </small>
-        </Paragraph>
-
-    </div>
-);
-
 const Content = ({ children, extraContent }) => {
     return (
         <Row className="content" type="flex">
@@ -110,6 +91,40 @@ const Content = ({ children, extraContent }) => {
 };
 
 class Home extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            schoolDataArray: [],
+            name: '',
+            address: '',
+            telephone: '',
+            email: ''
+        }
+    }
+
+    componentDidMount() {
+        axios.get('https://xdemic-api.herokuapp.com/schools')
+            .then(res => {
+                if (res.data.status) {
+                    res.data.data.map(e => {
+                        this.setState({
+                            name: e.name,
+                            address: e.address,
+                            telephone: e.telephone,
+                            email: e.email
+                        })
+                    });
+                } else {
+                    message.info('no school found');
+                }
+            })
+            .catch(err => {
+                message.error(`an error occured ${err.message}`);
+            })
+    }
+
+
     render() {
         return (
             <Layout style={{ minHeight: '100vh' }}>
@@ -118,12 +133,28 @@ class Home extends React.Component {
                     <Headers />
                     <PageHeader
                         style={{ marginTop: "50px" }}
-                        title="Credentials Dashboard"
+                        title={this.state.name}
                         avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
                         breadcrumb={{ routes }}
                     >
                         <Content>
-                            {content}
+                            {/* {this.content} */}
+
+
+
+                            <div className="content">
+                                <Paragraph>
+                                    {this.state.address}
+                                </Paragraph>
+                                <Paragraph>
+                                    {this.state.email}
+                                </Paragraph>
+                                <Paragraph>
+                                    {this.state.telephone}
+                                </Paragraph>
+
+                            </div>
+
                         </Content>
                     </PageHeader>
 
@@ -185,15 +216,9 @@ class Home extends React.Component {
                             <div style={{ padding: '30px', marginTop: "20px" }}>
                                 <Row gutter={16}>
                                     <Card title="Activity" bordered={false} style={{ font: 'bold', padding: '25px' }}>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
-                                            probare, quae sunt a te dicta? Refert tamen, quo modo.
-                                        </p>
-                                        <Divider />
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
-                                            probare, quae sunt a te dicta? Refert tamen, quo modo.
-                                        </p>
+                                        <Paragraph strong={true} type="warning">
+                                            Student Registerd
+                                        </Paragraph>
                                     </Card>
 
                                 </Row>

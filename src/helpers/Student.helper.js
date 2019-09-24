@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, PageHeader, Col, Row, Input, Card, Button } from 'antd';
+import { Table, PageHeader, Col, Row, Input, Card, Button, Form, Modal } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -42,7 +42,7 @@ const columns = [
 
 
 
-class StudentHelper extends React.Component {
+class StudentHelperClass extends React.Component {
 
     constructor(props) {
         super(props);
@@ -50,7 +50,12 @@ class StudentHelper extends React.Component {
             anArray: [],
             selectedRowKeys: [], // Check here to configure the default column
             loading: false,
-            studentsArray: []
+            studentsArray: [],
+
+            visible: false,
+            loadingModal: false,
+            iconLoading: false,
+            email: '',
         }
     }
     componentDidMount() {
@@ -97,8 +102,88 @@ class StudentHelper extends React.Component {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
-    render() {
 
+
+
+    // todo change here...
+    // Modal code
+
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleOk = e => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCancel = e => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    enterLoading = () => {
+        this.setState({ loadingModal: true });
+    };
+
+    enterIconLoading = () => {
+        this.setState({ iconLoading: true });
+    };
+
+    changeHandler = e => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    submitHandler = e => {
+        e.preventDefault();
+        this.enterLoading();
+        // this.handleSubmit()
+        this.sendCourse();
+    }
+
+    sendCourse = () => {
+        axios.post('https://xdemic-api.herokuapp.com/email', this.state)
+            .then(res => {
+                if (res.data.status) {
+                    this.setState({ loadingModal: false });
+                    Swal.fire('Success', 'Email Sent', 'success');
+                    this.handleCancel();
+                }
+                else {
+                    Swal.fire('Oho...', 'Something went wrong!', 'error');
+                    this.handleCancel();
+                    this.setState({ loadingModal: false })
+                }
+            })
+            .catch(err => {
+                Swal.fire('Error', err.message, 'error');
+                this.setState({ loadingModal: false });
+                this.handle.onCancel();
+            });
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+            }
+        });
+    };
+
+
+    // end here
+    // todo end here ...
+
+
+    render() {
+        const { email } = this.state;
+        const { getFieldDecorator } = this.props.form;
         const { loading, selectedRowKeys } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -135,13 +220,57 @@ class StudentHelper extends React.Component {
                         <Row gutter={16}>
                             <Col span={20} offset={2}>
                                 <div style={{ marginBottom: 16 }}>
-                                    <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                        Graduate
-                                    </Button>
 
-                                    <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading} style={{marginLeft: 5}}>
-                                        Expell
-                                    </Button>
+                                    <Row>
+                                        <Col span={2}>
+                                            <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
+                                                Graduate
+                                            </Button>
+                                        </Col>
+                                        <Col span={2}>
+                                            <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading} style={{ marginLeft: 5 }}>
+                                                Expell
+                                            </Button>
+
+                                        </Col>
+                                        <Col span={4} offset={16}>
+                                            <div>
+                                                <Button block size="small" onClick={this.showModal}>
+                                                    Add New Student
+                                                </Button>
+                                                <Modal
+                                                    title="Enter Course Detail"
+                                                    visible={this.state.visible}
+                                                    onOk={this.handleOk}
+                                                    onCancel={this.handleCancel}
+                                                >
+                                                    <Form onSubmit={this.submitHandler}>
+                                                        <Form.Item label="Student Email">
+                                                            {getFieldDecorator('email', {
+                                                                rules: [{ required: true, message: 'Please input student email!' }],
+                                                            })(
+                                                                <Input
+                                                                    placeholder="enter student email"
+                                                                    allowClear
+                                                                    name="email"
+                                                                    value={email}
+                                                                    onChange={this.changeHandler}
+                                                                />
+                                                            )}
+                                                        </Form.Item>
+
+
+                                                        <Button type="primary" loading={this.state.loadingModal} onClick={this.submitHandler} ghost >
+                                                            Submit
+                                                        </Button>
+
+                                                    </Form>
+                                                </Modal>
+                                            </div>
+                                        </Col>
+
+                                    </Row>
+
                                     <span style={{ marginLeft: 8 }}>
                                         {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                                     </span>
@@ -156,5 +285,7 @@ class StudentHelper extends React.Component {
         )
     }
 }
+
+const StudentHelper = Form.create()(StudentHelperClass);
 
 export default StudentHelper;

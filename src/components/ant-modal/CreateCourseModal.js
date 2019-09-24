@@ -1,34 +1,61 @@
 import React from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Modal, Button, Input, Form, DatePicker } from 'antd';
+import { Modal, Button, Input, Form, DatePicker, Select } from 'antd';
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
+const { Option } = Select;
+
 
 function onChangeDate(dates, dateStrings) {
     console.log('From: ', dates[0], ', to: ', dates[1]);
     console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 }
 
+
+
+function onBlur() {
+    console.log('blur');
+}
+
+function onFocus() {
+    console.log('focus');
+}
+
+function onSearch(val) {
+    console.log('search:', val);
+}
+
 class CreateNewCourseModal extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false,
+            loading: false,
+            iconLoading: false,
+            name: '',
+            creditUnitType: '',
+            creditUniteValue: '',
+            ctid: '',
+            subjectWebpage: '',
+            prerequisite: '',
+            uri: '',
+            courseCode: ''
+        };
+
+        this.onChange = this.onChange.bind(this);
     }
-    state = {
-        visible: false,
-        loading: false,
-        iconLoading: false,
-        name: '',
-        creditUnitType: '',
-        creditUniteValue: '',
-        ctid: '',
-        subjectWebpage: '',
-        prerequisite: '',
-        uri: '',
-        courseCode: ''
-    };
+    
+
+    onChange(value) {
+        console.log(`selected ${value}`);
+
+        this.setState({
+            creditUnitType: value
+        })
+    }
 
     showModal = () => {
         this.setState({
@@ -88,7 +115,7 @@ class CreateNewCourseModal extends React.Component {
     }
 
     render() {
-        const { name, creditUnitType, creditUniteValue, ctid, subjectWebpage, prerequisite, uri, courseCode } = this.state;
+        const { name, creditUniteValue, ctid, subjectWebpage, prerequisite, uri, courseCode } = this.state;
         const { getFieldDecorator } = this.props.form;
 
         return (
@@ -124,13 +151,51 @@ class CreateNewCourseModal extends React.Component {
                             }
                         </Form.Item>
 
-                        <Form.Item label="Course Credit Unit Type">
+                        <Form.Item label="Course Code">
                             <Input
+                                placeholder="enter Course Code"
+                                allowClear
+                                name="courseCode"
+                                value={courseCode}
+                                onChange={this.changeHandler} />
+                        </Form.Item>
+
+                        <Form.Item label="Course Credit Unit Type">
+                            {/* <Input
                                 placeholder="enter credit unit type"
                                 allowClear
                                 name="creditUnitType"
                                 value={creditUnitType}
-                                onChange={this.changeHandler} />
+                                onChange={this.changeHandler} /> */}
+
+                            <Select
+                                showSearch
+                                style={{ width: 470 }}
+                                placeholder="Select credit unit type"
+                                optionFilterProp="children"
+                                onChange={this.onChange}
+                                onFocus={onFocus}
+                                onBlur={onBlur}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
+                                <Option value="1">1</Option>
+                                <Option value="2">2</Option>
+                                <Option value="3">3</Option>
+                                <Option value="4">4</Option>
+                                <Option value="5">5</Option>
+                                <Option value="6">6</Option>
+                                <Option value="7">7</Option>
+                                <Option value="8">8</Option>
+                                <Option value="9">9</Option>
+                                <Option value="10">10</Option>
+                                <Option value="11">11</Option>
+                                <Option value="12">12</Option>
+                            </Select>
+
+
                         </Form.Item>
 
                         <Form.Item label="Course Credit Unite Value">
@@ -143,7 +208,7 @@ class CreateNewCourseModal extends React.Component {
                             />
                         </Form.Item>
 
-                        <Form.Item label="Course Ctid">
+                        <Form.Item label="Course Ctid" style={{display: 'none'}}>
                             <Input
                                 placeholder="enter course ctid"
                                 allowClear
@@ -171,7 +236,7 @@ class CreateNewCourseModal extends React.Component {
                                 onChange={this.changeHandler} />
                         </Form.Item>
 
-                        <Form.Item label="Course Uri">
+                        <Form.Item label="Course Uri" style={{display: 'none'}}>
                             <Input
                                 placeholder="enter course uri"
                                 allowClear
@@ -180,14 +245,7 @@ class CreateNewCourseModal extends React.Component {
                                 onChange={this.changeHandler} />
                         </Form.Item>
 
-                        <Form.Item label="Course Code">
-                            <Input
-                                placeholder="enter Course Code"
-                                allowClear
-                                name="courseCode"
-                                value={courseCode}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
+
 
                         <Form.Item label="Select Date">
                             <RangePicker

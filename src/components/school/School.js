@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Table, Form, Row, Col, Input, Button, Icon, Modal } from 'antd';
+import { Layout, Table, Form, Row, Col, Input, Button, Icon, Modal, Select } from 'antd';
 import Sidebar from '../common/Sidebar';
 import SchoolRegisterModal from '../ant-modal/SchoolRegisterModal';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 
 
 const { Header, Footer } = Layout;
+const { Option } = Select;
+
 
 
 const columns = [
@@ -57,6 +59,18 @@ const columns = [
     }
 ];
 
+function onBlur() {
+    console.log('blur');
+}
+
+function onFocus() {
+    console.log('focus');
+}
+
+function onSearch(val) {
+    console.log('search:', val);
+}
+
 class School extends React.Component {
 
     constructor(props) {
@@ -77,6 +91,8 @@ class School extends React.Component {
             did: '',
             telephone: ''
         }
+
+        this.onChange = this.onChange.bind(this);
     }
 
     componentDidMount() {
@@ -146,6 +162,13 @@ class School extends React.Component {
         this.setState({ iconLoading: true });
     };
 
+    onChange(value) {
+        console.log(`selected ${value}`);
+        this.setState({
+            agentType: value
+        })
+    }
+
     changeHandler = e => {
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -183,7 +206,7 @@ class School extends React.Component {
     }
 
     render() {
-        const { name, subjectWebpage, address, offers, agentSectorType, agentType, email, telephone } = this.state;
+        const { name, subjectWebpage, address, offers, agentSectorType, email, telephone } = this.state;
 
         return (
             <Layout style={{ minHeight: '100vh' }}>
@@ -254,12 +277,32 @@ class School extends React.Component {
                                 </Form.Item>
 
                                 <Form.Item label="School Agent Type">
-                                    <Input
+                                    {/* <Input
                                         placeholder="enter school agent type"
                                         allowClear
                                         name="agentType"
                                         value={agentType}
-                                        onChange={this.changeHandler} />
+                                        onChange={this.changeHandler} /> */}
+
+                                    <Select
+                                        showSearch
+                                        style={{ width: 470 }}
+                                        placeholder="Select school agent type"
+                                        optionFilterProp="children"
+                                        onChange={this.onChange}
+                                        onFocus={onFocus}
+                                        onBlur={onBlur}
+                                        onSearch={onSearch}
+                                        filterOption={(input, option) =>
+                                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        }
+                                    >
+                                        <Option value="High School">High School</Option>
+                                        <Option value="Middle School">Middle School</Option>
+                                        <Option value="University">University</Option>
+                                    </Select>
+
+
                                 </Form.Item>
 
                                 <Form.Item label="School Email">

@@ -28,6 +28,13 @@ class Headers extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            response: false,
+            endpoint: "https://xdemic-api.herokuapp.com",
+            visible: false,
+            current: 0,
+            size: 'default',
+        }
     }
 
 
@@ -47,15 +54,6 @@ class Headers extends React.Component {
         });
     }
 
-    state = {
-        response: false,
-        endpoint: "https://xdemic-api.herokuapp.com",
-        visible: false,
-        current: 0,
-        size: 'default',
-    }
-
-
     next() {
         const current = this.state.current + 1;
         this.setState({ current });
@@ -68,7 +66,7 @@ class Headers extends React.Component {
 
     doneMethod = () => {
         message.success('Processing complete!');
-        // this.props.history.push('/');
+        
     }
 
 
