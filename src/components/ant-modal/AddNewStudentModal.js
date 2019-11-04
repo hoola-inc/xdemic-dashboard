@@ -68,6 +68,7 @@ class AddNewStudentModal extends React.Component {
                 }
             })
             .catch(err => {
+                console.log('An Error occured while sending Email ::: ', err.message);
                 Swal.fire('Error', err.message, 'error');
                 this.setState({ loading: false });
                 this.handle.onCancel();
