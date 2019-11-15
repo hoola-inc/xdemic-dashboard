@@ -9,7 +9,7 @@ import CourseDetail from './components/course/CourseDetail';
 import School from "./components/school/School";
 import Student from "./components/student/Student";
 import Home from "./components/home/Home";
-import AdminDescription from './components/admin/AdminDescription';
+import AdminMain from './components/admin/Main.admin';
 
 
 
@@ -30,7 +30,7 @@ class App extends React.Component {
           <Route path="/school" component={School} />
           <Route path="/student" component={Student} />
           <Route path="/course" component={Course} />
-          <Route path="/admindescription" component={AdminDescription} />
+          <Route path="/admin" component={AdminMain} />
         </Switch>
       </BrowserRouter>
     );
