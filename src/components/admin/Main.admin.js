@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
 import AdminSteps from './AdminSteps';
@@ -11,13 +11,16 @@ class MainAdmin extends React.Component {
                 <Sidebar />
                 <Layout>
                     <Header />
-                    <h1>
-                        Welcome
-                    </h1>
-                    <p>
-                        Journey begins here 
-                    </p>
-                    <AdminSteps/>
+                    <Row>
+                        <Col span={22} offset={1}>
+
+                            <div style={{margin: 30}}>
+                                <h1> Welcome </h1>
+                                <p> Journey begins here </p>
+                            </div>
+                            <AdminSteps />
+                        </Col>
+                    </Row>
                 </Layout>
             </Layout>
         );

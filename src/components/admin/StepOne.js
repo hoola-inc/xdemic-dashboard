@@ -60,7 +60,7 @@ const residences = [
   },
 ];
 
-class CreateNewSchool extends React.Component {
+class StepOne extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -147,7 +147,7 @@ class CreateNewSchool extends React.Component {
     ));
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+      <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{marginTop: 50}}>
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Full Name">
@@ -255,9 +255,9 @@ class CreateNewSchool extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Gender">
-              <Button size="large" type="primary">Primary</Button>
-              <Button size="large" type="dashed" style={{marginLeft: 5}}>Dashed</Button>
-              <Button size="large" type="dashed" style={{marginLeft: 5}}>Dashed</Button>
+              <Button size="default" type="primary">Primary</Button>
+              <Button size="default" type="dashed" style={{marginLeft: 5}}>Dashed</Button>
+              <Button size="default" type="dashed" style={{marginLeft: 5}}>Dashed</Button>
             </Form.Item>
           </Col>
         </Row>
@@ -267,6 +267,6 @@ class CreateNewSchool extends React.Component {
   }
 }
 
-const WrappedCreateNewSchool = Form.create()(CreateNewSchool);
+const WrappedStepOne = Form.create()(StepOne);
 
-export default WrappedCreateNewSchool;
+export default WrappedStepOne;

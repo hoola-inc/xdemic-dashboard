@@ -1,14 +1,15 @@
 import React from 'react';
-import AdminDescription from './AdminDescription';
-import CreateNewSchool from "./CreateNewSchool";
-import { Steps, Button, message, Icon } from 'antd';
+import AdminDetail from './StepOne';
+import CreateNewSchool from "./StepTwo";
+import AddPersons from './StepThree'
+import { Steps, Button, message, Icon, Row, Col } from 'antd';
 
 const { Step } = Steps;
 
 const steps = [
     {
         title: 'First',
-        content: <AdminDescription />,
+        content: <AdminDetail />,
     },
     {
         title: 'Second',
@@ -16,7 +17,7 @@ const steps = [
     },
     {
         title: 'Last',
-        content: 'Last-content',
+        content: <AddPersons />,
     },
 ];
 
@@ -42,32 +43,32 @@ class AdminSteps extends React.Component {
         const { current } = this.state;
         return (
             <div>
-                <Steps current={current}>
-                    {steps.map(item => (
-                        <Step key={item.title} title={item.title} />
-                    ))}
-                </Steps>
-                <div className="steps-content">{steps[current].content}</div>
-                <div className="steps-action" style={{textAlign: "right"}}>
-                    {current < steps.length - 1 && (
-                        <Button type="primary" onClick={() => this.next()}>
-                           <Icon type="arrow-right" />
-                            Next
+                        <Steps current={current}>
+                            {steps.map(item => (
+                                <Step key={item.title} title={item.title} />
+                            ))}
+                        </Steps>
+                        <div className="steps-content">{steps[current].content}</div>
+                        <div className="steps-action" style={{ textAlign: "right" }}>
+                            {current < steps.length - 1 && (
+                                <Button type="primary" size="large" onClick={() => this.next()}>
+                                    <Icon type="arrow-right" />
+                                    Next
                         </Button>
-                    )}
-                    {current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Done
+                            )}
+                            {current === steps.length - 1 && (
+                                <Button type="primary"  size="large" onClick={() => message.success('Processing complete!')}>
+                                    Done
                         </Button>
-                    )}
-                    {current > 0 && (
-                        <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                            <Icon type="arrow-left" />
-                            Previous
-                            
+                            )}
+                            {current > 0 && (
+                                <Button style={{ marginLeft: 8 }}  size="large" onClick={() => this.prev()}>
+                                    <Icon type="arrow-left" />
+                                    Previous
+        
                         </Button>
-                    )}
-                </div>
+                            )}
+                        </div>
             </div>
         );
     }
