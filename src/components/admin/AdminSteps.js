@@ -1,5 +1,6 @@
 import React from 'react';
 import AdminDescription from './AdminDescription';
+import CreateNewSchool from "./CreateNewSchool";
 import { Steps, Button, message, Icon } from 'antd';
 
 const { Step } = Steps;
@@ -11,7 +12,7 @@ const steps = [
     },
     {
         title: 'Second',
-        content: 'Second-content',
+        content: <CreateNewSchool />,
     },
     {
         title: 'Last',

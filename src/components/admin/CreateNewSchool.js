@@ -60,7 +60,7 @@ const residences = [
   },
 ];
 
-class AdminDescription extends React.Component {
+class CreateNewSchool extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -267,6 +267,6 @@ class AdminDescription extends React.Component {
   }
 }
 
-const WrappedRegistrationForm = Form.create()(AdminDescription);
+const WrappedCreateNewSchool = Form.create()(CreateNewSchool);
 
-export default WrappedRegistrationForm;
+export default WrappedCreateNewSchool;
