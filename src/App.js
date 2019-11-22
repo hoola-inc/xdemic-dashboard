@@ -10,6 +10,7 @@ import School from "./components/school/School";
 import Student from "./components/student/Student";
 import Home from "./components/home/Home";
 import AdminMain from './components/admin/Main.admin';
+import ShowQrcode from "./components/landing/ShowQrcode";
 
 
 
@@ -31,6 +32,7 @@ class App extends React.Component {
           <Route path="/student" component={Student} />
           <Route path="/course" component={Course} />
           <Route path="/admin" component={AdminMain} />
+          <Route path="/qrcode" component={ShowQrcode} />
         </Switch>
       </BrowserRouter>
     );

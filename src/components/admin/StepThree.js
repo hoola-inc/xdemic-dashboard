@@ -8,18 +8,20 @@ import {
     Input,
     DatePicker,
     Table,
-    Divider,
     Tag,
     Avatar,
     Upload,
     Icon,
-    message
+    message,
+    Menu
 } from "antd";
 import FormItem from "antd/lib/form/FormItem";
+import AddNewPerson from '../ant-modal/AddNewPersonModal';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
+const { SubMenu } = Menu;
 
 //Upload props end here
 function onChange(date, dateString) {
@@ -39,97 +41,7 @@ const rowSelection = {
         name: record.name
     })
 };
-/// Tabel COlumns start
-const columns = [
-    {
-        title: "Avatar",
-        dataIndex: "avatar",
-        key: "avatar",
-        render: avatar => (
-            <span>
-                <Avatar />
-            </span>
-        )
-    },
-    {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        render: text => <a>{text}</a>
-    },
-    {
-        title: "DID",
-        dataIndex: "did",
-        key: "did"
-    },
-    {
-        title: "DOB",
-        dataIndex: "dob",
-        key: "dob"
-    },
-    {
-        title: "Gender",
-        dataIndex: "gender",
-        key: "gender"
-    },
-    {
-        title: "Phone",
-        dataIndex: "phone",
-        key: "phone"
-    },
-    {
-        title: "Email",
-        dataIndex: "email",
-        key: "email"
-    },
 
-    {
-        title: "Status",
-        key: "tags",
-        dataIndex: "tags",
-        render: tags => (
-            <span>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? "geekblue" : "green";
-                    // if (tag === "pending") {
-                    // color = "volcano";
-                    // }
-                    switch (tag) {
-                        case "pending":
-                            color = "yellow";
-                            break;
-                        case "rejected":
-                            color = "red";
-                            break;
-                        case "accepted":
-                            color = "green";
-                            break;
-                        case "sent":
-                            color = "geekblue";
-                            break;
-                        default:
-                            color = "geekblue";
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </span>
-        )
-    },
-    {
-        title: "CrateTime",
-        dataIndex: "createtime",
-        key: "createtime"
-    },
-    {
-        title: "Operation",
-        key: "operation",
-        render: (text, record) => <span>Menu</span>
-    }
-];
 // Table Columns ENd data array start
 const data = [
     {
@@ -169,7 +81,7 @@ const data = [
         createtime: "01/22/2019"
     },
     {
-        key: "1",
+        key: "4",
         avatar: "../drawables/image1.png",
         name: "Muhammad Adeel",
         did: "0xf77cb6f2de64c9a9e3663b3443d532cf071eb154",
@@ -182,15 +94,10 @@ const data = [
     }
 ];
 
-// const csvShowImage = () => {
-// console.log("this is working");
-// // this.setState({
-// // csvdragresult: true
-// // });
-// };
+
 
 // tabel data array ends
-class StepThree extends Component {
+class AddPersonToSchool extends Component {
     constructor(props) {
         super(props);
 
@@ -198,23 +105,111 @@ class StepThree extends Component {
             csvmodal: false,
             csvdragger: false,
             csvdragresult: false,
-            createModal: false
+            createModal: false,
+            collapsed: false
         };
 
-        this.csvShowImage = this.csvShowImage.bind(this);
-
+        this.fileUploadD.onChange = this.csvShowImage.bind(this);
     }
+    /// Tabel COlumns start
+    columns = [
+        {
+            title: "Avatar",
+            dataIndex: "avatar",
+            key: "avatar",
+            render: avatar => (
+                <span>
+                    <Avatar />
+                </span>
+            )
+        },
+        {
+            title: "Name",
+            dataIndex: "name",
+            key: "name",
+            render: text => <a>{text}</a>
+        },
+        {
+            title: "DID",
+            dataIndex: "did",
+            key: "did"
+        },
+        {
+            title: "DOB",
+            dataIndex: "dob",
+            key: "dob"
+        },
+        {
+            title: "Gender",
+            dataIndex: "gender",
+            key: "gender"
+        },
+        {
+            title: "Phone",
+            dataIndex: "phone",
+            key: "phone"
+        },
+        {
+            title: "Email",
+            dataIndex: "email",
+            key: "email"
+        },
+
+        {
+            title: "Status",
+            key: "tags",
+            dataIndex: "tags",
+            render: tags => (
+                <span>
+                    {tags.map(tag => {
+                        let color = tag.length > 5 ? "geekblue" : "green";
+                        // if (tag === "pending") {
+                        // color = "volcano";
+                        // }
+                        switch (tag) {
+                            case "pending":
+                                color = "yellow";
+                                break;
+                            case "rejected":
+                                color = "red";
+                                break;
+                            case "accepted":
+                                color = "green";
+                                break;
+                            case "sent":
+                                color = "geekblue";
+                                break;
+                            default:
+                                color = "geekblue";
+                        }
+                        return (
+                            <Tag color={color} key={tag}>
+                                {tag.toUpperCase()}
+                            </Tag>
+                        );
+                    })}
+                </span>
+            )
+        },
+        {
+            title: "CrateTime",
+            dataIndex: "createtime",
+            key: "createtime"
+        },
+        {
+            title: "Operation",
+            key: "operation",
+            render: (text, record) => (
+                <span>
+                    <Icon type="upload" />
+                </span>
+            )
+        }
+    ];
 
     // CSV Modal functions
     csvModal = () => {
         this.setState({ csvmodal: true, csvdragger: true });
-    };
-
-    csvShowImage = () => {
-        console.log("this is working");
-        // this.setState({
-        // csvdragresult: true
-        // });
     };
 
     // CSV FIle Dragger props
@@ -223,6 +218,7 @@ class StepThree extends Component {
         multiple: true,
         method: "post",
         action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+
         onChange(info) {
             const { status } = info.file;
             if (status !== "uploading") {
@@ -231,7 +227,7 @@ class StepThree extends Component {
             if (status === "done") {
                 message.success(`${info.file.name} file uploaded successfully.`);
                 console.log("info is: ", info);
-                this.csvShowImage();
+                this.props.state.csvShowImage();
             } else if (status === "error") {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -239,7 +235,13 @@ class StepThree extends Component {
     };
 
     // CSV Modal functions end here
-
+    csvShowImage = () => {
+        console.log("this is working");
+        this.setState({
+            csvdragger: false,
+            csvdragresult: true
+        });
+    };
     // Create Button Modal
 
     createModal = () => {
@@ -253,26 +255,32 @@ class StepThree extends Component {
                     <Col span={8}>
                         <Button type="primary" icon="upload" onClick={this.csvModal}>
                             Uplaod CSV
-                        </Button>
+</Button>
 
                         <Modal visible={this.state.csvmodal}>
                             {/ First step in Modal start here /}
-                            {this.state.csvmodal ? (
+                            {this.state.csvdragger ? (
                                 <Dragger visible={false} {...this.fileUploadD}>
                                     <p className="ant-upload-drag-icon">
                                         <Icon type="inbox" />
                                     </p>
                                     <p className="ant-upload-text">
                                         Click or drag file to this area to upload
-                                    </p>
+</p>
                                     <p className="ant-upload-hint">
                                         Support for a single or bulk upload. Strictly prohibit from
                                         uploading company data or other band files
-                                    </p>
+</p>
                                 </Dragger>
                             ) : null}
                             {/ First Step End here and Step Two Start /}
-                            {this.state.csvdragresult ? <div>sdfklasd;klfj;kls</div> : null}
+                            {this.state.csvdragresult ? (
+                                <div>
+                                    <Button>
+                                        <Icon type="upload" /> Upload
+</Button>
+                                </div>
+                            ) : null}
                         </Modal>
                     </Col>
                 </Row>
@@ -297,17 +305,19 @@ class StepThree extends Component {
                         </Form>
                     </Col>
                     <Col span={2}>
-                        <Button onClick={this.createModal} type="default">
-                            Create
-                        </Button>
-                        <Modal visible={this.state.createModal}></Modal>
+                        {/* to do add ad stuent modal here*/}
+
+                        <AddNewPerson />
+
+
                     </Col>
                 </Row>
                 <Row gutter={24}>
                     <Table
                         bordered
+                        align="center"
                         rowSelection={rowSelection}
-                        columns={columns}
+                        columns={this.columns}
                         dataSource={data}
                     />
                 </Row>
@@ -315,4 +325,4 @@ class StepThree extends Component {
         );
     }
 }
-export default StepThree;
+export default AddPersonToSchool;
