@@ -90,7 +90,7 @@ class AddNewStudentModal extends React.Component {
         return (
             <div>
                 <Button block size="default" onClick={this.showModal}>
-                    + Add Students
+                    + Add Teachers
                 </Button>
                 <Modal
                     title="Enter Course Detail"
