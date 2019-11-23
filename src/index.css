@@ -18,9 +18,8 @@ code {
   justify-content:center ;
   align-items: center;
   height: 100vh;
-
 }
 .main__logo img{
-  width: 1200px;
+  width: 800px;
   display: block;
 }

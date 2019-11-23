@@ -117,7 +117,7 @@ class AddPersonToSchool extends Component {
             title: "Avatar",
             dataIndex: "avatar",
             key: "avatar",
-            render: avatar => (
+            render: () => (
                 <span>
                     <Avatar />
                 </span>
@@ -209,6 +209,7 @@ class AddPersonToSchool extends Component {
 
     // CSV Modal functions
     csvModal = () => {
+        console.log(' i am hitting ...');
         this.setState({ csvmodal: true, csvdragger: true });
     };
 
@@ -255,7 +256,7 @@ class AddPersonToSchool extends Component {
                     <Col span={8}>
                         <Button type="primary" icon="upload" onClick={this.csvModal}>
                             Uplaod CSV
-</Button>
+                        </Button>
 
                         <Modal visible={this.state.csvmodal}>
                             {/ First step in Modal start here /}
@@ -266,11 +267,11 @@ class AddPersonToSchool extends Component {
                                     </p>
                                     <p className="ant-upload-text">
                                         Click or drag file to this area to upload
-</p>
+                                    </p>
                                     <p className="ant-upload-hint">
                                         Support for a single or bulk upload. Strictly prohibit from
                                         uploading company data or other band files
-</p>
+                                    </p>
                                 </Dragger>
                             ) : null}
                             {/ First Step End here and Step Two Start /}
@@ -278,7 +279,7 @@ class AddPersonToSchool extends Component {
                                 <div>
                                     <Button>
                                         <Icon type="upload" /> Upload
-</Button>
+                                    </Button>
                                 </div>
                             ) : null}
                         </Modal>
@@ -288,7 +289,7 @@ class AddPersonToSchool extends Component {
                     <Col span={22}>
                         <Form layout="inline">
                             <FormItem>
-                                <Search placeholder="Search Name" />
+                                <Search placeholder="Search Name" size="small" />
                             </FormItem>
                             <FormItem>
                                 <Search placeholder="Search Name" />
