@@ -17,6 +17,8 @@ import {
 } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import AddNewPerson from '../ant-modal/AddNewPersonModal';
+import withUnmounted from '@ishawnwang/withunmounted';
+import axios from 'axios';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
@@ -106,11 +108,48 @@ class AddPersonToSchool extends Component {
             csvdragger: false,
             csvdragresult: false,
             createModal: false,
-            collapsed: false
+            collapsed: false,
+
+            fileList: [],
+            uploading: false,
         };
 
-        this.fileUploadD.onChange = this.csvShowImage.bind(this);
     }
+
+    hasUnmounted = false;
+
+    handleUpload = () => {
+        const { fileList } = this.state;
+        const formData = new FormData();
+        formData.set('csv', fileList[0]);
+
+        this.setState({
+            uploading: true,
+        });
+
+        axios({
+            method: 'post',
+            url: 'http://localhost:8300/person/csv',
+            data: formData
+        })
+            .then((response) => {
+                //handle success
+                console.log(response.data.data);
+                this.setState({
+                    uploading: false
+                })
+            })
+            .catch((response) => {
+                //handle error
+                console.log(response);
+                message.error('shit fuck');
+                this.setState({
+                    uploading: false
+                })
+            });
+
+    };
+
     /// Tabel COlumns start
     columns = [
         {
@@ -207,33 +246,8 @@ class AddPersonToSchool extends Component {
         }
     ];
 
-    // CSV Modal functions
-    csvModal = () => {
-        console.log(' i am hitting ...');
-        this.setState({ csvmodal: true, csvdragger: true });
-    };
 
-    // CSV FIle Dragger props
-    fileUploadD = {
-        name: "file",
-        multiple: true,
-        method: "post",
-        action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
 
-        onChange(info) {
-            const { status } = info.file;
-            if (status !== "uploading") {
-                // console.log(info.file, info.fileList);
-            }
-            if (status === "done") {
-                message.success(`${info.file.name} file uploaded successfully.`);
-                console.log("info is: ", info);
-                this.props.state.csvShowImage();
-            } else if (status === "error") {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        }
-    };
 
     // CSV Modal functions end here
     csvShowImage = () => {
@@ -250,39 +264,49 @@ class AddPersonToSchool extends Component {
     };
 
     render() {
+
+        const { uploading, fileList } = this.state;
+
+        const props = {
+            onRemove: file => {
+                this.setState(state => {
+                    const index = state.fileList.indexOf(file);
+                    const newFileList = state.fileList.slice();
+                    newFileList.splice(index, 1);
+                    return {
+                        fileList: newFileList,
+                    };
+                });
+            },
+            beforeUpload: file => {
+                this.setState(state => ({
+                    fileList: [...state.fileList, file],
+                }));
+                return false;
+            },
+            fileList,
+        };
+
         return (
             <div>
                 <Row gutter={24}>
                     <Col span={8}>
-                        <Button type="primary" icon="upload" onClick={this.csvModal}>
-                            Uplaod CSV
-                        </Button>
-
-                        <Modal visible={this.state.csvmodal}>
-                            {/ First step in Modal start here /}
-                            {this.state.csvdragger ? (
-                                <Dragger visible={false} {...this.fileUploadD}>
-                                    <p className="ant-upload-drag-icon">
-                                        <Icon type="inbox" />
-                                    </p>
-                                    <p className="ant-upload-text">
-                                        Click or drag file to this area to upload
-                                    </p>
-                                    <p className="ant-upload-hint">
-                                        Support for a single or bulk upload. Strictly prohibit from
-                                        uploading company data or other band files
-                                    </p>
-                                </Dragger>
-                            ) : null}
-                            {/ First Step End here and Step Two Start /}
-                            {this.state.csvdragresult ? (
-                                <div>
-                                    <Button>
-                                        <Icon type="upload" /> Upload
-                                    </Button>
-                                </div>
-                            ) : null}
-                        </Modal>
+                        <div>
+                            <Upload {...props}>
+                                <Button>
+                                    <Icon type="upload" /> Select File
+                                </Button>
+                            </Upload>
+                            <Button
+                                type="primary"
+                                onClick={this.handleUpload}
+                                disabled={fileList.length === 0}
+                                loading={uploading}
+                                style={{ marginTop: 16 }}
+                            >
+                                {uploading ? 'Uploading' : 'Start Upload'}
+                            </Button>
+                        </div>
                     </Col>
                 </Row>
                 <Row gutter={24}>
@@ -326,4 +350,4 @@ class AddPersonToSchool extends Component {
         );
     }
 }
-export default AddPersonToSchool;
+export default withUnmounted(AddPersonToSchool);

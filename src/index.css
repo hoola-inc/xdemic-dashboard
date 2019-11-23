@@ -19,7 +19,15 @@ code {
   align-items: center;
   height: 100vh;
 }
-.main__logo img{
+.main__logo img#logo{
   width: 800px;
   display: block;
 }
+
+.qr_code{
+  width: 100%;
+  display: flex;
+  justify-content:center ;
+  align-items: center;
+}
+

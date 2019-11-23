@@ -1,25 +1,23 @@
 import React from 'react';
 import logo from "../../assets/img/xDemic-logo-01.png";
-import QrCode from 'react.qrcode.generator';
-import { Col, Row } from 'antd';
+import { Col, Row, message } from 'antd';
 import axios from 'axios';
-import withUnmounted from '@ishawnwang/withunmounted'
+import withUnmounted from '@ishawnwang/withunmounted';
 
 class ShowQrcode extends React.Component {
 
     constructor(props) {
         super(props);
-        this.getQRCodeValue();
         this.state = {
-            qrcodeValue: ''
+            qrcodeValue: null
         }
     }
 
     hasUnmounted = false;
 
-    // componentDidMount() {
-    //     this.getQRCodeValue();
-    // }
+    componentDidMount() {
+        this.getQRCodeValue();
+    }
 
     getQRCodeValue = async () => {
         try {
@@ -27,7 +25,7 @@ class ShowQrcode extends React.Component {
             this.setState({
                 qrcodeValue: response.data
             });
-            console.log(this.state.qrcodeValue);
+            message.info('Scan QRCode to proceed');
         } catch (error) {
             console.log(error);
         }
@@ -37,12 +35,15 @@ class ShowQrcode extends React.Component {
 
         return (
             <div className="main__logo">
-                <Row>
-                    <Col span={20} offset={2}>
-                        <img src={logo} />
+                <Row align="middle">
+                    <Col>
+                        <img src={logo} id="logo" />
                     </Col>
-                    <Col span={6} offset={8}>
-                        <QrCode value={this.state.qrcodeValue} size={300} background="#FFFFFF" foreground="#000000" />
+                    <Col>
+                        <div className="qr_code">
+                            <img src={this.state.qrcodeValue} width='400' height='400' />
+                        </div>
+
                     </Col>
                 </Row>
             </div>
