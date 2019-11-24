@@ -289,7 +289,7 @@ class AddPersonToSchool extends Component {
 
         return (
             <div>
-                <Row gutter={24}>
+                {/* <Row gutter={24}>
                     <Col span={8}>
                         <div>
                             <Upload {...props}>
@@ -308,25 +308,42 @@ class AddPersonToSchool extends Component {
                             </Button>
                         </div>
                     </Col>
-                </Row>
-                <Row gutter={24}>
+                </Row> */}
+                <Row gutter={24} style={{ marginTop: 25 }}>
                     <Col span={22}>
                         <Form layout="inline">
+                            <Form.Item>
+                                <Upload {...props}>
+                                    <Button>
+                                        <Icon type="upload" /> Select File
+                                </Button>
+                                </Upload>
+                            </Form.Item>
+                            <Form.Item>
+                                <Button
+                                    type="primary"
+                                    onClick={this.handleUpload}
+                                    disabled={fileList.length === 0}
+                                    loading={uploading}
+                                >
+                                    {uploading ? 'Uploading' : 'Start Upload'}
+                                </Button>
+                            </Form.Item>
                             <FormItem>
                                 <Search placeholder="Search Name" size="small" />
                             </FormItem>
                             <FormItem>
                                 <Search placeholder="Search Name" />
                             </FormItem>
-                            <FormItem label="Creat Time">
+                            <FormItem>
                                 <RangePicker onChange={onChange} />
                             </FormItem>
                             <FormItem>
                                 <Button type="primary">Search</Button>
                             </FormItem>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button type="default">Reset</Button>
-                            </FormItem>
+                            </FormItem> */}
                         </Form>
                     </Col>
                     <Col span={2}>
@@ -337,7 +354,7 @@ class AddPersonToSchool extends Component {
 
                     </Col>
                 </Row>
-                <Row gutter={24}>
+                <Row gutter={24} style={{ marginTop: 25 }}>
                     <Table
                         bordered
                         align="center"
