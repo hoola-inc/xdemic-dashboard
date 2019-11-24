@@ -93,7 +93,7 @@ class AddNewStudentModal extends React.Component {
                     + Add Students
                 </Button>
                 <Modal
-                    title="Enter Course Detail"
+                    title="Enter Student Email"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}

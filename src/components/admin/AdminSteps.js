@@ -50,8 +50,7 @@ class AdminSteps extends React.Component {
         console.log("PROPS:",this.props);
         this.props.history.push('/student');
 
-      }
-      
+    }
 
     render() {
         const { current } = this.state;
