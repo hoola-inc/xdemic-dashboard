@@ -4,7 +4,7 @@ import Sidebar from '../common/Sidebar';
 import SchoolRegisterModal from '../ant-modal/SchoolRegisterModal';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import didJwt from 'did-jwt';
 
 const { Header, Footer } = Layout;
 const { Option } = Select;
@@ -17,31 +17,31 @@ const columns = [
         dataIndex: 'name',
         key: 'name'
     },
-    {
-        title: 'Subject Webpage',
-        dataIndex: 'subjectWebpage',
-        key: 'subjectWebpage'
-    },
+    // {
+    // title: 'Subject Webpage',
+    // dataIndex: 'subjectWebpage',
+    // key: 'subjectWebpage'
+    // },
     {
         title: 'Address',
         dataIndex: 'address',
         key: 'address'
     },
-    {
-        title: 'Offers',
-        dataIndex: 'offers',
-        key: 'offers'
-    },
-    {
-        title: 'Agent SectorType',
-        dataIndex: 'agentSectorType',
-        key: 'agentSectorType'
-    },
-    {
-        title: 'Agent Type',
-        dataIndex: 'agentType',
-        key: 'agentType'
-    },
+    // {
+    // title: 'Offers',
+    // dataIndex: 'offers',
+    // key: 'offers'
+    // },
+    // {
+    // title: 'Agent SectorType',
+    // dataIndex: 'agentSectorType',
+    // key: 'agentSectorType'
+    // },
+    // {
+    // title: 'Agent Type',
+    // dataIndex: 'agentType',
+    // key: 'agentType'
+    // },
     {
         title: 'Email',
         dataIndex: 'email',
@@ -54,9 +54,14 @@ const columns = [
     },
     {
         title: 'Telephone',
-        dataIndex: 'telephone',
-        key: 'telephone'
-    }
+        dataIndex: 'phone',
+        key: 'phone'
+    },
+    {
+        title: 'Created at',
+        dataIndex: 'createdAt',
+        key: 'createdAt'
+    },
 ];
 
 function onBlur() {
@@ -102,21 +107,23 @@ class School extends React.Component {
         let newArray = [];
         axios.get('https://xdemic-api.herokuapp.com/schools')
             .then(res => {
-
                 if (res.data.status) {
-
-                    this.courseDataArray = res.data.data;
-                    res.data.data.map(e => {
+                    console.log(didJwt.decodeJWT(res.data.data))
+                    const decodedData = didJwt.decodeJWT(res.data.data);
+                    console.log(decodedData.payload.claim[0])
+                    // this.courseDataArray = decodedData.payload.claim[0];
+                    decodedData.payload.claim.map(e => {
                         newArray.push({
                             name: e.name,
-                            subjectWebpage: e.subjectWebpage,
-                            address: e.address,
-                            offers: e.offers,
-                            agentSectorType: e.agentSectorType,
-                            agentType: e.agentType,
+                            // subjectWebpage: e.subjectWebpage,
+                            address: e.address.addressCountry,
+                            // offers: e.offers,
+                            // agentSectorType: e.agentSectorType,
+                            // agentType: e.agentType,
                             email: e.email,
                             did: e.did,
-                            telephone: e.telephone
+                            phone: e.phone,
+                            createdAt: e.createdAt
                         })
                     });
                     // setting state
@@ -220,7 +227,7 @@ class School extends React.Component {
                     <div>
                         <Button type="primary" style={{ float: "right" }} onClick={this.showModal}>
                             New School
-        </Button>
+</Button>
                         <Modal
                             title="Enter Course Detail"
                             visible={this.state.visible}
@@ -278,11 +285,11 @@ class School extends React.Component {
 
                                 <Form.Item label="School Agent Type">
                                     {/* <Input
-                                        placeholder="enter school agent type"
-                                        allowClear
-                                        name="agentType"
-                                        value={agentType}
-                                        onChange={this.changeHandler} /> */}
+placeholder="enter school agent type"
+allowClear
+name="agentType"
+value={agentType}
+onChange={this.changeHandler} /> */}
 
                                     <Select
                                         showSearch
@@ -325,7 +332,7 @@ class School extends React.Component {
 
                                 <Button type="primary" loading={this.state.loading} onClick={this.submitHandler} ghost >
                                     Submit
-                    </Button>
+</Button>
 
                             </Form>
                         </Modal>

@@ -3,6 +3,7 @@ import { Table, PageHeader, Col, Row, Input, Card, Button, Form, Modal } from 'a
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+
 const { Search } = Input;
 
 const routes = [
@@ -22,12 +23,16 @@ const routes = [
 
 const columns = [
     {
+        title: 'DID',
+        dataIndex: 'did',
+    },
+    {
         title: 'Name',
-        dataIndex: 'name',
+        dataIndex: 'fullName',
     },
     {
         title: 'phone',
-        dataIndex: 'phone',
+        dataIndex: 'mobile',
     },
     {
         title: 'Email',
@@ -35,7 +40,11 @@ const columns = [
     },
     {
         title: 'Date of birth',
-        dataIndex: 'dob'
+        dataIndex: 'birthDate'
+    },
+    {
+        title: 'Created at',
+        dataIndex: 'createdAt'
     }
 ];
 
@@ -60,16 +69,18 @@ class StudentHelperClass extends React.Component {
     }
     componentDidMount() {
         let data = [];
-        axios.get('https://xdemic-api.herokuapp.com/student')
+        axios.get('https://xdemic-api.herokuapp.com/students')
             .then(res => {
                 if (res.data.status) {
                     res.data.data.map((e, i) => {
                         data.push({
                             key: i,
-                            name: e.name,
-                            phone: e.phone,
+                            fullName: e.fullName,
+                            mobile: e.mobile,
                             email: e.email,
-                            dob: e.dob
+                            birthDate: e.birthDate,
+                            did: e.did,
+                            createdAt: e.createdAt,
                         })
                     })
 
@@ -225,19 +236,19 @@ class StudentHelperClass extends React.Component {
                                         <Col span={2}>
                                             <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
                                                 Graduate
-                                            </Button>
+</Button>
                                         </Col>
                                         <Col span={2}>
                                             <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading} style={{ marginLeft: 5 }}>
                                                 Expell
-                                            </Button>
+</Button>
 
                                         </Col>
                                         <Col span={4} offset={16}>
                                             <div>
                                                 <Button block size="small" onClick={this.showModal}>
                                                     Add New Student
-                                                </Button>
+</Button>
                                                 <Modal
                                                     title="Enter Course Detail"
                                                     visible={this.state.visible}
@@ -262,7 +273,7 @@ class StudentHelperClass extends React.Component {
 
                                                         <Button type="primary" loading={this.state.loadingModal} onClick={this.submitHandler} ghost >
                                                             Submit
-                                                        </Button>
+</Button>
 
                                                     </Form>
                                                 </Modal>
