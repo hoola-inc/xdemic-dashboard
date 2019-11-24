@@ -183,42 +183,18 @@ class AddPersonToSchool extends Component {
         // key: "createdAt"
         // },
 
-        // {
-        // title: "Status",
-        // key: "tags",
-        // dataIndex: "tags",
-        // render: tags => (
-        // <span>
-        // {tags.map(tag => {
-        // let color = tag.length > 5 ? "geekblue" : "green";
-        // // if (tag === "pending") {
-        // // color = "volcano";
-        // // }
-        // switch (tag) {
-        // case "pending":
-        // color = "yellow";
-        // break;
-        // case "rejected":
-        // color = "red";
-        // break;
-        // case "accepted":
-        // color = "green";
-        // break;
-        // case "send":
-        // color = "geekblue";
-        // break;
-        // default:
-        // color = "geekblue";
-        // }
-        // return (
-        // <Tag color={color} key={tag}>
-        // {tag.toUpperCase()}
-        // </Tag>
-        // );
-        // })}
-        // </span>
-        // )
-        // },
+        {
+            title: "Status",
+            key: "tags",
+            dataIndex: "tags",
+            render: () => (
+                <span>
+                    <Button type="primary" ghost onClick={this.sendInvite}>
+                        Send
+                    </Button>
+                </span>
+            )
+        },
         {
             title: "CrateTime",
             dataIndex: `createdAt`,
@@ -236,7 +212,12 @@ class AddPersonToSchool extends Component {
     ];
 
 
-
+    sendInvite = () => {
+        const hide = message.loading('Action in progress..', 2, onclose)
+            .then(afterClose => {
+                message.success('invite sent!');
+            })
+    }
 
     // CSV Modal functions end here
     csvShowImage = () => {
