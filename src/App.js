@@ -23,7 +23,6 @@ class App extends React.Component {
 
   render() {
     return (
-      // <Course />
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Home} />

@@ -32,6 +32,7 @@ class AdminSteps extends React.Component {
         this.state = {
             current: 0,
         };
+        // this.onSubmit = this.onSubmit.bind(this);
     }
 
     next() {
@@ -43,6 +44,14 @@ class AdminSteps extends React.Component {
         const current = this.state.current - 1;
         this.setState({ current });
     }
+
+    onSubmit() {
+        message.success('Processing complete!');
+        console.log("PROPS:",this.props);
+        this.props.history.push('/student');
+
+      }
+      
 
     render() {
         const { current } = this.state;
@@ -62,7 +71,7 @@ class AdminSteps extends React.Component {
                         </Button>
                             )}
                             {current === steps.length - 1 && (
-                                <Button type="primary"  size="large" onClick={() => message.success('Processing complete!')}>
+                                <Button type="primary"  size="large" onClick={() => this.onSubmit()}>
                                     Done
                         </Button>
                             )}

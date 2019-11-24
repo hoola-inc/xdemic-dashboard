@@ -15,6 +15,7 @@ import {
     message,
     Menu
 } from "antd";
+import Swal from 'sweetalert2';
 import FormItem from "antd/lib/form/FormItem";
 import AddNewPerson from '../ant-modal/AddNewPersonModal';
 import withUnmounted from '@ishawnwang/withunmounted';
@@ -44,59 +45,6 @@ const rowSelection = {
     })
 };
 
-// Table Columns ENd data array start
-const data = [
-    {
-        key: "1",
-        avatar: "../drawables/image1.png",
-        name: "Rizwan Zaheer",
-        did: "0xf77cb6f2de64c9a9e3663b3443d532cf071eb154",
-        dob: "21",
-        gender: "Other",
-        phone: "0300",
-        email: "rizwan@hoola.tech",
-        tags: ["pending"],
-        createtime: "11/22/2019"
-    },
-    {
-        key: "2",
-        avatar: "../drawables/image1.png",
-        name: "Ameer Hamza",
-        did: "0xf77cb6f2de64c9a9e3663b3443d532cf071eb154",
-        dob: "30",
-        gender: "Male",
-        phone: "0345",
-        email: "hamza@hoola.tech",
-        tags: ["rejected"],
-        createtime: "15/22/2019"
-    },
-    {
-        key: "3",
-        avatar: "../drawables/image1.png",
-        name: "Husnain Baloch",
-        did: "0xf77cb6f2de64c9a9e3663b3443d532cf071eb154",
-        dob: "32",
-        gender: "Female",
-        phone: "0336",
-        email: "husnain@hoola.tech",
-        tags: ["sent"],
-        createtime: "01/22/2019"
-    },
-    {
-        key: "4",
-        avatar: "../drawables/image1.png",
-        name: "Muhammad Adeel",
-        did: "0xf77cb6f2de64c9a9e3663b3443d532cf071eb154",
-        dob: "33",
-        gender: "Male",
-        phone: "0344",
-        email: "adeel@hoola.tech",
-        tags: ["accepted"],
-        createtime: "21/05/2019"
-    }
-];
-
-
 
 // tabel data array ends
 class AddPersonToSchool extends Component {
@@ -112,11 +60,40 @@ class AddPersonToSchool extends Component {
 
             fileList: [],
             uploading: false,
+            tableData: []
         };
 
     }
 
     hasUnmounted = false;
+
+
+    componentDidMount() {
+        axios.get("https://xdemic-api.herokuapp.com/persons")
+            .then(res => {
+                console.log(res);
+                if (res.data.status) {
+                    this.setState({ loading: false });
+                    this.setState({
+                        uploading: false,
+                        tableData: res.data.data
+                    })
+                }
+                else {
+                    Swal.fire('Oho...', 'Something went wrong!', 'error');
+                    this.handleCancel();
+                    this.setState({ loading: false })
+                }
+            })
+            .catch(err => {
+                console.log('An Error occured while sending Email ::: ', err.message);
+                Swal.fire('Error', err.message, 'error');
+                // this.setState({ loading: false });
+                // this.handle.onCancel();
+            });
+
+    }
+
 
     handleUpload = () => {
         const { fileList } = this.state;
@@ -129,14 +106,21 @@ class AddPersonToSchool extends Component {
 
         axios({
             method: 'post',
-            url: 'http://localhost:8300/person/csv',
+            url: 'https://xdemic-api.herokuapp.com/person/csv',
             data: formData
         })
             .then((response) => {
+
+                // Table Columns ENd data array start
+                const data = [];
+                // const tags = response.data.data[0].tags
                 //handle success
-                console.log(response.data.data);
+                console.log(response);
+                data.push(response.data.data);
+                console.log("UPDATED RECORD::", data)
                 this.setState({
-                    uploading: false
+                    uploading: false,
+                    tableData: data
                 })
             })
             .catch((response) => {
@@ -164,7 +148,7 @@ class AddPersonToSchool extends Component {
         },
         {
             title: "Name",
-            dataIndex: "name",
+            dataIndex: "fullName",
             key: "name",
             render: text => <a>{text}</a>
         },
@@ -175,7 +159,7 @@ class AddPersonToSchool extends Component {
         },
         {
             title: "DOB",
-            dataIndex: "dob",
+            dataIndex: "birthDate",
             key: "dob"
         },
         {
@@ -185,7 +169,7 @@ class AddPersonToSchool extends Component {
         },
         {
             title: "Phone",
-            dataIndex: "phone",
+            dataIndex: "mobile",
             key: "phone"
         },
         {
@@ -193,47 +177,52 @@ class AddPersonToSchool extends Component {
             dataIndex: "email",
             key: "email"
         },
+        // {
+        // title: "Date",
+        // dataIndex: "createdAt",
+        // key: "createdAt"
+        // },
 
-        {
-            title: "Status",
-            key: "tags",
-            dataIndex: "tags",
-            render: tags => (
-                <span>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? "geekblue" : "green";
-                        // if (tag === "pending") {
-                        // color = "volcano";
-                        // }
-                        switch (tag) {
-                            case "pending":
-                                color = "yellow";
-                                break;
-                            case "rejected":
-                                color = "red";
-                                break;
-                            case "accepted":
-                                color = "green";
-                                break;
-                            case "sent":
-                                color = "geekblue";
-                                break;
-                            default:
-                                color = "geekblue";
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </span>
-            )
-        },
+        // {
+        // title: "Status",
+        // key: "tags",
+        // dataIndex: "tags",
+        // render: tags => (
+        // <span>
+        // {tags.map(tag => {
+        // let color = tag.length > 5 ? "geekblue" : "green";
+        // // if (tag === "pending") {
+        // // color = "volcano";
+        // // }
+        // switch (tag) {
+        // case "pending":
+        // color = "yellow";
+        // break;
+        // case "rejected":
+        // color = "red";
+        // break;
+        // case "accepted":
+        // color = "green";
+        // break;
+        // case "send":
+        // color = "geekblue";
+        // break;
+        // default:
+        // color = "geekblue";
+        // }
+        // return (
+        // <Tag color={color} key={tag}>
+        // {tag.toUpperCase()}
+        // </Tag>
+        // );
+        // })}
+        // </span>
+        // )
+        // },
         {
             title: "CrateTime",
-            dataIndex: "createtime",
-            key: "createtime"
+            dataIndex: `createdAt`,
+            key: "createdAt"
         },
         {
             title: "Operation",
@@ -290,24 +279,24 @@ class AddPersonToSchool extends Component {
         return (
             <div>
                 {/* <Row gutter={24}>
-                    <Col span={8}>
-                        <div>
-                            <Upload {...props}>
-                                <Button>
-                                    <Icon type="upload" /> Select File
-                                </Button>
-                            </Upload>
-                            <Button
-                                type="primary"
-                                onClick={this.handleUpload}
-                                disabled={fileList.length === 0}
-                                loading={uploading}
-                                style={{ marginTop: 16 }}
-                            >
-                                {uploading ? 'Uploading' : 'Start Upload'}
-                            </Button>
-                        </div>
-                    </Col>
+                <Col span={8}>
+                <div>
+                <Upload {...props}>
+                <Button>
+                <Icon type="upload" /> Select File
+                </Button>
+                </Upload>
+                <Button
+                type="primary"
+                onClick={this.handleUpload}
+                disabled={fileList.length === 0}
+                loading={uploading}
+                style={{ marginTop: 16 }}
+                >
+                {uploading ? 'Uploading' : 'Start Upload'}
+                </Button>
+                </div>
+                </Col>
                 </Row> */}
                 <Row gutter={24} style={{ marginTop: 25 }}>
                     <Col span={22}>
@@ -316,7 +305,7 @@ class AddPersonToSchool extends Component {
                                 <Upload {...props}>
                                     <Button>
                                         <Icon type="upload" /> Select File
-                                </Button>
+                                    </Button>
                                 </Upload>
                             </Form.Item>
                             <Form.Item>
@@ -342,7 +331,7 @@ class AddPersonToSchool extends Component {
                                 <Button type="primary">Search</Button>
                             </FormItem>
                             {/* <FormItem>
-                                <Button type="default">Reset</Button>
+                            <Button type="default">Reset</Button>
                             </FormItem> */}
                         </Form>
                     </Col>
@@ -360,7 +349,7 @@ class AddPersonToSchool extends Component {
                         align="center"
                         rowSelection={rowSelection}
                         columns={this.columns}
-                        dataSource={data}
+                        dataSource={this.state.tableData}
                     />
                 </Row>
             </div>
