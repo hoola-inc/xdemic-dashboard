@@ -1,7 +1,14 @@
-// Step Four
-
 import React from "react";
-import { Row, Button, Col, Icon, Dropdown, Menu, message, Checkbox } from "antd";
+import {
+  Row,
+  Button,
+  Col,
+  Icon,
+  Dropdown,
+  Menu,
+  message,
+  Checkbox
+} from "antd";
 
 class AddCourses extends React.Component {
   constructor(props) {
@@ -34,19 +41,32 @@ class AddCourses extends React.Component {
     return (
       <div>
         <Row gutter={24} style={{ marginTop: 25 }}>
+          <Row gutter={24} style={{ textAlign: "center" }}>
+
+            <Col span={24} style={{ textAlign: "center" }}>
+              Classcraft offers presets that help you encourage and assess
+              specific behaviors.Select the category
+<br />
+              that most closely laligns with your goals
+</Col>
+          </Row>
           <Col span={12} offset={6}>
             <Row gutter={[24, 48]} style={{ marginTop: 25 }}>
-              <Col span={18} offset={7}>
-                {/* Show Drop Down Here */}
+              <Col span={24} style={{ textAlign: "center" }}>
                 <Dropdown overlay={this.menu}>
-                  <Button size='large'>
+                  <Button size="large">
                     Select Your School Level <Icon type="down" />
                   </Button>
                 </Dropdown>
               </Col>
             </Row>
-            <Row gutter={48}>
-              <Col span={5} offset={1} className="box-shadow">
+            <Row gutter={48} style={{ marginTop: 25, marginLeft: 24, marginRight: -60 }}>
+              <Col
+                span={6}
+                offset={1}
+                className="box-shadow"
+                style={{ minHeight: 300 }}
+              >
                 <Row>
                   <Col span={24} style={{ textAlign: "center" }}>
                     <Icon
@@ -69,7 +89,7 @@ class AddCourses extends React.Component {
                     <h3 style={{ textAlign: "center" }}>
                       your classcraft's default preset <br /> for your grade
                       level
-                    </h3>
+</h3>
                   </Col>
                 </Row>
                 <Row>
@@ -81,11 +101,16 @@ class AddCourses extends React.Component {
                       style={{ marginBottom: "3%" }}
                     >
                       Learn More
-                    </Button>
+</Button>
                   </Col>
                 </Row>
               </Col>
-              <Col span={5} offset={1} className="box-shadow">
+              <Col
+                span={6}
+                offset={1}
+                className="box-shadow"
+                style={{ minHeight: 300 }}
+              >
                 <Row>
                   <Col span={24} style={{ textAlign: "center" }}>
                     <Icon
@@ -111,7 +136,7 @@ class AddCourses extends React.Component {
                       Maximize your efforts around <br /> Positive Behavorial{" "}
                       <br />
                       Interventions and Supports <br /> (PBIS)
-                    </h3>
+</h3>
                   </Col>
                 </Row>
                 <Row>
@@ -123,11 +148,16 @@ class AddCourses extends React.Component {
                       style={{ marginBottom: "3%" }}
                     >
                       Learn More
-                    </Button>
+</Button>
                   </Col>
                 </Row>
               </Col>
-              <Col span={5} offset={1} className="box-shadow">
+              <Col
+                span={6}
+                offset={1}
+                className="box-shadow"
+                style={{ minHeight: 300 }}
+              >
                 <Row>
                   <Col span={24} style={{ textAlign: "center" }}>
                     <Icon
@@ -146,7 +176,7 @@ class AddCourses extends React.Component {
                     {" "}
                     <h2 style={{ textAlign: "center" }}>
                       Social Emotional Learning
-                    </h2>
+</h2>
                   </Col>
                 </Row>
                 <Row>
@@ -154,8 +184,8 @@ class AddCourses extends React.Component {
                     {" "}
                     <h3 style={{ textAlign: "center" }}>
                       Develop your students' social
-                      <br /> emotional learning skills.
-                    </h3>
+<br /> emotional learning skills.
+</h3>
                   </Col>
                 </Row>
                 <Row>
@@ -167,7 +197,7 @@ class AddCourses extends React.Component {
                       style={{ marginBottom: "3%" }}
                     >
                       Learn More
-                    </Button>
+</Button>
                   </Col>
                 </Row>
               </Col>
