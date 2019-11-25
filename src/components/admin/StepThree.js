@@ -18,7 +18,6 @@ import {
 import Swal from 'sweetalert2';
 import FormItem from "antd/lib/form/FormItem";
 import AddNewPerson from '../ant-modal/AddNewPersonModal';
-import withUnmounted from '@ishawnwang/withunmounted';
 import axios from 'axios';
 
 const { Search } = Input;
@@ -64,8 +63,6 @@ class AddPersonToSchool extends Component {
         };
 
     }
-
-    hasUnmounted = false;
 
 
     componentDidMount() {
@@ -337,4 +334,4 @@ class AddPersonToSchool extends Component {
         );
     }
 }
-export default withUnmounted(AddPersonToSchool);
+export default AddPersonToSchool;

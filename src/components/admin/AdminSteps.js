@@ -2,7 +2,7 @@ import React from 'react';
 import AdminDetail from './StepOne';
 import CreateNewSchool from "./StepTwo";
 import AddPersons from './StepThree';
-import AddCoursesForSchool from './StepFour'
+import AddCoursesForSchool from './AddCourses'
 import { Steps, Button, message, Icon, Row, Col } from 'antd';
 
 const { Step } = Steps;
@@ -45,13 +45,6 @@ class AdminSteps extends React.Component {
         this.setState({ current });
     }
 
-    onSubmit() {
-        message.success('Processing complete!');
-        console.log("PROPS:",this.props);
-        this.props.history.push('/student');
-
-    }
-
     render() {
         const { current } = this.state;
         return (
@@ -70,7 +63,7 @@ class AdminSteps extends React.Component {
                         </Button>
                             )}
                             {current === steps.length - 1 && (
-                                <Button type="primary"  size="large" onClick={() => this.onSubmit()}>
+                                <Button type="primary"  size="large" onClick={() => message.success('Processing complete!')}>
                                     Done
                         </Button>
                             )}
