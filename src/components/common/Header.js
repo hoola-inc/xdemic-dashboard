@@ -34,6 +34,7 @@ class Headers extends React.Component {
             visible: false,
             current: 0,
             size: 'default',
+            message: [1]
         }
     }
 
@@ -41,17 +42,21 @@ class Headers extends React.Component {
 
 
     componentDidMount() {
-        // const { endpoint } = this.state;
-        // const socket = socketIOClient(endpoint);
-        // socket.on("FromAPI", data => {
-        //     console.log(
-        //         `%c${data}`,
-        //         "color:red;font-family:system-ui;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold"
-        //     );
+        const { endpoint } = this.state;
+        const socket = socketIOClient(endpoint);
 
-        //     console.log(data);
-        //     this.setState({ response: data.dob });
-        // });
+        socket.on("StudentRequest", data => {
+            console.log(data);
+
+            if (data.status) {
+                this.setState({
+                    response: true,
+                    current: this.state.message.length,
+                    message: data.data
+                })
+            }
+            console.log("updated state!", this.state)
+        });
     }
 
     next() {
@@ -66,7 +71,7 @@ class Headers extends React.Component {
 
     doneMethod = () => {
         message.success('Processing complete!');
-        
+
     }
 
 
@@ -161,7 +166,7 @@ class Headers extends React.Component {
     handleMenuClick(e) {
         message.info('Click on menu item.');
         console.log('click', e);
-        this.showModal();
+        // this.showModal();
     }
 
     menu = (
@@ -182,14 +187,14 @@ class Headers extends React.Component {
     );
 
 
-    notifications = (
-        <Menu onClick={this.showModal}>
-            <Menu.Item key="1">
-
-                Noticaiton received
-            </Menu.Item>
-        </Menu>
-    );
+    notifications = () =>
+        (
+            <Menu>
+                <Menu.Item key="1">
+                    {this.state.message}
+                </Menu.Item>
+            </Menu>
+        );
 
 
 
@@ -255,11 +260,14 @@ class Headers extends React.Component {
                         </Col>
                         <Col span={3}>
                             <Col span={4}>
-                                <Badge count={1}>
+                                <Badge count={this.state.current + ''}>
                                     <Dropdown overlay={this.notifications}>
                                         <a className="ant-dropdown-link" href="#">
                                             <Icon type="bell" theme="twoTone" spin={true} style={{ fontSize: '24px' }} />
                                         </a>
+                                        {/* <Button>
+                                            <Icon type="bell" theme="outlined" spin={true} style={{ fontSize: '24px' }} />
+                                        </Button> */}
                                     </Dropdown>
                                 </Badge>
 
