@@ -15,10 +15,10 @@ import {
     message,
     Menu
 } from "antd";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import FormItem from "antd/lib/form/FormItem";
+import axios from "axios";
 import AddNewPerson from '../ant-modal/AddNewPersonModal';
-import axios from 'axios';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
@@ -29,6 +29,8 @@ const { SubMenu } = Menu;
 function onChange(date, dateString) {
     console.log(date, dateString);
 }
+
+
 // rowSelection Table start
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -44,7 +46,6 @@ const rowSelection = {
     })
 };
 
-
 // tabel data array ends
 class AddPersonToSchool extends Component {
     constructor(props) {
@@ -54,19 +55,18 @@ class AddPersonToSchool extends Component {
             csvmodal: false,
             csvdragger: false,
             csvdragresult: false,
-            createModal: false,
+            showmodal: false,
             collapsed: false,
 
             fileList: [],
             uploading: false,
             tableData: []
         };
-
     }
 
-
     componentDidMount() {
-        axios.get("https://xdemic-api.herokuapp.com/persons")
+        axios
+            .get("https://xdemic-api.herokuapp.com/persons")
             .then(res => {
                 console.log(res);
                 if (res.data.status) {
@@ -74,61 +74,59 @@ class AddPersonToSchool extends Component {
                     this.setState({
                         uploading: false,
                         tableData: res.data.data
-                    })
-                }
-                else {
-                    Swal.fire('Oho...', 'Something went wrong!', 'error');
+                    });
+                } else {
+                    Swal.fire("Oho...", "Something went wrong!", "error");
                     this.handleCancel();
-                    this.setState({ loading: false })
+                    this.setState({ loading: false });
                 }
             })
             .catch(err => {
-                console.log('An Error occured while sending Email ::: ', err.message);
-                Swal.fire('Error', err.message, 'error');
+                console.log("An Error occured while sending Email ::: ", err.message);
+                Swal.fire("Error", err.message, "error");
                 // this.setState({ loading: false });
                 // this.handle.onCancel();
             });
-
     }
-
 
     handleUpload = () => {
         const { fileList } = this.state;
         const formData = new FormData();
-        formData.set('csv', fileList[0]);
+        formData.set("csv", fileList[0]);
 
         this.setState({
-            uploading: true,
+            uploading: true
         });
 
         axios({
-            method: 'post',
-            url: 'https://xdemic-api.herokuapp.com/person/csv',
+            method: "post",
+            url: "https://xdemic-api.herokuapp.com/person/csv",
             data: formData
         })
-            .then((response) => {
-
+            .then(response => {
                 // Table Columns ENd data array start
                 const data = [];
                 // const tags = response.data.data[0].tags
                 //handle success
                 console.log(response);
                 data.push(response.data.data);
-                console.log("UPDATED RECORD::", data)
+                console.log("UPDATED RECORD::", data);
+                message.success("file loaded successfully...");
                 this.setState({
                     uploading: false,
-                    tableData: data
-                })
+                    showmodal: false,
+                    tableData: data,
+                    fileList: []
+                });
             })
-            .catch((response) => {
+            .catch(response => {
                 //handle error
                 console.log(response);
-                message.error('shit fuck');
+                message.error("shit fuck");
                 this.setState({
                     uploading: false
-                })
+                });
             });
-
     };
 
     /// Tabel COlumns start
@@ -188,7 +186,7 @@ class AddPersonToSchool extends Component {
                 <span>
                     <Button type="primary" ghost onClick={this.sendInvite}>
                         Send
-                    </Button>
+</Button>
                 </span>
             )
         },
@@ -208,13 +206,13 @@ class AddPersonToSchool extends Component {
         }
     ];
 
-
     sendInvite = () => {
-        const hide = message.loading('Action in progress..', 2, onclose)
+        const hide = message
+            .loading("Action in progress..", 2, onclose)
             .then(afterClose => {
-                message.success('invite sent!');
-            })
-    }
+                message.success("invite sent!");
+            });
+    };
 
     // CSV Modal functions end here
     csvShowImage = () => {
@@ -227,11 +225,10 @@ class AddPersonToSchool extends Component {
     // Create Button Modal
 
     createModal = () => {
-        this.setState({ createModal: true });
+        this.setState({ showmodal: true });
     };
 
     render() {
-
         const { uploading, fileList } = this.state;
 
         const props = {
@@ -241,60 +238,63 @@ class AddPersonToSchool extends Component {
                     const newFileList = state.fileList.slice();
                     newFileList.splice(index, 1);
                     return {
-                        fileList: newFileList,
+                        fileList: newFileList
                     };
                 });
             },
             beforeUpload: file => {
                 this.setState(state => ({
-                    fileList: [...state.fileList, file],
+                    fileList: [...state.fileList, file]
                 }));
                 return false;
             },
-            fileList,
+            fileList
         };
 
         return (
             <div>
                 {/* <Row gutter={24}>
-                <Col span={8}>
-                <div>
-                <Upload {...props}>
-                <Button>
-                <Icon type="upload" /> Select File
-                </Button>
-                </Upload>
-                <Button
-                type="primary"
-                onClick={this.handleUpload}
-                disabled={fileList.length === 0}
-                loading={uploading}
-                style={{ marginTop: 16 }}
-                >
-                {uploading ? 'Uploading' : 'Start Upload'}
-                </Button>
-                </div>
-                </Col>
-                </Row> */}
+<Col span={8}>
+<div>
+<Upload {...props}>
+<Button>
+<Icon type="upload" /> Select File
+</Button>
+</Upload>
+<Button
+type="primary"
+onClick={this.handleUpload}
+disabled={fileList.length === 0}
+loading={uploading}
+style={{ marginTop: 16 }}
+>
+{uploading ? 'Uploading' : 'Start Upload'}
+</Button>
+</div>
+</Col>
+</Row> */}
                 <Row gutter={24} style={{ marginTop: 25 }}>
                     <Col span={22}>
                         <Form layout="inline">
                             <Form.Item>
-                                <Upload {...props}>
-                                    <Button>
-                                        <Icon type="upload" /> Select File
-                                    </Button>
-                                </Upload>
+                                <Button onClick={this.createModal}>
+                                    <Icon type="upload" /> Select File
+</Button>
+                                {/* <Upload {...props}>
+<Button>
+<Icon type="upload" /> Select File
+</Button>
+</Upload> */}
                             </Form.Item>
                             <Form.Item>
-                                <Button
-                                    type="primary"
-                                    onClick={this.handleUpload}
-                                    disabled={fileList.length === 0}
-                                    loading={uploading}
-                                >
-                                    {uploading ? 'Uploading' : 'Start Upload'}
-                                </Button>
+                                {/* <Button
+type="primary"
+onClick={this.handleUpload}
+disabled={fileList.length === 0}
+loading={uploading}
+>
+{uploading ? "Uploading" : "Start Upload"}
+</Button> */}
                             </Form.Item>
                             <FormItem>
                                 <Search placeholder="Search Name" size="small" />
@@ -309,16 +309,14 @@ class AddPersonToSchool extends Component {
                                 <Button type="primary">Search</Button>
                             </FormItem>
                             {/* <FormItem>
-                            <Button type="default">Reset</Button>
-                            </FormItem> */}
+<Button type="default">Reset</Button>
+</FormItem> */}
                         </Form>
                     </Col>
                     <Col span={2}>
                         {/* to do add ad stuent modal here*/}
 
                         <AddNewPerson />
-
-
                     </Col>
                 </Row>
                 <Row gutter={24} style={{ marginTop: 25 }}>
@@ -330,6 +328,36 @@ class AddPersonToSchool extends Component {
                         dataSource={this.state.tableData}
                     />
                 </Row>
+                <Modal
+                    title="Basic Modal"
+                    visible={this.state.showmodal}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button
+                            type="primary"
+                            onClick={this.handleUpload}
+                            disabled={fileList.length === 0}
+                            loading={uploading}
+                            style={{ marginTop: 16 }}
+                        >
+                            {uploading ? "Uploading" : "Start Upload"}
+                        </Button>,
+                    ]}
+                >
+                    <Dragger {...props}>
+                        <p className="ant-upload-drag-icon">
+                            <Icon type="inbox" />
+                        </p>
+                        <p className="ant-upload-text">
+                            Click or drag file to this area to upload
+</p>
+                        <p className="ant-upload-hint">
+                            Support for a single or bulk upload. Strictly prohibit from
+                            uploading company data or other band files
+</p>
+                    </Dragger>
+                </Modal>
             </div>
         );
     }

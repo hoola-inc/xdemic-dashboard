@@ -2,7 +2,8 @@ import React from 'react';
 import AdminDetail from './StepOne';
 import CreateNewSchool from "./StepTwo";
 import AddPersons from './StepThree';
-import AddCoursesForSchool from './AddCourses'
+import AddCoursesForSchool from './StepFour'
+import AddStudents from './StepFive'
 import { Steps, Button, message, Icon, Row, Col } from 'antd';
 
 const { Step } = Steps;
@@ -21,9 +22,13 @@ const steps = [
         content: <AddPersons />,
     },
     {
-        title: 'Fourth',
+        title: 'Four',
         content: <AddCoursesForSchool />
-    }
+    },
+    {
+        title: 'Five',
+        content: <AddStudents />
+    },
 ];
 
 class AdminSteps extends React.Component {

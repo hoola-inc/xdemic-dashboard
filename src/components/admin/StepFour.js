@@ -10,7 +10,7 @@ import {
   Checkbox
 } from "antd";
 
-class AddCourses extends React.Component {
+class StepFour extends React.Component {
   constructor(props) {
     super(props);
 
@@ -208,4 +208,4 @@ class AddCourses extends React.Component {
     );
   }
 }
-export default AddCourses;
+export default StepFour;
