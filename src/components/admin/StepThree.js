@@ -206,6 +206,10 @@ class AddPersonToSchool extends Component {
         }
     ];
 
+    handleCancel = () => {
+        this.setState({ showmodal: false });
+    };
+
     sendInvite = () => {
         const hide = message
             .loading("Action in progress..", 2, onclose)

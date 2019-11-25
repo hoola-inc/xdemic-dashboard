@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from '../common/Sidebar';
 import Header from "../common/Header";
 import Footer from '../common/Footer';
+import CreateNewCourse from '../ant-modal/CreateCourseModal';
 import { Link } from 'react-router-dom';
 import { Card, Layout, PageHeader, Row, Typography, Col, Input, Spin, Button, message } from 'antd';
 import axios from 'axios';
@@ -87,7 +88,7 @@ class CoursesCard extends React.Component {
                             >
                                 <Meta title={element.name} description={element.courseCode} />
 
-                                <Button type="primary" value={element._id} size="small" style={{ marginTop: 10 }} onClick={(e) =>this.courseDetail(e)}>More</Button>
+                                <Button type="primary" value={element._id} size="small" style={{ marginTop: 10 }} onClick={(e) => this.courseDetail(e)}>More</Button>
 
                             </Card>
                         )
@@ -141,6 +142,13 @@ class CoursesCard extends React.Component {
                         </Row>
 
                     </PageHeader>
+
+                    <Row>
+                        <Col span={4} offset={20}>
+                            <CreateNewCourse />
+                        </Col>
+
+                    </Row>
 
                     <div style={{ marginTop: 25 }}>
                         <Row gutter={16}>

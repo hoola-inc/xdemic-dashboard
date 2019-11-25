@@ -1,274 +1,243 @@
-import React from 'react';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import { Modal, Button, Input, Form, DatePicker, Select } from 'antd';
-import moment from 'moment';
+import React, { Component } from "react";
+import {
+    Upload,
+    Button,
+    Form,
+    Icon,
+    Input,
+    Modal,
+    Row,
+    Col,
+    DatePicker
+} from "antd";
+import FormItem from "antd/lib/form/FormItem";
 
-const { RangePicker } = DatePicker;
-const { Option } = Select;
+const { Dragger } = Upload;
 
-
-function onChangeDate(dates, dateStrings) {
-    console.log('From: ', dates[0], ', to: ', dates[1]);
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+function hasErrors(fieldsError) {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
-
-
-
-function onBlur() {
-    console.log('blur');
-}
-
-function onFocus() {
-    console.log('focus');
-}
-
-function onSearch(val) {
-    console.log('search:', val);
-}
-
-class CreateNewCourseModal extends React.Component {
-
+class CreateCourseModal extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            visible: false,
-            loading: false,
-            iconLoading: false,
-            name: '',
-            creditUnitType: '',
-            creditUniteValue: '',
-            ctid: '',
-            subjectWebpage: '',
-            prerequisite: '',
-            uri: '',
-            courseCode: ''
+            fileList: [],
+            uploading: false,
+            showmodal: false
         };
-
-        this.onChange = this.onChange.bind(this);
-    }
-    
-
-    onChange(value) {
-        console.log(`selected ${value}`);
-
-        this.setState({
-            creditUnitType: value
-        })
     }
 
     showModal = () => {
-        this.setState({
-            visible: true,
-        });
+        this.setState({ showmodal: true });
     };
-
-    handleOk = e => {
-        this.setState({
-            visible: false,
-        });
+    handleCancel = () => {
+        this.setState({ showmodal: false });
     };
-
-    handleCancel = e => {
-        this.setState({
-            visible: false,
-        });
-    };
-
-    enterLoading = () => {
-        this.setState({ loading: true });
-    };
-
-    enterIconLoading = () => {
-        this.setState({ iconLoading: true });
-    };
-
-    changeHandler = e => {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    submitHandler = e => {
-        e.preventDefault();
-        this.enterLoading();
-        this.sendCourse();
-    }
-
-    sendCourse = () => {
-        axios.post('https://xdemic-api.herokuapp.com/course', this.state)
-            .then(res => {
-                if (res.data.status) {
-                    this.setState({ loading: false });
-                    this.handleCancel();
-                    Swal.fire('Course', 'created and live on url', 'success');
-                }
-                else {
-                    this.setState({ loading: false });
-                    this.handleCancel();
-                    Swal.fire('Oho...', 'An Error Occured', 'error');
-                }
-            })
-            .catch(err => {
-                this.setState({ loading: false });
-                this.handleCancel();
-                Swal.fire('Error', 'An error occured', 'error');
-            });
-    }
 
     render() {
-        const { name, creditUniteValue, ctid, subjectWebpage, prerequisite, uri, courseCode } = this.state;
-        const { getFieldDecorator } = this.props.form;
-
+        const {
+            getFieldDecorator,
+            getFieldsError,
+            getFieldError,
+            isFieldTouched
+        } = this.props.form;
+        // Only show error after a field is touched.
+        const coursenameError =
+            isFieldTouched("coursename") && getFieldError("coursename");
+        const courseCodeError =
+            isFieldTouched("coursecode") && getFieldError("coursecode");
+        const courseUnityError =
+            isFieldTouched("courseunity") && getFieldError("courseunity");
+        const courseUnitValuError =
+            isFieldTouched("courseunitvalu") && getFieldError("courseunitvalu");
+        const prerequisitesError =
+            isFieldTouched("prerequisites") && getFieldError("prerequisites");
+        const usernameError =
+            isFieldTouched("username") && getFieldError("username");
+        const passwordError =
+            isFieldTouched("password") && getFieldError("password");
         return (
             <div>
-                <Button block size="small" onClick={this.showModal}>
-                    +
-        </Button>
+                <Button onClick={this.showModal}>
+                    <Icon type="plus" /> Create New Course
+                </Button>
+
                 <Modal
-                    title="Enter Course Detail"
-                    visible={this.state.visible}
+                    title="Enter Course Details"
+                    visible={this.state.showmodal}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    footer={null}
+                // footer={[<Button type="default">Back</Button>,<Button type="primary">Create</Button>]}
                 >
-                    <Form onSubmit={this.submitHandler}>
-                        <Form.Item label="Course Name">
-                            {
-                                getFieldDecorator('foo', {
-                                    rules: [{
+                    <Form onSubmit={this.handleSubmit}>
+                        <Form.Item style={{ marginBottom: -1 }}>Course Name</Form.Item>
+                        <Form.Item
+                            style={{ marginBottom: -1 }}
+                            validateStatus={coursenameError ? "error" : ""}
+                            help={coursenameError || ""}
+                        >
+                            {getFieldDecorator("coursename", {
+                                rules: [
+                                    { required: true, message: "Please Enter your Course Name!" }
+                                ]
+                            })(
+                                <Input
+                                    prefix={
+                                        <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                                    }
+                                    placeholder="Enter Course Name"
+                                />
+                            )}
+                        </Form.Item>
+                        <Form.Item style={{ marginBottom: -1 }}>
+                            Course Code (Recommended)
+</Form.Item>
+                        <Form.Item
+                            style={{ marginBottom: -1 }}
+                            validateStatus={courseCodeError ? "error" : ""}
+                            help={courseCodeError || ""}
+                        >
+                            {getFieldDecorator("coursecode", {
+                                rules: [
+                                    { required: true, message: "Please Enter your Course Code!" }
+                                ]
+                            })(
+                                <Input
+                                    prefix={
+                                        <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                                    }
+                                    placeholder="Enter Course Code"
+                                />
+                            )}
+                        </Form.Item>
+
+                        <Form.Item style={{ marginBottom: -1 }}>
+                            Course Credit Unity Type
+</Form.Item>
+                        <Form.Item
+                            style={{ marginBottom: -1 }}
+                            validateStatus={courseUnityError ? "error" : ""}
+                            help={courseUnityError || ""}
+                        >
+                            {getFieldDecorator("courseunity", {
+                                rules: [
+                                    {
                                         required: true,
-                                        message: 'this field is required'
-                                    }]
-                                })
-                                    (
-                                        <Input
-                                            placeholder="enter course name"
-                                            allowClear
-                                            require
-                                            name="name"
-                                            value={name}
-                                            onChange={this.changeHandler}
-                                        />
-                                    )
-                            }
+                                        message: "Please Enter Course Credit Unity Types!"
+                                    }
+                                ]
+                            })(
+                                <Input
+                                    prefix={
+                                        <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                                    }
+                                    placeholder="Course Credit Unity Types"
+                                />
+                            )}
                         </Form.Item>
 
-                        <Form.Item label="Course Code">
-                            <Input
-                                placeholder="enter Course Code"
-                                allowClear
-                                name="courseCode"
-                                value={courseCode}
-                                onChange={this.changeHandler} />
+                        <Form.Item style={{ marginBottom: -1 }}>
+                            Course Credit Unit Value
+</Form.Item>
+                        <Form.Item
+                            style={{ marginBottom: -1 }}
+                            validateStatus={courseUnitValuError ? "error" : ""}
+                            help={courseUnitValuError || ""}
+                        >
+                            {getFieldDecorator("courseunitvalu", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: "Please Enter Course Credit Unit Value!"
+                                    }
+                                ]
+                            })(
+                                <Input
+                                    prefix={
+                                        <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                                    }
+                                    placeholder="Course Credit Unit Value"
+                                />
+                            )}
                         </Form.Item>
 
-                        <Form.Item label="Course Credit Unit Type">
-                            {/* <Input
-                                placeholder="enter credit unit type"
-                                allowClear
-                                name="creditUnitType"
-                                value={creditUnitType}
-                                onChange={this.changeHandler} /> */}
+                        <FormItem style={{ marginBottom: -1 }}>
+                            <Row gutter={8}>
+                                <Col span={12}>Min Result</Col>
+                                <Col span={12}>Max Result</Col>
+                            </Row>
+                            <Row gutter={8}>
+                                <Col span={12}>
+                                    {getFieldDecorator("minresult", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: "Please enter min result you got!"
+                                            }
+                                        ]
+                                    })(<Input />)}
+                                </Col>
+                                <Col span={12}>
+                                    {getFieldDecorator("maxresult", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: "Please enter max result you got!"
+                                            }
+                                        ]
+                                    })(<Input />)}
+                                </Col>
+                            </Row>
+                        </FormItem>
 
-                            <Select
-                                showSearch
-                                style={{ width: 470 }}
-                                placeholder="Select credit unit type"
-                                optionFilterProp="children"
-                                onChange={this.onChange}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                            >
-                                <Option value="1">1</Option>
-                                <Option value="2">2</Option>
-                                <Option value="3">3</Option>
-                                <Option value="4">4</Option>
-                                <Option value="5">5</Option>
-                                <Option value="6">6</Option>
-                                <Option value="7">7</Option>
-                                <Option value="8">8</Option>
-                                <Option value="9">9</Option>
-                                <Option value="10">10</Option>
-                                <Option value="11">11</Option>
-                                <Option value="12">12</Option>
-                            </Select>
-
-
+                        <Form.Item style={{ marginBottom: -1 }}>
+                            Course Credit Unit Value
+</Form.Item>
+                        <Form.Item
+                            style={{ marginBottom: -1 }}
+                            validateStatus={prerequisitesError ? "error" : ""}
+                            help={prerequisitesError || ""}
+                        >
+                            {getFieldDecorator("prerequisites", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: "Please Enter Prerequisites!"
+                                    }
+                                ]
+                            })(
+                                <Input
+                                    prefix={
+                                        <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                                    }
+                                    placeholder="Enter Prerequisites"
+                                />
+                            )}
                         </Form.Item>
 
-                        <Form.Item label="Course Credit Unite Value">
-                            <Input
-                                placeholder="enter credit unite value"
-                                allowClear
-                                name="creditUniteValue"
-                                value={creditUniteValue}
-                                onChange={this.changeHandler}
-                            />
+                        <Form.Item style={{ marginBottom: -1 }}>Term</Form.Item>
+                        <Form.Item style={{ marginBottom: -1 }}>
+                            <DatePicker size="large" style={{ width: "100%" }}></DatePicker>
                         </Form.Item>
 
-                        <Form.Item label="Course Ctid" style={{display: 'none'}}>
-                            <Input
-                                placeholder="enter course ctid"
-                                allowClear
-                                name="ctid"
-                                value={ctid}
-                                onChange={this.changeHandler}
-                            />
+                        <Form.Item style={{ marginTop: "10%" }}>
+                            <Row>
+                                <Col span={12} style={{ textAlign: 'end', paddingRight: "5%" }}>
+                                    <Button style={{ width: "50%" }} onClick={this.handleCancel}>Back</Button>
+                                </Col>
+                                <Col span={12} >
+                                    <Button style={{ width: "50%" }} type="primary">Create</Button>
+                                </Col>
+                            </Row>
                         </Form.Item>
-
-                        <Form.Item label="Course Subject Web Page">
-                            <Input
-                                placeholder="enter course subject web page"
-                                allowClear
-                                name="subjectWebpage"
-                                value={subjectWebpage}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
-
-                        <Form.Item label="Course Pre Requisite">
-                            <Input
-                                placeholder="enter pre requisite"
-                                allowClear
-                                name="prerequisite"
-                                value={prerequisite}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
-
-                        <Form.Item label="Course Uri" style={{display: 'none'}}>
-                            <Input
-                                placeholder="enter course uri"
-                                allowClear
-                                name="uri"
-                                value={uri}
-                                onChange={this.changeHandler} />
-                        </Form.Item>
-
-
-
-                        <Form.Item label="Select Date">
-                            <RangePicker
-                                ranges={{
-                                    Today: [moment(), moment()],
-                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                }}
-                                onChange={onChangeDate}
-                            />
-                        </Form.Item>
-
-                        <Button type="primary" loading={this.state.loading} onClick={this.submitHandler} ghost >
-                            Submit
-                    </Button>
-
                     </Form>
                 </Modal>
             </div>
-
         );
     }
 }
+const WrappedCreateCourseModal = Form.create({ name: "horizontal_login" })(CreateCourseModal);
 
-const CreateCourseModal = Form.create()(CreateNewCourseModal);
-
-export default CreateCourseModal;
+export default WrappedCreateCourseModal;

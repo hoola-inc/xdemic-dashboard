@@ -131,7 +131,7 @@ class StepTwo extends React.Component {
                 <Row>
 
                     <Col span={6} offset={15}>
-                        <div style={{padding: 25}}>
+                        <div style={{ padding: 25 }}>
                             <Avatar style={{ backgroundColor: this.state.color, verticalAlign: 'middle' }} size="large">
                                 {this.state.user}
                             </Avatar>
@@ -145,32 +145,32 @@ class StepTwo extends React.Component {
                         </div>
                     </Col>
                     <Col span={6} offset={4}>
-                        <Form.Item label="Full Name">
-                            {getFieldDecorator('email', {
+                        <Form.Item label="School Name">
+                            {getFieldDecorator('text', {
                                 rules: [
                                     {
-                                        type: 'email',
-                                        message: 'The input is not valid E-mail!',
+                                        type: 'text',
+                                        message: 'The input is not valid school name!',
                                     },
                                     {
                                         required: true,
-                                        message: 'Please input your E-mail!',
+                                        message: 'Please input your school name!',
                                     },
                                 ],
                             })(<Input size="large" />)}
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
-                        <Form.Item label="Full Name">
-                            {getFieldDecorator('email', {
+                        <Form.Item label="Street Address">
+                            {getFieldDecorator('text', {
                                 rules: [
                                     {
-                                        type: 'email',
-                                        message: 'The input is not valid E-mail!',
+                                        type: 'text',
+                                        message: 'The input is not valid street address!',
                                     },
                                     {
                                         required: true,
-                                        message: 'Please input your E-mail!',
+                                        message: 'Please input your street address!',
                                     },
                                 ],
                             })(<Input size="large" />)}
@@ -178,7 +178,7 @@ class StepTwo extends React.Component {
                     </Col>
 
                     <Col span={6} offset={4}>
-                        <Form.Item label="Full Name">
+                        <Form.Item label="Email Address">
                             {getFieldDecorator('email', {
                                 rules: [
                                     {
@@ -194,16 +194,16 @@ class StepTwo extends React.Component {
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
-                        <Form.Item label="Full Name">
-                            {getFieldDecorator('email', {
+                        <Form.Item label="City">
+                            {getFieldDecorator('text', {
                                 rules: [
                                     {
                                         type: 'email',
-                                        message: 'The input is not valid E-mail!',
+                                        message: 'The input is not valid city!',
                                     },
                                     {
                                         required: true,
-                                        message: 'Please input your E-mail!',
+                                        message: 'Please input your city!',
                                     },
                                 ],
                             })(<Input size="large" />)}
@@ -211,32 +211,32 @@ class StepTwo extends React.Component {
                     </Col>
 
                     <Col span={6} offset={4}>
-                        <Form.Item label="Full Name">
-                            {getFieldDecorator('email', {
+                        <Form.Item label="Phone Number">
+                            {getFieldDecorator('text', {
                                 rules: [
                                     {
-                                        type: 'email',
-                                        message: 'The input is not valid E-mail!',
+                                        type: 'text',
+                                        message: 'The input is not valid phone number!',
                                     },
                                     {
                                         required: true,
-                                        message: 'Please input your E-mail!',
+                                        message: 'Please input your phone number!',
                                     },
                                 ],
                             })(<Input size="large" />)}
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
-                        <Form.Item label="Full Name">
-                            {getFieldDecorator('email', {
+                        <Form.Item label="Country">
+                            {getFieldDecorator('text', {
                                 rules: [
                                     {
                                         type: 'email',
-                                        message: 'The input is not valid E-mail!',
+                                        message: 'The input is not valid country!',
                                     },
                                     {
                                         required: true,
-                                        message: 'Please input your E-mail!',
+                                        message: 'Please input your country!',
                                     },
                                 ],
                             })(<Input size="large" />)}
@@ -245,9 +245,14 @@ class StepTwo extends React.Component {
 
                 </Row>
 
-
-
+                <div style={{textAlign: "center", marginTop: 50}}>
+                    <Button type="default" size="large">
+                        Add New School
+                        </Button>
+                </div>
             </Form>
+
+
         );
     }
 }

@@ -151,22 +151,22 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Full Name">
-              {getFieldDecorator('email', {
+              {getFieldDecorator('text', {
                 rules: [
                   {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    type: 'text',
+                    message: 'The input is not valid name!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your name!',
                   },
                 ],
               })(<Input size="large" />)}
             </Form.Item>
           </Col>
           <Col span={6} offset={2}>
-            <Form.Item label="Full Name">
+            <Form.Item label="Email">
               {getFieldDecorator('email', {
                 rules: [
                   {
@@ -182,16 +182,16 @@ class StepOne extends React.Component {
             </Form.Item>
           </Col>
           <Col span={6} offset={4}>
-            <Form.Item label="Full Name">
-              {getFieldDecorator('email', {
+            <Form.Item label="ID">
+              {getFieldDecorator('text', {
                 rules: [
                   {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    type: 'text',
+                    message: 'The input is not valid id!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your id!',
                   },
                 ],
               })(<Input size="large" />)}
@@ -201,16 +201,16 @@ class StepOne extends React.Component {
 
         <Row>
           <Col span={6} offset={4}>
-            <Form.Item label="Full Name">
+            <Form.Item label="Department">
               {getFieldDecorator('email', {
                 rules: [
                   {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    type: 'text',
+                    message: 'The input is not valid department!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your department!',
                   },
                 ],
               })(<Input size="large" />)}
@@ -218,16 +218,16 @@ class StepOne extends React.Component {
           </Col>
 
           <Col span={6} offset={2}>
-            <Form.Item label="Full Name">
+            <Form.Item label="Mobile Number">
               {getFieldDecorator('email', {
                 rules: [
                   {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    type: 'text',
+                    message: 'The input is not valid phone number!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your phone number!',
                   },
                 ],
               })(<Input size="large" />)}
@@ -236,15 +236,15 @@ class StepOne extends React.Component {
 
           <Col span={6} offset={4}>
             <Form.Item label="Date of birth">
-              {getFieldDecorator('email', {
+              {getFieldDecorator('text', {
                 rules: [
                   {
                     type: 'date',
-                    message: 'The input is not valid E-mail!',
+                    message: 'The input is not valid birth date!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your birth date!',
                   },
                 ],
               })(<DatePicker onChange={onChange} size="large"/>)}
