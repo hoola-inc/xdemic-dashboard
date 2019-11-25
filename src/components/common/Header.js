@@ -41,17 +41,17 @@ class Headers extends React.Component {
 
 
     componentDidMount() {
-        const { endpoint } = this.state;
-        const socket = socketIOClient(endpoint);
-        socket.on("FromAPI", data => {
-            console.log(
-                `%c${data}`,
-                "color:red;font-family:system-ui;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold"
-            );
+        // const { endpoint } = this.state;
+        // const socket = socketIOClient(endpoint);
+        // socket.on("FromAPI", data => {
+        //     console.log(
+        //         `%c${data}`,
+        //         "color:red;font-family:system-ui;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold"
+        //     );
 
-            console.log(data);
-            this.setState({ response: data.dob });
-        });
+        //     console.log(data);
+        //     this.setState({ response: data.dob });
+        // });
     }
 
     next() {

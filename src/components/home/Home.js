@@ -172,10 +172,12 @@ class Home extends React.Component {
                                     renderItem={
                                         item => <List.Item>
                                             <Checkbox.Group style={{ width: '100%' }} onChange={onChange}>
-                                                <Checkbox value="A" />
-                                                <Typography.Text style={{ paddingLeft: 20 }}>
-                                                    {item}
-                                                </Typography.Text>
+                                                <Checkbox>
+                                                    <Typography.Text style={{ paddingLeft: 20 }}>
+                                                        {item}
+                                                    </Typography.Text>
+                                                </Checkbox>
+
                                             </Checkbox.Group>
                                             <span style={{ float: 'right' }}>       <Tag color="volcano">volcano</Tag> </span>
                                         </List.Item>

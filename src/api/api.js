@@ -1,10 +1,10 @@
-import openSocket from 'socket.io-client';
+// import openSocket from 'socket.io-client';
 
-const socket = openSocket('https://xdemic-api.herokuapp.co');
+// const socket = openSocket('https://xdemic-api.herokuapp.com');
 
-function subscribeToTimer(cb) {
-    socket.on('timer', timestamp => cb(null, timestamp));
-    socket.emit('subscribeToTimer', 1000);
-}
+// function subscribeToTimer(cb) {
+//     socket.on('timer', timestamp => cb(null, timestamp));
+//     socket.emit('subscribeToTimer', 1000);
+// }
 
-export { subscribeToTimer };
+// export { subscribeToTimer };
