@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
     Form,
     Input,
@@ -12,7 +13,8 @@ import {
     Button,
     AutoComplete,
     DatePicker,
-    Avatar
+    Avatar,
+    message
 } from 'antd';
 
 
@@ -32,7 +34,14 @@ class StepTwo extends React.Component {
             confirmDirty: false,
             autoCompleteResult: [],
             user: UserList[0],
-            color: colorList[0]
+            color: colorList[0],
+
+            name: '',
+            email: '',
+            phone: '',
+            streetAddress: '',
+            addressCountry: '',
+            addressLocality: ''
         };
     }
 
@@ -85,9 +94,59 @@ class StepTwo extends React.Component {
         });
     };
 
+    changeHandler = e => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    submitHandler = e => {
+        e.preventDefault();
+        this.createNewSchool();
+    }
+
+    createNewSchool = () => {
+        console.log(this.state);
+
+        const newObj = {
+            name: this.state.name,
+            email: this.state.email,
+            phone: this.state.phone,
+            address: {
+                streetAddress: this.state.streetAddress,
+                addressCountry: this.state.addressCountry,
+                addressLocality: this.state.addressLocality
+            }
+        }
+
+        console.log('OBJ ::: ', newObj);
+
+        axios.post('https://xdemic-api.herokuapp.com/school', newObj)
+            .then(res => {
+                message.loading('Action in progress..', res, onclose)
+                    .then(afterClose => {
+                        message.success('school created!');
+                    });
+
+                this.setState({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    streetAddress: '',
+                    addressCountry: '',
+                    addressLocality: ''
+                });
+            })
+            .catch(err => {
+                message.error(err.message);
+            })
+
+    }
+
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const { autoCompleteResult } = this.state;
+
+        const { name, email, phone, streetAddress, addressCountry, addressLocality } = this.state;
 
         const formItemLayout = {
             labelCol: {
@@ -146,34 +205,26 @@ class StepTwo extends React.Component {
                     </Col>
                     <Col span={6} offset={4}>
                         <Form.Item label="School Name">
-                            {getFieldDecorator('text', {
+                            {getFieldDecorator('name', {
                                 rules: [
-                                    {
-                                        type: 'text',
-                                        message: 'The input is not valid school name!',
-                                    },
                                     {
                                         required: true,
                                         message: 'Please input your school name!',
                                     },
                                 ],
-                            })(<Input size="large" />)}
+                            })(<Input size="large" allowClear name="name" value={name} onChange={this.changeHandler} />)}
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
                         <Form.Item label="Street Address">
-                            {getFieldDecorator('text', {
+                            {getFieldDecorator('streetAddress', {
                                 rules: [
-                                    {
-                                        type: 'text',
-                                        message: 'The input is not valid street address!',
-                                    },
                                     {
                                         required: true,
                                         message: 'Please input your street address!',
                                     },
                                 ],
-                            })(<Input size="large" />)}
+                            })(<Input size="large" allowClear name="streetAddress" value={streetAddress} onChange={this.changeHandler} />)}
                         </Form.Item>
                     </Col>
 
@@ -182,71 +233,55 @@ class StepTwo extends React.Component {
                             {getFieldDecorator('email', {
                                 rules: [
                                     {
-                                        type: 'email',
-                                        message: 'The input is not valid E-mail!',
-                                    },
-                                    {
                                         required: true,
                                         message: 'Please input your E-mail!',
                                     },
                                 ],
-                            })(<Input size="large" />)}
+                            })(<Input size="large" allowClear name="email" value={email} onChange={this.changeHandler} />)}
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
                         <Form.Item label="City">
-                            {getFieldDecorator('text', {
+                            {getFieldDecorator('addressLocality', {
                                 rules: [
-                                    {
-                                        type: 'email',
-                                        message: 'The input is not valid city!',
-                                    },
                                     {
                                         required: true,
                                         message: 'Please input your city!',
                                     },
                                 ],
-                            })(<Input size="large" />)}
+                            })(<Input size="large" allowClear name="addressLocality" value={addressLocality} onChange={this.changeHandler} />)}
                         </Form.Item>
                     </Col>
 
                     <Col span={6} offset={4}>
                         <Form.Item label="Phone Number">
-                            {getFieldDecorator('text', {
+                            {getFieldDecorator('phone', {
                                 rules: [
-                                    {
-                                        type: 'text',
-                                        message: 'The input is not valid phone number!',
-                                    },
                                     {
                                         required: true,
                                         message: 'Please input your phone number!',
                                     },
                                 ],
-                            })(<Input size="large" />)}
+                            })(<Input size="large" allowClear name="phone" value={phone} onChange={this.changeHandler} />)}
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
                         <Form.Item label="Country">
-                            {getFieldDecorator('text', {
+                            {getFieldDecorator('addressCountry', {
                                 rules: [
-                                    {
-                                        type: 'email',
-                                        message: 'The input is not valid country!',
-                                    },
                                     {
                                         required: true,
                                         message: 'Please input your country!',
                                     },
                                 ],
-                            })(<Input size="large" />)}
+                            })(<Input size="large" allowClear name="addressCountry" value={addressCountry} onChange={this.changeHandler} />)}
                         </Form.Item>
                     </Col>
 
                 </Row>
 
-                <div style={{textAlign: "center", marginTop: 50}}>
-                    <Button type="default" size="large">
+                <div style={{ textAlign: "center", marginTop: 50 }}>
+                    <Button type="default" size="large" onClick={this.submitHandler}>
                         Add New School
                         </Button>
                 </div>
