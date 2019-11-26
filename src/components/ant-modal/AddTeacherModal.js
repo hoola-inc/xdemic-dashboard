@@ -93,15 +93,15 @@ class AddNewStudentModal extends React.Component {
                     + Add Teachers
                 </Button>
                 <Modal
-                    title="Enter Course Detail"
+                    title="Enter Teacher Email"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
                     <Form onSubmit={this.submitHandler}>
-                        <Form.Item label="Student Email">
+                        <Form.Item label="Teacher Email">
                             {getFieldDecorator('email', {
-                                rules: [{ required: true, message: 'Please input student email!' }],
+                                rules: [{ required: true, message: 'Please input teacher email!' }],
                             })(
                                 <Input
                                     placeholder="enter student email"

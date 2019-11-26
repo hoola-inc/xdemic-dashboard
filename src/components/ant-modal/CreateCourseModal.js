@@ -24,7 +24,16 @@ class CreateCourseModal extends Component {
         this.state = {
             fileList: [],
             uploading: false,
-            showmodal: false
+            showmodal: false,
+
+            name: '',
+            resultMin: '',
+            resultMax: '',
+            creditsAvailable: '',
+            courseCode: '',
+            termType: '',
+            prerequisites: '',
+            courseCreditUnitValue: ''
         };
     }
 
@@ -34,6 +43,10 @@ class CreateCourseModal extends Component {
     handleCancel = () => {
         this.setState({ showmodal: false });
     };
+
+    changeHandler = e => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
 
     render() {
         const {
@@ -93,7 +106,7 @@ class CreateCourseModal extends Component {
                         </Form.Item>
                         <Form.Item style={{ marginBottom: -1 }}>
                             Course Code (Recommended)
-</Form.Item>
+                        </Form.Item>
                         <Form.Item
                             style={{ marginBottom: -1 }}
                             validateStatus={courseCodeError ? "error" : ""}
@@ -115,7 +128,7 @@ class CreateCourseModal extends Component {
 
                         <Form.Item style={{ marginBottom: -1 }}>
                             Course Credit Unity Type
-</Form.Item>
+                        </Form.Item>
                         <Form.Item
                             style={{ marginBottom: -1 }}
                             validateStatus={courseUnityError ? "error" : ""}
@@ -140,7 +153,7 @@ class CreateCourseModal extends Component {
 
                         <Form.Item style={{ marginBottom: -1 }}>
                             Course Credit Unit Value
-</Form.Item>
+                        </Form.Item>
                         <Form.Item
                             style={{ marginBottom: -1 }}
                             validateStatus={courseUnitValuError ? "error" : ""}
@@ -193,8 +206,8 @@ class CreateCourseModal extends Component {
                         </FormItem>
 
                         <Form.Item style={{ marginBottom: -1 }}>
-                            Course Credit Unit Value
-</Form.Item>
+                            Prerequisites
+                        </Form.Item>
                         <Form.Item
                             style={{ marginBottom: -1 }}
                             validateStatus={prerequisitesError ? "error" : ""}
