@@ -14,19 +14,35 @@ import {
     AutoComplete,
     DatePicker,
     Avatar,
-    message
-} from 'antd';
+    message,
+    Upload
 
+} from 'antd';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
-
 const UserList = ['U', 'Lucy', 'Tom', 'Edward'];
 const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+}
 
+function beforeUpload(file) {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+        message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+}
 class StepTwo extends React.Component {
     constructor(props) {
         super(props);
@@ -44,6 +60,26 @@ class StepTwo extends React.Component {
             addressLocality: ''
         };
     }
+
+    onChange = (value) => {
+        this.setState({
+            addressCountry: value
+        });
+        console.log(`selected ${value}`);
+    }
+
+    onBlur = () => {
+        console.log('blur');
+    }
+
+    onFocus = () => {
+        console.log('focus');
+    }
+
+    onSearch = (val) => {
+        console.log('search:', val);
+    }
+
 
     handleSubmit = e => {
         e.preventDefault();
@@ -100,12 +136,11 @@ class StepTwo extends React.Component {
 
     submitHandler = e => {
         e.preventDefault();
-        this.createNewSchool();
+        this.createNewSchoolObj();
     }
 
-    createNewSchool = () => {
+    createNewSchoolObj = () => {
         console.log(this.state);
-
         const newObj = {
             name: this.state.name,
             email: this.state.email,
@@ -117,32 +152,38 @@ class StepTwo extends React.Component {
             }
         }
 
-        console.log('OBJ ::: ', newObj);
-
-        axios.post('https://xdemic-api.herokuapp.com/school', newObj)
-            .then(res => {
-                message.loading('Action in progress..', res, onclose)
-                    .then(afterClose => {
-                        message.success('school created!');
-                    });
-
-                this.setState({
-                    name: '',
-                    email: '',
-                    phone: '',
-                    streetAddress: '',
-                    addressCountry: '',
-                    addressLocality: ''
-                });
-            })
-            .catch(err => {
-                message.error(err.message);
-            })
-
+        this.addNewSchool(newObj);
     }
 
+    addNewSchool = async (obj) => {
+        try {
+            const createSchool = await axios.post('https://xdemic-api.herokuapp.com/school', obj);
+            message.loading('Action in progress..', createSchool, onclose)
+                .then(afterClose => {
+                    message.success('school created successfully!');
+                });
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
+    handleChange = info => {
+        if (info.file.status === 'uploading') {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+            getBase64(info.file.originFileObj, imageUrl =>
+                this.setState({
+                    imageUrl,
+                    loading: false,
+                }),
+            );
+        }
+    };
 
     render() {
+        const { imageUrl } = this.state;
         const { getFieldDecorator } = this.props.form;
         const { autoCompleteResult } = this.state;
 
@@ -183,7 +224,21 @@ class StepTwo extends React.Component {
             <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
         ));
 
+        const uploadButton = (
 
+            <div>
+                {/* <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <div className="ant-upload-text">Upload</div> */}
+                <Button
+                    size="small"
+                    style={{ marginLeft: 36, verticalAlign: 'middle' }}
+                // onClick={this.handleChange}
+                >
+                    upload
+                        </Button>
+            </div>
+
+        );
 
         return (
             <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{ marginTop: 50 }}>
@@ -191,16 +246,26 @@ class StepTwo extends React.Component {
 
                     <Col span={6} offset={15}>
                         <div style={{ padding: 25 }}>
-                            <Avatar style={{ backgroundColor: this.state.color, verticalAlign: 'middle' }} size="large">
-                                {this.state.user}
+                            <Avatar src={imageUrl} alt="Avatar">
                             </Avatar>
-                            <Button
+                            {/* <Button
                                 size="small"
                                 style={{ marginLeft: 16, verticalAlign: 'middle' }}
-                                onClick={this.changeUser}
+                                onClick={this.handleChange}
                             >
                                 Change
-                        </Button>
+                        </Button> */}
+                            <Upload
+                                name="avatar"
+                                // listType="picture-card"
+                                // className="avatar-uploader"
+                                showUploadList={false}
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                beforeUpload={beforeUpload}
+                                onChange={this.handleChange}
+                            >
+                                {imageUrl ? uploadButton : uploadButton}
+                            </Upload>
                         </div>
                     </Col>
                     <Col span={6} offset={4}>
@@ -266,7 +331,7 @@ class StepTwo extends React.Component {
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
-                        <Form.Item label="Country">
+                        {/* <Form.Item label="Country">
                             {getFieldDecorator('addressCountry', {
                                 rules: [
                                     {
@@ -275,7 +340,29 @@ class StepTwo extends React.Component {
                                     },
                                 ],
                             })(<Input size="large" allowClear name="addressCountry" value={addressCountry} onChange={this.changeHandler} />)}
+                        </Form.Item> */}
+
+                        <Form.Item label="Country">
+                            <Select
+                                size="large"
+                                showSearch
+                                style={{ width: 350 }}
+                                placeholder="Select a person"
+                                optionFilterProp="children"
+                                onChange={this.onChange}
+                                onFocus={this.onFocus}
+                                onBlur={this.onBlur}
+                                onSearch={this.onSearch}
+                                filterOption={(input, option) =>
+                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
+                                <Option value="china">China</Option>
+                                <Option value="america">America</Option>
+                                <Option value="japan">Japan</Option>
+                            </Select>
                         </Form.Item>
+
                     </Col>
 
                 </Row>
