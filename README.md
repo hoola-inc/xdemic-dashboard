@@ -1,4 +1,4 @@
-# xdemic-dashboard
+# xDemicDashboard
 
 ## run commands
 ### npm install
