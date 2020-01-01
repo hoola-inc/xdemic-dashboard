@@ -1,14 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import Select from 'react-select';
+import countryList from 'react-select-country-list'
 import {
     Form,
     Input,
     Tooltip,
     Icon,
     Cascader,
-    Select,
+    // Select,
     Row,
     Col,
     Checkbox,
@@ -21,7 +23,7 @@ import {
 
 } from 'antd';
 
-const { Option } = Select;
+// const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
@@ -54,6 +56,9 @@ class StepTwo extends React.Component {
             user: UserList[0],
             color: colorList[0],
 
+            options: this.options,
+            value: null,
+
             name: '',
             email: '',
             phone: '',
@@ -61,6 +66,8 @@ class StepTwo extends React.Component {
             addressCountry: '',
             addressLocality: ''
         };
+
+        this.options = countryList().getData();
     }
 
     onChange = (value) => {
@@ -134,6 +141,10 @@ class StepTwo extends React.Component {
 
     changeHandler = e => {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    yo = value => {
+        this.setState({ value })
     }
 
     submitHandler = e => {
@@ -213,18 +224,18 @@ class StepTwo extends React.Component {
                 },
             },
         };
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '86',
-        })(
-            <Select style={{ width: 70 }}>
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
-            </Select>,
-        );
+        // const prefixSelector = getFieldDecorator('prefix', {
+        //     initialValue: '86',
+        // })(
+        //     <Select style={{ width: 70 }}>
+        //         <Option value="86">+86</Option>
+        //         <Option value="87">+87</Option>
+        //     </Select>,
+        // );
 
-        const websiteOptions = autoCompleteResult.map(website => (
-            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-        ));
+        // const websiteOptions = autoCompleteResult.map(website => (
+        //     <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
+        // ));
 
         const uploadButton = (
 
@@ -347,23 +358,10 @@ class StepTwo extends React.Component {
 
                         <Form.Item label="Country">
                             <Select
-                                size="large"
-                                showSearch
-                                style={{ width: 350 }}
-                                placeholder="Select a person"
-                                optionFilterProp="children"
-                                onChange={this.onChange}
-                                onFocus={this.onFocus}
-                                onBlur={this.onBlur}
-                                onSearch={this.onSearch}
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                            >
-                                <Option value="china">China</Option>
-                                <Option value="america">America</Option>
-                                <Option value="japan">Japan</Option>
-                            </Select>
+                                options={this.state.options}
+                                value={this.state.value}
+                                onChange={this.yo}
+                            />
                         </Form.Item>
 
                     </Col>
