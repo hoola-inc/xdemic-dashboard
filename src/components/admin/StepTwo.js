@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import {
     Form,
     Input,
@@ -327,7 +329,8 @@ class StepTwo extends React.Component {
                                         message: 'Please input your phone number!',
                                     },
                                 ],
-                            })(<Input size="large" allowClear name="phone" value={phone} onChange={this.changeHandler} />)}
+                            })(<PhoneInput id="PhoneInput" country={'us'} value={this.state.phone} name="phone" onChange={phone => this.setState({ phone })}
+                            />)}
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
