@@ -3,7 +3,7 @@ import axios from 'axios';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import Select from 'react-select';
-import countryList from 'react-select-country-list'
+import countryList from 'react-select-country-list';
 import {
     Form,
     Input,
@@ -47,9 +47,15 @@ function beforeUpload(file) {
     }
     return isJpgOrPng && isLt2M;
 }
+
 class StepTwo extends React.Component {
     constructor(props) {
+
+
         super(props);
+
+        this.options = countryList().getData();
+
         this.state = {
             confirmDirty: false,
             autoCompleteResult: [],
@@ -67,7 +73,7 @@ class StepTwo extends React.Component {
             addressLocality: ''
         };
 
-        this.options = countryList().getData();
+
     }
 
     onChange = (value) => {
@@ -358,6 +364,7 @@ class StepTwo extends React.Component {
 
                         <Form.Item label="Country">
                             <Select
+                                style={{color: 'red'}}
                                 options={this.state.options}
                                 value={this.state.value}
                                 onChange={this.yo}
