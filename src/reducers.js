@@ -4,6 +4,9 @@
 
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
+// admin reducer
+// user reducer
+import adminReducer from "./containers/Admin/reducer";
 
 // import history from "utils/history";
 import globalReducer from "./containers/App/reducer";
@@ -19,6 +22,8 @@ export default function createReducer(injectedReducers = {}) {
     global: globalReducer,
     // language: languageProviderReducer, // languageProviderReducer json
     // router: connectRouter(history),
+    admin: adminReducer,
+    // user: userReducer,
     ...injectedReducers
   });
 
