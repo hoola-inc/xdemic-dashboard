@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import StepFive from "../../components/admin/StepFive";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 class AdminContainer extends Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class AdminContainer extends Component {
     console.log("this.props.name is: ", this.props.name);
     return (
       <div>
-        <div>
+        <div
+        //onClick={this.props.fetchProducts}
+        >
           Admin Container
           <h1> hi {this.state.name}</h1>
           <h1> I'm {this.props.testingState}</h1>
@@ -35,6 +38,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapActionToProps = () => {};
+const mapActionToProps = dispatch =>
+  bindActionCreators(
+    {
+      // fetchProducts: fetchProductsAction
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapActionToProps)(AdminContainer);
