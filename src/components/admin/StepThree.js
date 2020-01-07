@@ -146,6 +146,11 @@ class AddPersonToSchool extends Component {
       render: text => <a>{text}</a>
     },
     {
+      title: "Set Privileges",
+      dataIndex: "setPrivileges",
+      key: "setPrivileges"
+    },
+    {
       title: "DID",
       dataIndex: "did",
       key: "did"
@@ -256,25 +261,25 @@ class AddPersonToSchool extends Component {
     return (
       <div>
         {/* <Row gutter={24}>
-<Col span={8}>
-<div>
-<Upload {...props}>
-<Button>
-<Icon type="upload" /> Select File
-</Button>
-</Upload>
-<Button
-type="primary"
-onClick={this.handleUpload}
-disabled={fileList.length === 0}
-loading={uploading}
-style={{ marginTop: 16 }}
->
-{uploading ? 'Uploading' : 'Start Upload'}
-</Button>
-</div>
-</Col>
-</Row> */}
+              <Col span={8}>
+              <div>
+              <Upload {...props}>
+              <Button>
+              <Icon type="upload" /> Select File
+              </Button>
+              </Upload>
+              <Button
+              type="primary"
+              onClick={this.handleUpload}
+              disabled={fileList.length === 0}
+              loading={uploading}
+              style={{ marginTop: 16 }}
+              >
+              {uploading ? 'Uploading' : 'Start Upload'}
+              </Button>
+              </div>
+              </Col>
+            </Row> */}
         <Row gutter={24} style={{ marginTop: 25 }}>
           <Col span={22}>
             <Form layout="inline">
@@ -283,20 +288,20 @@ style={{ marginTop: 16 }}
                   <Icon type="upload" /> Select File
                 </Button>
                 {/* <Upload {...props}>
-<Button>
-<Icon type="upload" /> Select File
-</Button>
-</Upload> */}
+                  <Button>
+                  <Icon type="upload" /> Select File
+                  </Button>
+                  </Upload> */}
               </Form.Item>
               <Form.Item>
                 {/* <Button
-type="primary"
-onClick={this.handleUpload}
-disabled={fileList.length === 0}
-loading={uploading}
->
-{uploading ? "Uploading" : "Start Upload"}
-</Button> */}
+                type="primary"
+                onClick={this.handleUpload}
+                disabled={fileList.length === 0}
+                loading={uploading}
+                >
+                {uploading ? "Uploading" : "Start Upload"}
+                </Button> */}
               </Form.Item>
               {/* <FormItem>
                 <Search placeholder="Search Name" size="small" />
@@ -311,8 +316,8 @@ loading={uploading}
                 <Button type="primary">Search</Button>
               </FormItem> */}
               {/* <FormItem>
-<Button type="default">Reset</Button>
-</FormItem> */}
+                <Button type="default">Reset</Button>
+                </FormItem> */}
             </Form>
           </Col>
           <Col span={2}>
