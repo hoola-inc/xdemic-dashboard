@@ -298,18 +298,18 @@ loading={uploading}
 {uploading ? "Uploading" : "Start Upload"}
 </Button> */}
               </Form.Item>
-              <FormItem>
+              {/* <FormItem>
                 <Search placeholder="Search Name" size="small" />
-              </FormItem>
-              <FormItem>
+              </FormItem> */}
+              {/* <FormItem>
                 <Search placeholder="Search Name" />
-              </FormItem>
-              <FormItem>
+              </FormItem> */}
+              {/* <FormItem>
                 <RangePicker onChange={onChange} />
-              </FormItem>
-              <FormItem>
+              </FormItem> */}
+              {/* <FormItem>
                 <Button type="primary">Search</Button>
-              </FormItem>
+              </FormItem> */}
               {/* <FormItem>
 <Button type="default">Reset</Button>
 </FormItem> */}
