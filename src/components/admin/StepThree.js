@@ -11,8 +11,10 @@ import {
   Avatar,
   Upload,
   Icon,
-  message
-  //   Menu
+  message,
+  Dropdown,
+  Select,
+  Menu
 } from "antd";
 import Swal from "sweetalert2";
 import FormItem from "antd/lib/form/FormItem";
@@ -23,6 +25,7 @@ const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 // const { SubMenu } = Menu;
+const { Option } = Select;
 
 //Upload props end here
 function onChange(date, dateString) {
@@ -86,6 +89,21 @@ class AddPersonToSchool extends Component {
         // this.handle.onCancel();
       });
   }
+  onChange(value) {
+    console.log(`selected ${value}`);
+  }
+
+  onBlur() {
+    console.log("blur");
+  }
+
+  onFocus() {
+    console.log("focus");
+  }
+
+  onSearch(val) {
+    console.log("search:", val);
+  }
 
   handleUpload = () => {
     const { fileList } = this.state;
@@ -146,14 +164,39 @@ class AddPersonToSchool extends Component {
       render: text => <a>{text}</a>
     },
     {
-      title: "Set Privileges",
-      dataIndex: "setPrivileges",
-      key: "setPrivileges"
-    },
-    {
       title: "DID",
       dataIndex: "did",
       key: "did"
+    },
+    {
+      title: "Set Privileges",
+      dataIndex: "setPrivileges",
+      key: "setPrivileges",
+      render: (text, record) => {
+        console.log("render text is: ", text);
+        console.log("render record is: ", record);
+        return (
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder="Select a person"
+            optionFilterProp="children"
+            onChange={onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onSearch={this.onSearch}
+            filterOption={(input, option) =>
+              option.props.children
+                .toLowerCase()
+                .indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="tom">Tom</Option>
+          </Select>
+        );
+      }
     },
     {
       title: "DOB",
@@ -201,11 +244,15 @@ class AddPersonToSchool extends Component {
     {
       title: "Operation",
       key: "operation",
-      render: (text, record) => (
-        <span>
-          <Icon type="upload" />
-        </span>
-      )
+      render: (text, record) => {
+        console.log("render text is: ", text);
+        console.log("render record is: ", record);
+        return (
+          <span>
+            <Icon type="upload" />
+          </span>
+        );
+      }
     }
   ];
 
