@@ -13,6 +13,7 @@ import {
   Icon,
   message,
   Dropdown,
+  Popconfirm,
   Select,
   Divider,
   Menu
@@ -266,13 +267,24 @@ class AddPersonToSchool extends Component {
             <Divider type="vertical" />
             <Icon type="close-circle" />
             <Divider type="vertical" />
-            <Icon type="delete" />
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => this.handleDelete(record._id)}
+            >
+              {/* <a>Delete</a> */}
+              <Icon type="delete" />
+            </Popconfirm>
           </span>
         );
       }
     }
   ];
 
+  handleDelete = key => {
+    console.log("handleDelete is calling ", key);
+    // const dataSource = [...this.state.dataSource];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  };
   handleCancel = () => {
     this.setState({ showmodal: false });
   };
