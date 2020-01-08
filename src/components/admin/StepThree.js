@@ -47,6 +47,8 @@ const rowSelection = {
   })
 };
 
+const PRIVILEGES = ["Super Admin", "Admin", "User", "Student", "Anonymous"];
+
 // tabel data array ends
 class AddPersonToSchool extends Component {
   constructor(props) {
@@ -58,6 +60,7 @@ class AddPersonToSchool extends Component {
       csvdragresult: false,
       showmodal: false,
       collapsed: false,
+      selectedValue: "",
 
       fileList: [],
       uploading: false,
@@ -89,21 +92,23 @@ class AddPersonToSchool extends Component {
         // this.handle.onCancel();
       });
   }
-  onChange(value) {
-    console.log(`selected ${value}`);
-  }
+  onChange = value => {
+    console.log(`onChange selected ${value}`);
+    this.setState({ selectedValue: value });
+    console.log("onChange this.state is: ", this.state);
+  };
 
-  onBlur() {
+  onBlur = () => {
     console.log("blur");
-  }
+  };
 
-  onFocus() {
+  onFocus = () => {
     console.log("focus");
-  }
+  };
 
-  onSearch(val) {
+  onSearch = val => {
     console.log("search:", val);
-  }
+  };
 
   handleUpload = () => {
     const { fileList } = this.state;
@@ -179,9 +184,10 @@ class AddPersonToSchool extends Component {
           <Select
             showSearch
             style={{ width: 200 }}
-            placeholder="Select a person"
-            optionFilterProp="children"
-            onChange={onChange}
+            placeholder="Select a Privilege"
+            // optionFilterProp="children"
+            // defaultValue={this.state.selectedValue}
+            onChange={this.onChange}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onSearch={this.onSearch}
@@ -191,9 +197,9 @@ class AddPersonToSchool extends Component {
                 .indexOf(input.toLowerCase()) >= 0
             }
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            {PRIVILEGES.map(val => (
+              <Option value={val}>{val}</Option>
+            ))}
           </Select>
         );
       }
