@@ -185,7 +185,7 @@ class AddPersonToSchool extends Component {
         return (
           <Select
             showSearch
-            style={{ width: 200 }}
+            style={{ width: 120 }}
             placeholder="Select a Privilege"
             // optionFilterProp="children"
             // defaultValue={this.state.selectedValue}
