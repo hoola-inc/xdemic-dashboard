@@ -152,6 +152,11 @@ class StepFive extends Component {
       key: "did"
     },
     {
+      title: "Courses",
+      dataIndex: "course",
+      key: "course"
+    },
+    {
       title: "DOB",
       dataIndex: "birthDate",
       key: "dob"
