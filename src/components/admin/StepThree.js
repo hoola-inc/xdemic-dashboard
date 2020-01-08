@@ -381,7 +381,9 @@ class AddPersonToSchool extends Component {
               </Col>
             </Row> */}
         <Row gutter={24} style={{ marginTop: 25 }}>
-          <Col span={22}>
+          {/* <Col span={22}></Col> */}
+          <Col span={4} offset={20}>
+            {/* to do add ad stuent modal here*/}
             <Form layout="inline">
               <Form.Item>
                 <Button onClick={this.createModal}>
@@ -394,6 +396,7 @@ class AddPersonToSchool extends Component {
                   </Upload> */}
               </Form.Item>
               <Form.Item>
+                <AddNewPerson />
                 {/* <Button
                 type="primary"
                 onClick={this.handleUpload}
@@ -419,11 +422,6 @@ class AddPersonToSchool extends Component {
                 <Button type="default">Reset</Button>
                 </FormItem> */}
             </Form>
-          </Col>
-          <Col span={2}>
-            {/* to do add ad stuent modal here*/}
-
-            <AddNewPerson />
           </Col>
         </Row>
         <Row gutter={24} style={{ marginTop: 25 }}>
