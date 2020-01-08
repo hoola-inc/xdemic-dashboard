@@ -259,13 +259,22 @@ class AddPersonToSchool extends Component {
           <span>
             {/* <Icon type="upload" /> */}
             {/* <Icon type="check" /> */}
-            <Icon type="check-circle" />
+            <Icon
+              type="check-circle"
+              onClick={() => this.handleAccept(record)}
+            />
             <Divider type="vertical" />
-            <Icon type="minus-circle" />
+            <Icon
+              type="minus-circle"
+              onClick={() => this.handleReject(record)}
+            />
             <Divider type="vertical" />
-            <Icon type="edit" />
+            <Icon type="edit" onClick={() => this.handleEdit(record)} />
             <Divider type="vertical" />
-            <Icon type="close-circle" />
+            <Icon
+              type="close-circle"
+              onClick={() => this.handleReject(record)}
+            />
             <Divider type="vertical" />
             <Popconfirm
               title="Sure to delete?"
@@ -282,6 +291,21 @@ class AddPersonToSchool extends Component {
 
   handleDelete = key => {
     console.log("handleDelete is calling ", key);
+    // const dataSource = [...this.state.dataSource];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  };
+  handleAccept = key => {
+    console.log("handleAccept is calling ", key);
+    // const dataSource = [...this.state.dataSource];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  };
+  handleEdit = key => {
+    console.log("handleEdit is calling ", key);
+    // const dataSource = [...this.state.dataSource];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  };
+  handleReject = key => {
+    console.log("handleReject is calling ", key);
     // const dataSource = [...this.state.dataSource];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
