@@ -14,6 +14,7 @@ import {
   message,
   Dropdown,
   Select,
+  Divider,
   Menu
 } from "antd";
 import Swal from "sweetalert2";
@@ -255,7 +256,17 @@ class AddPersonToSchool extends Component {
         console.log("render record is: ", record);
         return (
           <span>
-            <Icon type="upload" />
+            {/* <Icon type="upload" /> */}
+            {/* <Icon type="check" /> */}
+            <Icon type="check-circle" />
+            <Divider type="vertical" />
+            <Icon type="minus-circle" />
+            <Divider type="vertical" />
+            <Icon type="edit" />
+            <Divider type="vertical" />
+            <Icon type="close-circle" />
+            <Divider type="vertical" />
+            <Icon type="delete" />
           </span>
         );
       }
