@@ -131,16 +131,17 @@ class AddPersonToSchool extends Component {
         const data = [];
         // const tags = response.data.data[0].tags
         //handle success
-        console.log(response);
+        console.log("table csv data is: ", response.data.data);
         data.push(response.data.data);
         console.log("UPDATED RECORD::", data);
         message.success("file loaded successfully...");
         this.setState({
           uploading: false,
           showmodal: false,
-          tableData: data,
+          tableData: response.data.data,
           fileList: []
         });
+        console.log("after state is : ", response.data.data);
       })
       .catch(response => {
         //handle error
@@ -156,7 +157,7 @@ class AddPersonToSchool extends Component {
   columns = [
     {
       title: "Avatar",
-      dataIndex: "avatar",
+      dataIndex: "Avatar",
       key: "avatar",
       render: () => (
         <span>
@@ -166,13 +167,13 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "Name",
-      dataIndex: "fullName",
+      dataIndex: "Name",
       key: "name",
       render: text => <a>{text}</a>
     },
     {
       title: "DID",
-      dataIndex: "did",
+      dataIndex: "DID",
       key: "did"
     },
     {
@@ -208,22 +209,22 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "DOB",
-      dataIndex: "birthDate",
+      dataIndex: "DOB",
       key: "dob"
     },
     {
       title: "Gender",
-      dataIndex: "gender",
+      dataIndex: "Gender",
       key: "gender"
     },
     {
       title: "Phone",
-      dataIndex: "mobile",
+      dataIndex: "Phone",
       key: "phone"
     },
     {
       title: "Email",
-      dataIndex: "email",
+      dataIndex: "Email",
       key: "email"
     },
     // {
@@ -235,7 +236,7 @@ class AddPersonToSchool extends Component {
     {
       title: "Status",
       key: "tags",
-      dataIndex: "tags",
+      dataIndex: "Status",
       render: () => (
         <span>
           <Button type="primary" ghost onClick={this.sendInvite}>
@@ -246,12 +247,12 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "CrateTime",
-      dataIndex: `createdAt`,
+      dataIndex: `CrateTime`,
       key: "createdAt"
     },
     {
       title: "Operation",
-      key: "operation",
+      key: "Operation",
       render: (text, record) => {
         console.log("render text is: ", text);
         console.log("render record is: ", record);
