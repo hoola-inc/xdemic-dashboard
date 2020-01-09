@@ -278,12 +278,12 @@ class StepFive extends Component {
             </Col>
             </Row> */}
         <Row gutter={24} style={{ marginTop: 25 }}>
-          <Col span={4} offset={20}>
+          <Col span={5} offset={19}>
             {/* to do add ad stuent modal here*/}
             <Form layout="inline">
               <Form.Item>
                 <Button onClick={this.createModal}>
-                  <Icon type="upload" /> Select File
+                  <Icon type="upload" /> Select CSV File
                 </Button>
                 {/* <Upload {...props}>
                   <Button>
