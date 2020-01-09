@@ -266,7 +266,7 @@ class StepOne extends React.Component {
                 Female
               </Button>
               <Button size="default" type="default" style={{ marginLeft: 5 }}>
-                other
+                Other
               </Button>
             </Form.Item>
           </Col>
