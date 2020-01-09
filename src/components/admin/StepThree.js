@@ -157,7 +157,7 @@ class AddPersonToSchool extends Component {
   columns = [
     {
       title: "Avatar",
-      dataIndex: "Avatar",
+      dataIndex: "avatar",
       key: "avatar",
       render: () => (
         <span>
@@ -167,13 +167,13 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "Name",
-      dataIndex: "Name",
+      dataIndex: "name",
       key: "name",
       render: text => <a>{text}</a>
     },
     {
       title: "DID",
-      dataIndex: "DID",
+      dataIndex: "did",
       key: "did"
     },
     {
@@ -209,22 +209,22 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "DOB",
-      dataIndex: "DOB",
+      dataIndex: "dob",
       key: "dob"
     },
     {
       title: "Gender",
-      dataIndex: "Gender",
+      dataIndex: "gender",
       key: "gender"
     },
     {
       title: "Phone",
-      dataIndex: "Phone",
+      dataIndex: "phone",
       key: "phone"
     },
     {
       title: "Email",
-      dataIndex: "Email",
+      dataIndex: "email",
       key: "email"
     },
     // {
@@ -236,7 +236,7 @@ class AddPersonToSchool extends Component {
     {
       title: "Status",
       key: "tags",
-      dataIndex: "Status",
+      dataIndex: "status",
       render: () => (
         <span>
           <Button type="primary" ghost onClick={this.sendInvite}>
@@ -247,7 +247,7 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "CrateTime",
-      dataIndex: `CrateTime`,
+      dataIndex: `createdAt`,
       key: "createdAt"
     },
     {
