@@ -361,28 +361,21 @@ class AddPersonToSchool extends Component {
 
     return (
       <div>
-        {/* <Row gutter={24}>
-              <Col span={8}>
-              <div>
-              <Upload {...props}>
-              <Button>
-              <Icon type="upload" /> Select File
-              </Button>
-              </Upload>
-              <Button
-              type="primary"
-              onClick={this.handleUpload}
-              disabled={fileList.length === 0}
-              loading={uploading}
-              style={{ marginTop: 16 }}
-              >
-              {uploading ? 'Uploading' : 'Start Upload'}
-              </Button>
-              </div>
-              </Col>
-            </Row> */}
         <Row gutter={24} style={{ marginTop: 25 }}>
-          <Col span={5} offset={19}>
+          <Col span={6}>
+            {/* to do add ad stuent modal here*/}
+            <Form layout="inline">
+              <Form.Item>
+                <Button onClick={this.createModal}>
+                  <Icon type="upload" /> Select CSV File
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <AddNewPerson name={"Person"} />
+              </Form.Item>
+            </Form>
+          </Col>
+          <Col span={6} push={12}>
             {/* to do add ad stuent modal here*/}
             <Form layout="inline">
               <Form.Item>
