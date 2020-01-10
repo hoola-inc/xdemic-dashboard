@@ -1,88 +1,100 @@
-import React from 'react';
-import AdminDetail from './StepOne';
+import React from "react";
+import AdminDetail from "./StepOne";
 import CreateNewSchool from "./StepTwo";
-import AddPersons from './StepThree';
-import AddCoursesForSchool from './StepFour'
-import AddStudents from './StepFive'
-import { Steps, Button, message, Icon, Row, Col } from 'antd';
+import AddPersons from "./StepThree";
+import AddCoursesForSchool from "./StepFour";
+import AddStudents from "./StepFive";
+import { Steps, Button, message, Icon, Row, Col } from "antd";
 
 const { Step } = Steps;
 
 const steps = [
-    {
-        title: 'First',
-        content: <AdminDetail />,
-    },
-    {
-        title: 'Second',
-        content: <CreateNewSchool />,
-    },
-    {
-        title: 'Third',
-        content: <AddPersons />,
-    },
-    {
-        title: 'Four',
-        content: <AddCoursesForSchool />
-    },
-    {
-        title: 'Five',
-        content: <AddStudents />
-    },
+  {
+    title: "First",
+    content: <AdminDetail />
+  },
+  {
+    title: "Second",
+    content: <CreateNewSchool />
+  },
+  {
+    title: "Third",
+    content: <AddPersons />
+  },
+  {
+    title: "Four",
+    content: <AddCoursesForSchool />
+  },
+  {
+    title: "Five",
+    content: <AddStudents />
+  }
 ];
 
 class AdminSteps extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            current: 0,
-        };
-        // this.onSubmit = this.onSubmit.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      current: 0
+    };
+    // this.onSubmit = this.onSubmit.bind(this);
+  }
 
-    next() {
-        const current = this.state.current + 1;
-        this.setState({ current });
-    }
+  next() {
+    const current = this.state.current + 1;
+    this.setState({ current });
+  }
 
-    prev() {
-        const current = this.state.current - 1;
-        this.setState({ current });
-    }
+  prev() {
+    const current = this.state.current - 1;
+    this.setState({ current });
+  }
 
-    render() {
-        const { current } = this.state;
-        return (
-            <div>
-                        <Steps current={current}>
-                            {steps.map(item => (
-                                <Step key={item.title} title={item.title} />
-                            ))}
-                        </Steps>
-                        <div className="steps-content">{steps[current].content}</div>
-                        <div className="steps-action" style={{ textAlign: "right" }}>
-                            {current < steps.length - 1 && (
-                                <Button type="primary" size="large" onClick={() => this.next()}>
-                                    <Icon type="arrow-right" />
-                                    Next
-                        </Button>
-                            )}
-                            {current === steps.length - 1 && (
-                                <Button type="primary"  size="large" onClick={() => message.success('Processing complete!')}>
-                                    Done
-                        </Button>
-                            )}
-                            {current > 0 && (
-                                <Button style={{ marginLeft: 8 }}  size="large" onClick={() => this.prev()}>
-                                    <Icon type="arrow-left" />
-                                    Previous
-        
-                        </Button>
-                            )}
-                        </div>
-            </div>
-        );
-    }
+  render() {
+    const { current } = this.state;
+    return (
+      <div>
+        <Steps current={current}>
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div className="steps-content">{steps[current].content}</div>
+        <div className="steps-action" style={{ textAlign: "right" }}>
+          {current > 0 && (
+            <Button
+              //   style={{ marginLeft: 8 }}
+              size="large"
+              onClick={() => this.prev()}
+            >
+              <Icon type="arrow-left" />
+              Previous
+            </Button>
+          )}
+          {current < steps.length - 1 && (
+            <Button
+              style={{ marginLeft: 8 }}
+              type="primary"
+              size="large"
+              onClick={() => this.next()}
+            >
+              <Icon type="arrow-right" />
+              Next
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => message.success("Processing complete!")}
+            >
+              Done
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default AdminSteps;
