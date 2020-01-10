@@ -84,6 +84,7 @@ class AdminSteps extends React.Component {
           )}
           {current === steps.length - 1 && (
             <Button
+              style={{ marginLeft: 8 }}
               type="primary"
               size="large"
               onClick={() => message.success("Processing complete!")}
