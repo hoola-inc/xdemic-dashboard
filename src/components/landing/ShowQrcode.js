@@ -22,10 +22,14 @@ class ShowQrcode extends React.Component {
     // const history = useHistory();
     const socket = socketIOClient(ENDPOINT);
     socket.on("QRCodeSuccess", data => {
+      const hide = message.loading("Everything is Good, Redirecting....", 1000);
       console.log("on QRCodeSuccess data is: ", data);
       if (data.status) {
         // route the app on "/admin" route
-        this.props.history.push("/admin");
+        setTimeout(() => {
+          hide();
+          this.props.history.push("/admin");
+        }, 1500);
       }
     });
   }
@@ -49,11 +53,16 @@ class ShowQrcode extends React.Component {
       <div className="main__logo">
         <Row align="middle">
           <Col>
-            <img src={logo} id="logo" />
+            <img alt={"logo"} src={logo} id="logo" />
           </Col>
           <Col>
             <div className="qr_code">
-              <img src={this.state.qrcodeValue} width="400" height="400" />
+              <img
+                alt={"qrcodeValue"}
+                src={this.state.qrcodeValue}
+                width="400"
+                height="400"
+              />
             </div>
           </Col>
         </Row>
