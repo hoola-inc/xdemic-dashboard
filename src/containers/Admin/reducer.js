@@ -8,30 +8,37 @@
  */
 
 import produce from "immer";
-import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from "./constants";
+import {
+  LOAD_REPOS_SUCCESS,
+  LOAD_REPOS,
+  LOAD_REPOS_ERROR,
+  ADD_ADMIN
+} from "./constants";
 
 // The initial state of the App
 export const initialState = {
   loading: false,
   error: false,
   currentUser: false,
-  userData: {
-    repositories: false
-  }
+  userData: {}
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const adminReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case ADD_ADMIN:
+        console.log("case ADD_ADMIN data is: ", action);
+        draft.userData = action;
+        break;
       case LOAD_REPOS:
         draft.loading = true;
         draft.error = false;
-        draft.userData.repositories = false;
+        // draft.userData.repositories = false;
         break;
 
       case LOAD_REPOS_SUCCESS:
-        draft.userData.repositories = action.repos;
+        // draft.userData.repositories = action.repos;
         draft.loading = false;
         draft.currentUser = action.username;
         break;

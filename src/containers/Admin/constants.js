@@ -9,6 +9,8 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
+export const ADD_ADMIN = "xDemicDashboard/Admin/ADD_ADMIN";
+
 export const LOAD_REPOS = "xDemicDashboard/Admin/LOAD_REPOS";
 export const LOAD_REPOS_SUCCESS = "xDemicDashboard/Admin/LOAD_REPOS_SUCCESS";
 export const LOAD_REPOS_ERROR = "xDemicDashboard/Admin/LOAD_REPOS_ERROR";

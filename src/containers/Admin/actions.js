@@ -15,7 +15,7 @@
  *    }
  */
 
-import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from "./constants";
+import { LOAD_REPOS, LOAD_REPOS_SUCCESS,ADD_ADMIN, LOAD_REPOS_ERROR } from "./constants";
 
 /**
  * Load the repositories, this action starts the request saga
@@ -56,6 +56,13 @@ export function repoLoadingError(error) {
     type: LOAD_REPOS_ERROR,
     error
   };
+}
+
+export function addAdmin(data){
+  return{
+    type: ADD_ADMIN,
+    data
+  }
 }
 
 export function fetchProducts() {
