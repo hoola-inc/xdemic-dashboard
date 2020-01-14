@@ -70,6 +70,9 @@ class Headers extends React.Component {
       }
       console.log("updated state!", this.state);
     });
+    socket.on("QRCodeSuccess", data => {
+      console.log("on QRCodeSuccess data is: ", data);
+    });
   }
 
   next() {

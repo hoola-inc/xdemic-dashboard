@@ -1,26 +1,18 @@
-import React from 'react';
+import React from "react";
 
 // React Router packages
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 
 // import components
-import Course from './components/course/CoursesCard';
-import CourseDetail from './components/course/CourseDetail';
+import Course from "./components/course/CoursesCard";
+import CourseDetail from "./components/course/CourseDetail";
 import School from "./components/school/School";
 import Student from "./components/student/Student";
 import Home from "./components/home/Home";
-import AdminMain from './components/admin/Main.admin';
+import AdminMain from "./components/admin/Main.admin";
 import ShowQrcode from "./components/landing/ShowQrcode";
 
-
-
 class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
-
   render() {
     return (
       <BrowserRouter>
@@ -39,4 +31,3 @@ class App extends React.Component {
 }
 
 export default App;
-
