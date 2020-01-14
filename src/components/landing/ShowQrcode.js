@@ -23,10 +23,10 @@ class ShowQrcode extends React.Component {
     const socket = socketIOClient(ENDPOINT);
     socket.on("QRCodeSuccess", data => {
       console.log("on QRCodeSuccess data is: ", data);
-      // if (data.status) {
-      // route the app on "/admin" route
-      this.props.history.push("/admin");
-      // }
+      if (data.status) {
+        // route the app on "/admin" route
+        this.props.history.push("/admin");
+      }
     });
   }
 
