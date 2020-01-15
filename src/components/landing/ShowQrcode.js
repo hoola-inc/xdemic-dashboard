@@ -2,7 +2,6 @@ import React from "react";
 import logo from "../../assets/img/xDemic-logo-01.png";
 import { Col, Row, message } from "antd";
 import axios from "axios";
-import withUnmounted from "@ishawnwang/withunmounted";
 import socketIOClient from "socket.io-client";
 import { connect } from "react-redux";
 
