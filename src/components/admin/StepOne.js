@@ -13,6 +13,8 @@ import {
   AutoComplete,
   DatePicker
 } from "antd";
+import { connect } from "react-redux";
+import { addAdmin } from "../../containers/Admin/actions";
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -64,6 +66,14 @@ class StepOne extends React.Component {
     autoCompleteResult: []
   };
 
+  componentDidMount() {
+    this.props.addAdmin({
+      name: "rizwan zaheer",
+      age: 36,
+      type: "dev",
+      gender: "M"
+    });
+  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -110,6 +120,8 @@ class StepOne extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
+    const { userName } = this.props;
+    console.log("userName is: ", userName);
 
     const formItemLayout = {
       labelCol: {
@@ -155,18 +167,7 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Full Name">
-              {getFieldDecorator("text", {
-                rules: [
-                  {
-                    type: "text",
-                    message: "The input is not valid name!"
-                  },
-                  {
-                    required: true,
-                    message: "Please input your name!"
-                  }
-                ]
-              })(<Input size="large" />)}
+              <Input size="large" value={userName} disabled />
             </Form.Item>
           </Col>
           <Col span={6} offset={2}>
@@ -278,4 +279,19 @@ class StepOne extends React.Component {
 
 const WrappedStepOne = Form.create()(StepOne);
 
-export default WrappedStepOne;
+const mapStateToProps = state => {
+  return {
+    // testingState: state.global.error,
+    userName: state.admin.userData.name || [{ name: "Hamza" }]
+  };
+};
+
+const mapActionToProps = dispatch => {
+  return {
+    addAdmin: data => {
+      dispatch(addAdmin(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapActionToProps)(WrappedStepOne);
