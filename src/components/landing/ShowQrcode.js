@@ -4,6 +4,7 @@ import { Col, Row, message } from "antd";
 import axios from "axios";
 import withUnmounted from "@ishawnwang/withunmounted";
 import socketIOClient from "socket.io-client";
+import { connect } from "react-redux";
 
 const ENDPOINT = "https://xdemic-api.herokuapp.com";
 
@@ -21,17 +22,21 @@ class ShowQrcode extends React.Component {
     this.getQRCodeValue();
     // const history = useHistory();
     const socket = socketIOClient(ENDPOINT);
-    socket.on("QRCodeSuccess", data => {
-      const hide = message.loading("Everything is Good, Redirecting....", 1000);
-      console.log("on QRCodeSuccess data is: ", data);
-      if (data.status) {
-        // route the app on "/admin" route
-        setTimeout(() => {
-          hide();
-          this.props.history.push("/admin");
-        }, 1500);
-      }
-    });
+    const data = {
+      name: "Rizwan",
+      age: 26
+    };
+    // socket.on("QRCodeSuccess", data => {
+    //   const hide = message.loading("Everything is Good, Redirecting....", 1000);
+    //   console.log("on QRCodeSuccess data is: ", data);
+    //   if (data.status) {
+    //     // route the app on "/admin" route
+    //     setTimeout(() => {
+    //       hide();
+    //       this.props.history.push("/admin");
+    //     }, 1500);
+    //   }
+    // });
   }
 
   getQRCodeValue = async () => {
@@ -71,4 +76,13 @@ class ShowQrcode extends React.Component {
   }
 }
 
-export default withUnmounted(ShowQrcode);
+const mapStateToProps = state => {
+  return {
+    // testingState: state.global.error,
+    // userData: state.global.userData.repositories || [{ name: "Hamza" }]
+  };
+};
+
+const mapActionToProps = dispatch => {};
+
+export default connect(mapStateToProps, mapActionToProps)(ShowQrcode);
