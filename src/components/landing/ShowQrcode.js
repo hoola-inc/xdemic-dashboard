@@ -24,23 +24,19 @@ class ShowQrcode extends React.Component {
     this.getQRCodeValue();
     // const history = useHistory();
     const socket = socketIOClient(ENDPOINT);
-    const data = {
-      name: "Rizwan",
-      age: 26
-    };
-    this.props.addAdmin(data);
-    console.log("after action trigger ");
-    // socket.on("QRCodeSuccess", data => {
-    //   const hide = message.loading("Everything is Good, Redirecting....", 1000);
-    //   console.log("on QRCodeSuccess data is: ", data);
-    //   if (data.status) {
-    //     // route the app on "/admin" route
-    //     setTimeout(() => {
-    //       hide();
-    //       this.props.history.push("/admin");
-    //     }, 1500);
-    //   }
-    // });
+    socket.on("QRCodeSuccess", data => {
+      const hide = message.loading("Everything is Good, Redirecting....", 1000);
+      console.log("on QRCodeSuccess data is: ", data);
+      if (data.status) {
+        // route the app on "/admin" route
+        setTimeout(() => {
+          this.props.addAdmin(data.data);
+          hide();
+          console.log("after action trigger ");
+          this.props.history.push("/admin");
+        }, 1500);
+      }
+    });
   }
 
   getQRCodeValue = async () => {
