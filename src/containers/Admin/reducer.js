@@ -29,7 +29,7 @@ const adminReducer = (state = initialState, action) =>
     switch (action.type) {
       case ADD_ADMIN:
         console.log("case ADD_ADMIN data is: ", action);
-        draft.userData = action;
+        draft.userData = action.data;
         break;
       case LOAD_REPOS:
         draft.loading = true;
