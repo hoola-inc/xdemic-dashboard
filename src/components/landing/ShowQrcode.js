@@ -6,6 +6,8 @@ import withUnmounted from "@ishawnwang/withunmounted";
 import socketIOClient from "socket.io-client";
 import { connect } from "react-redux";
 
+import { addAdmin } from "../../containers/Admin/actions";
+
 const ENDPOINT = "https://xdemic-api.herokuapp.com";
 
 class ShowQrcode extends React.Component {
@@ -26,6 +28,8 @@ class ShowQrcode extends React.Component {
       name: "Rizwan",
       age: 26
     };
+    this.props.addAdmin(data);
+    console.log("after action trigger ");
     // socket.on("QRCodeSuccess", data => {
     //   const hide = message.loading("Everything is Good, Redirecting....", 1000);
     //   console.log("on QRCodeSuccess data is: ", data);
@@ -83,6 +87,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapActionToProps = dispatch => {};
+const mapActionToProps = dispatch => {
+  return {
+    addAdmin: data => {
+      dispatch(addAdmin(data));
+    }
+  };
+};
 
 export default connect(mapStateToProps, mapActionToProps)(ShowQrcode);
