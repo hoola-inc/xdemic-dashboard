@@ -5,6 +5,7 @@ import {
   Tooltip,
   Icon,
   Cascader,
+  Radio,
   Select,
   Row,
   Col,
@@ -61,19 +62,34 @@ const residences = [
 ];
 
 class StepOne extends React.Component {
+  // constructor(props){
+  //   super(props);
+  // }
   state = {
     confirmDirty: false,
-    autoCompleteResult: []
+    autoCompleteResult: [],
+    gender: this.props.gender
   };
 
   componentDidMount() {
     this.props.addAdmin({
-      name: "rizwan zaheer",
+      fullName: "rizwan zaheer",
       age: 36,
+      birthDate: "30-sep-1992",
+      mobile: "03135561765",
+      email: "rizwan@hoola.tech",
+      did: "this is did",
       type: "dev",
-      gender: "M"
+      gender: "Male",
+      department: "Software Engineer"
     });
   }
+  onGenderChange = e => {
+    console.log("radio checked", e.target.value);
+    this.setState({
+      gender: e.target.value
+    });
+  };
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -120,8 +136,18 @@ class StepOne extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
-    const { userName } = this.props;
-    console.log("userName is: ", userName);
+    const {
+      fullName,
+      age,
+      birthDate,
+      mobile,
+      email,
+      did,
+      type,
+      gender,
+      department
+    } = this.props;
+    console.log("fullName is: ", fullName);
 
     const formItemLayout = {
       labelCol: {
@@ -167,39 +193,17 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Full Name">
-              <Input size="large" value={userName} disabled />
+              <Input size="large" value={fullName} disabled />
             </Form.Item>
           </Col>
           <Col span={6} offset={2}>
             <Form.Item label="Email">
-              {getFieldDecorator("email", {
-                rules: [
-                  {
-                    type: "email",
-                    message: "The input is not valid E-mail!"
-                  },
-                  {
-                    required: true,
-                    message: "Please input your E-mail!"
-                  }
-                ]
-              })(<Input size="large" />)}
+              <Input size="large" value={email} disabled />
             </Form.Item>
           </Col>
           <Col span={6} offset={4}>
             <Form.Item label="ID">
-              {getFieldDecorator("text", {
-                rules: [
-                  {
-                    type: "text",
-                    message: "The input is not valid id!"
-                  },
-                  {
-                    required: true,
-                    message: "Please input your id!"
-                  }
-                ]
-              })(<Input size="large" />)}
+              <Input size="large" value={did} disabled />
             </Form.Item>
           </Col>
         </Row>
@@ -207,52 +211,19 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Department">
-              {getFieldDecorator("email", {
-                rules: [
-                  {
-                    type: "text",
-                    message: "The input is not valid department!"
-                  },
-                  {
-                    required: true,
-                    message: "Please input your department!"
-                  }
-                ]
-              })(<Input size="large" />)}
+              <Input size="large" value={department} disabled />
             </Form.Item>
           </Col>
 
           <Col span={6} offset={2}>
             <Form.Item label="Mobile Number">
-              {getFieldDecorator("email", {
-                rules: [
-                  {
-                    type: "text",
-                    message: "The input is not valid phone number!"
-                  },
-                  {
-                    required: true,
-                    message: "Please input your phone number!"
-                  }
-                ]
-              })(<Input size="large" />)}
+              <Input size="large" value={mobile} disabled />
             </Form.Item>
           </Col>
 
           <Col span={6} offset={4}>
             <Form.Item label="Date of birth">
-              {getFieldDecorator("text", {
-                rules: [
-                  {
-                    type: "date",
-                    message: "The input is not valid birth date!"
-                  },
-                  {
-                    required: true,
-                    message: "Please input your birth date!"
-                  }
-                ]
-              })(<DatePicker onChange={onChange} size="large" />)}
+              <Input size="large" value={birthDate} disabled />
             </Form.Item>
           </Col>
         </Row>
@@ -260,7 +231,16 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Gender">
-              <Button size="default" type="primary">
+              <Radio.Group
+                onChange={this.onGenderChange}
+                value={gender}
+                disabled
+              >
+                <Radio value={"Male"}>Male</Radio>
+                <Radio value={"Female"}>Female</Radio>
+                <Radio value={"Others"}>Others</Radio>
+              </Radio.Group>
+              {/* <Button size="default" type="primary">
                 Male
               </Button>
               <Button size="default" type="default" style={{ marginLeft: 5 }}>
@@ -268,7 +248,7 @@ class StepOne extends React.Component {
               </Button>
               <Button size="default" type="default" style={{ marginLeft: 5 }}>
                 Other
-              </Button>
+              </Button> */}
             </Form.Item>
           </Col>
         </Row>
@@ -280,9 +260,28 @@ class StepOne extends React.Component {
 const WrappedStepOne = Form.create()(StepOne);
 
 const mapStateToProps = state => {
+  const {
+    fullName,
+    age,
+    birthDate,
+    mobile,
+    email,
+    did,
+    type,
+    gender,
+    department
+  } = state.admin.userData;
   return {
     // testingState: state.global.error,
-    userName: state.admin.userData.name || [{ name: "Hamza" }]
+    fullName,
+    age,
+    birthDate,
+    mobile,
+    email,
+    did,
+    type,
+    gender,
+    department
   };
 };
 
