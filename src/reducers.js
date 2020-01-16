@@ -5,8 +5,9 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 // admin reducer
-// user reducer
 import adminReducer from "./containers/Admin/reducer";
+// School reducer
+import schoolReducer from "./containers/School/reducer";
 
 // import history from "utils/history";
 import globalReducer from "./containers/App/reducer";
@@ -23,6 +24,7 @@ export default function createReducer(injectedReducers = {}) {
     // language: languageProviderReducer, // languageProviderReducer json
     // router: connectRouter(history),
     admin: adminReducer,
+    school: schoolReducer,
     // user: userReducer,
     ...injectedReducers
   });

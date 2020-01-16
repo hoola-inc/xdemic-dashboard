@@ -26,7 +26,7 @@ class AdminContainer extends Component {
 const mapStateToProps = state => {
   return {
     testingState: state.global.error,
-    userData: state.global.userData.repositories || [{ name: "Hamza" }]
+    userData: state.global.userData.repositories || [{ name: "Rizwan" }]
   };
 };
 
