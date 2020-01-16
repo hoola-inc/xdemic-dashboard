@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Modal, Button, Input, Form, DatePicker, message } from "antd";
+import { Modal, Button, Input, Form, message } from "antd";
 
 class AddNewPersonModal extends React.Component {
   constructor(props) {
