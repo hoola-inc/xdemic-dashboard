@@ -4,28 +4,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Select from "react-select";
 import countryList from "react-select-country-list";
-import {
-  Form,
-  Input,
-  Tooltip,
-  Icon,
-  Cascader,
-  // Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  DatePicker,
-  Avatar,
-  message,
-  Upload
-} from "antd";
-
-// const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+import { Form, Input, Row, Col, Button, Avatar, message, Upload } from "antd";
 
 const UserList = ["U", "Lucy", "Tom", "Edward"];
 const colorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
