@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   Row,
   Button,
@@ -137,7 +138,7 @@ class StepFive extends Component {
       title: "Name",
       dataIndex: "fullName",
       key: "name",
-      render: text => <a>{text}</a>
+      render: text => <Link>{text}</Link>
     },
     {
       title: "DID",
