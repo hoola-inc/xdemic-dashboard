@@ -15,18 +15,23 @@
  *    }
  */
 
-import { ADD_ADMIN } from "./constants";
+import {
+  LOAD_REPOS,
+  LOAD_REPOS_SUCCESS,
+  ADD_ADMIN,
+  LOAD_REPOS_ERROR
+} from "./constants";
 
 /**
  * Load the repositories, this action starts the request saga
  *
  * @return {object} An action object with a type of LOAD_REPOS
  */
-// export function loadRepos() {
-//   return {
-//     type: LOAD_REPOS
-//   };
-// }
+export function loadRepos() {
+  return {
+    type: LOAD_REPOS
+  };
+}
 
 /**
  * Dispatched when the repositories are loaded by the request saga
@@ -36,13 +41,13 @@ import { ADD_ADMIN } from "./constants";
  *
  * @return {object}      An action object with a type of LOAD_REPOS_SUCCESS passing the repos
  */
-// export function reposLoaded(repos, username) {
-//   return {
-//     type: LOAD_REPOS_SUCCESS,
-//     repos,
-//     username
-//   };
-// }
+export function reposLoaded(repos, username) {
+  return {
+    type: LOAD_REPOS_SUCCESS,
+    repos,
+    username
+  };
+}
 
 /**
  * Dispatched when loading the repositories fails
@@ -51,12 +56,12 @@ import { ADD_ADMIN } from "./constants";
  *
  * @return {object}       An action object with a type of LOAD_REPOS_ERROR passing the error
  */
-// export function repoLoadingError(error) {
-//   return {
-//     type: LOAD_REPOS_ERROR,
-//     error
-//   };
-// }
+export function repoLoadingError(error) {
+  return {
+    type: LOAD_REPOS_ERROR,
+    error
+  };
+}
 
 export function addAdmin(data) {
   return {

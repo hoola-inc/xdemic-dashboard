@@ -8,7 +8,12 @@
  */
 
 import produce from "immer";
-import { ADD_ADMIN } from "./constants";
+import {
+  LOAD_REPOS_SUCCESS,
+  LOAD_REPOS,
+  LOAD_REPOS_ERROR,
+  ADD_ADMIN
+} from "./constants";
 
 // The initial state of the App
 export const initialState = {
@@ -26,23 +31,22 @@ const adminReducer = (state = initialState, action) =>
         console.log("case ADD_ADMIN data is: ", action);
         draft.userData = action.data;
         break;
+      case LOAD_REPOS:
+        draft.loading = true;
+        draft.error = false;
+        // draft.userData.repositories = false;
+        break;
 
-      // case LOAD_REPOS:
-      //   draft.loading = true;
-      //   draft.error = false;
-      //   // draft.userData.repositories = false;
-      //   break;
+      case LOAD_REPOS_SUCCESS:
+        // draft.userData.repositories = action.repos;
+        draft.loading = false;
+        draft.currentUser = action.username;
+        break;
 
-      // case LOAD_REPOS_SUCCESS:
-      //   // draft.userData.repositories = action.repos;
-      //   draft.loading = false;
-      //   draft.currentUser = action.username;
-      //   break;
-
-      // case LOAD_REPOS_ERROR:
-      //   draft.error = action.error;
-      //   draft.loading = false;
-      //   break;
+      case LOAD_REPOS_ERROR:
+        draft.error = action.error;
+        draft.loading = false;
+        break;
     }
   });
 
