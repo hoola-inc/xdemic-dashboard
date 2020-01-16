@@ -5,8 +5,6 @@ import {
   Col,
   Modal,
   Form,
-  Input,
-  DatePicker,
   Table,
   Avatar,
   Upload,
@@ -20,6 +18,7 @@ import Swal from "sweetalert2";
 
 import axios from "axios";
 import AddNewPerson from "../ant-modal/AddNewPersonModal";
+import { Link } from "react-router-dom";
 
 const { Dragger } = Upload;
 // const { SubMenu } = Menu;
@@ -165,7 +164,7 @@ class AddPersonToSchool extends Component {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: text => <a>{text}</a>
+      render: text => <Link to="#">{text}</Link>
     },
     {
       title: "DID",
