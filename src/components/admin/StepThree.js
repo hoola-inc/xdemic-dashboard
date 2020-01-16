@@ -12,27 +12,23 @@ import {
   Upload,
   Icon,
   message,
-  Dropdown,
   Popconfirm,
   Select,
-  Divider,
-  Menu
+  Divider
 } from "antd";
 import Swal from "sweetalert2";
-import FormItem from "antd/lib/form/FormItem";
+
 import axios from "axios";
 import AddNewPerson from "../ant-modal/AddNewPersonModal";
 
-const { Search } = Input;
-const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 // const { SubMenu } = Menu;
 const { Option } = Select;
 
 //Upload props end here
-function onChange(date, dateString) {
-  console.log(date, dateString);
-}
+// function onChange(date, dateString) {
+//   console.log(date, dateString);
+// }
 
 // rowSelection Table start
 const rowSelection = {
