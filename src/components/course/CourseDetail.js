@@ -156,8 +156,8 @@ for (let i = 0; i < 46; i++) {
   data.push({
     key: i,
     name: `Edward King ${i}`,
-    creditUniteValue: 32,
-    creditUniteValue: `London, Park Lane no. ${i}`
+    creditUniteValue: 32
+    // creditUniteValue: `London, Park Lane no. ${i}`
   });
 }
 
@@ -235,7 +235,7 @@ class CourseDetail extends React.Component {
   handleChange(value) {
     console.log(`selected ${value}`);
 
-    if (value == "C") {
+    if (value === "C") {
       console.log(this.state.courseId);
       axios
         .put(
