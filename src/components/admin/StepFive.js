@@ -138,7 +138,7 @@ class StepFive extends Component {
       title: "Name",
       dataIndex: "fullName",
       key: "name",
-      render: text => <Link>{text}</Link>
+      render: text => <Link to="#">{text}</Link>
     },
     {
       title: "DID",
