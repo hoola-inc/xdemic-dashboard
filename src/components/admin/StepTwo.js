@@ -360,15 +360,15 @@ class StepTwo extends React.Component {
           </Col>
           <Col span={6} offset={2}>
             {/* <Form.Item label="Country">
-                            {getFieldDecorator('addressCountry', {
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: 'Please input your country!',
-                                    },
-                                ],
-                            })(<Input size="large" allowClear name="addressCountry" value={addressCountry} onChange={this.changeHandler} />)}
-                        </Form.Item> */}
+                    {getFieldDecorator('addressCountry', {
+                        rules: [
+                            {
+                                required: true,
+                                message: 'Please input your country!',
+                            },
+                        ],
+                    })(<Input size="large" allowClear name="addressCountry" value={addressCountry} onChange={this.changeHandler} />)}
+                </Form.Item> */}
 
             <Form.Item label="Country">
               <Select
