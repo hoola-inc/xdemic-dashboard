@@ -179,17 +179,14 @@ class StepTwo extends React.Component {
   };
 
   render() {
-    const { imageUrl } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
 
     const {
       name,
       email,
-      phone,
       streetAddress,
-      addressCountry,
-      addressLocality
+      addressLocality,
+      imageUrl
     } = this.state;
 
     const formItemLayout = {
@@ -200,18 +197,6 @@ class StepTwo extends React.Component {
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 16 }
-      }
-    };
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0
-        },
-        sm: {
-          span: 16,
-          offset: 8
-        }
       }
     };
     // const prefixSelector = getFieldDecorator('prefix', {
