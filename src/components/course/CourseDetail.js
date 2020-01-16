@@ -19,6 +19,7 @@ import {
 } from "antd";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const { Paragraph } = Typography;
 const { Search } = Input;
@@ -281,7 +282,11 @@ class CourseDetail extends React.Component {
     {
       title: "Add Student To course",
       dataIndex: "addStudentToCourse",
-      render: () => <a onClick={this.addStudent}>Add Student</a>
+      render: () => (
+        <Link to="#" onClick={this.addStudent}>
+          Add Student
+        </Link>
+      )
     }
   ];
 
