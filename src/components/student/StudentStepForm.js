@@ -1,11 +1,8 @@
 import React from "react";
 import {
-  Layout,
   Steps,
   Button,
   message,
-  PageHeader,
-  Typography,
   Row,
   Col,
   Card,
@@ -15,12 +12,11 @@ import {
   List,
   Avatar
 } from "antd";
-import Sidebar from "../common/Sidebar";
-import Header from "../common/Header";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const { Step } = Steps;
-const { Paragraph } = Typography;
+
 const { Option } = Select;
 
 const children = [];
@@ -38,46 +34,46 @@ const data = [
   }
 ];
 
-const routes = [
-  {
-    path: "index",
-    breadcrumbName: "Home"
-  },
-  {
-    path: "first",
-    breadcrumbName: "StudentForm"
-  },
-  {
-    path: "second",
-    breadcrumbName: "StudentStepForm"
-  }
-];
+// const routes = [
+//   {
+//     path: "index",
+//     breadcrumbName: "Home"
+//   },
+//   {
+//     path: "first",
+//     breadcrumbName: "StudentForm"
+//   },
+//   {
+//     path: "second",
+//     breadcrumbName: "StudentStepForm"
+//   }
+// ];
 
-const Content = ({ children, extraContent }) => {
-  return (
-    <Row className="content" type="flex">
-      <div className="main" style={{ flex: 1 }}>
-        {children}
-      </div>
-      <div
-        className="extra"
-        style={{
-          marginLeft: 80
-        }}
-      >
-        {extraContent}
-      </div>
-    </Row>
-  );
-};
+// const Content = ({ children, extraContent }) => {
+//   return (
+//     <Row className="content" type="flex">
+//       <div className="main" style={{ flex: 1 }}>
+//         {children}
+//       </div>
+//       <div
+//         className="extra"
+//         style={{
+//           marginLeft: 80
+//         }}
+//       >
+//         {extraContent}
+//       </div>
+//     </Row>
+//   );
+// };
 
-const content = (
-  <div className="content">
-    <Paragraph>
-      <small>Follow the steps to register student</small>
-    </Paragraph>
-  </div>
-);
+// const content = (
+//   <div className="content">
+//     <Paragraph>
+//       <small>Follow the steps to register student</small>
+//     </Paragraph>
+//   </div>
+// );
 
 class StudentStepForm extends React.Component {
   constructor(props) {
@@ -211,7 +207,7 @@ class StudentStepForm extends React.Component {
                     avatar={
                       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     }
-                    title={<a href="#">{name}</a>}
+                    title={<Link to="#">{name}</Link>}
                     description={"Phone: " + phone}
                   />
                 </List.Item>
@@ -236,7 +232,7 @@ class StudentStepForm extends React.Component {
                     avatar={
                       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     }
-                    title={<a href="#">{name}</a>}
+                    title={<Link href="#">{name}</Link>}
                     description="Has been registered"
                   />
                 </List.Item>
