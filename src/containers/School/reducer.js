@@ -8,7 +8,13 @@
  */
 
 import produce from "immer";
-import { ADD_SCHOOL } from "./constants";
+import {
+  ADD_SCHOOL,
+  EDIT_SCHOOL,
+  DELETE_SCHOOL,
+  ACCEPT_SCHOOL,
+  REJECT_SCHOOL
+} from "./constants";
 
 // The initial state of the App
 export const initialState = {
@@ -23,6 +29,22 @@ const schoolReducer = (state = initialState, action) =>
     switch (action.type) {
       case ADD_SCHOOL:
         console.log("case ADD_ADMIN data is: ", action);
+        draft.userData = action.data;
+        break;
+      case EDIT_SCHOOL:
+        console.log("case EDIT_SCHOOL data is: ", action);
+        draft.userData = action.data;
+        break;
+      case DELETE_SCHOOL:
+        console.log("case DELETE_SCHOOL data is: ", action);
+        draft.userData = action.data;
+        break;
+      case ACCEPT_SCHOOL:
+        console.log("case DELETE_SCHOOL data is: ", action);
+        draft.userData = action.data;
+        break;
+      case REJECT_SCHOOL:
+        console.log("case DELETE_SCHOOL data is: ", action);
         draft.userData = action.data;
         break;
     }
