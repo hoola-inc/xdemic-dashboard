@@ -20,7 +20,8 @@ import {
 export const initialState = {
   loading: false,
   error: false,
-  currentSchool: {}
+  currentSchool: {},
+  schools: []
 };
 
 /* eslint-disable default-case, no-param-reassign */
