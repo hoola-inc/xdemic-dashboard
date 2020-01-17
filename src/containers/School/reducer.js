@@ -40,11 +40,11 @@ const schoolReducer = (state = initialState, action) =>
         draft.userData = action.data;
         break;
       case ACCEPT_SCHOOL:
-        console.log("case DELETE_SCHOOL data is: ", action);
+        console.log("case ACCEPT_SCHOOL data is: ", action);
         draft.userData = action.data;
         break;
       case REJECT_SCHOOL:
-        console.log("case DELETE_SCHOOL data is: ", action);
+        console.log("case REJECT_SCHOOL data is: ", action);
         draft.userData = action.data;
         break;
     }
