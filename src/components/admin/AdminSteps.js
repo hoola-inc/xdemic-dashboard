@@ -78,8 +78,8 @@ class AdminSteps extends React.Component {
               size="large"
               onClick={() => this.next()}
             >
-              <Icon type="arrow-right" />
               Next
+              <Icon type="arrow-right" />
             </Button>
           )}
           {current === steps.length - 1 && (
