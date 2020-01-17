@@ -16,6 +16,7 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import { addAdmin } from "../../containers/Admin/actions";
+import { fetchSchool } from "../../containers/School/actions";
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -193,6 +194,9 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Full Name">
+              <button onClick={() => this.props.fetchSchool("hello riz!")}>
+                Click me
+              </button>
               <Input size="large" value={fullName} disabled />
             </Form.Item>
           </Col>
@@ -289,6 +293,9 @@ const mapActionToProps = dispatch => {
   return {
     addAdmin: data => {
       dispatch(addAdmin(data));
+    },
+    fetchSchool: data => {
+      dispatch(fetchSchool(data));
     }
   };
 };
