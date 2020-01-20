@@ -50,7 +50,7 @@ export function addNewPerson(data) {
   return function(dispatch) {
     return HS.post("persons", data).then(res => {
       console.log("add new person response is: ", res);
-      dispatch(addPersons(data));
+      dispatch(addPerson(data));
     });
   };
 }
@@ -80,7 +80,7 @@ export function fetchPerson(personDid) {
       // We can dispatch many times!
       // Here, we update the app state with the results of the API call.
       // dispatch(receivePosts(personDid, json))
-      dispatch(addPerson(res.data.data));
+      dispatch(addPersons(res.data.data));
     });
   };
 }

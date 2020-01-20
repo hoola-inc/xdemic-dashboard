@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Row,
   Button,
@@ -19,6 +20,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import AddNewPerson from "../ant-modal/AddNewPersonModal";
 import { Link } from "react-router-dom";
+import { fetchPerson } from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
 // const { SubMenu } = Menu;
@@ -66,6 +68,7 @@ class AddPersonToSchool extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchPerson();
     axios
       .get("https://xdemic-api.herokuapp.com/persons")
       .then(res => {
@@ -455,4 +458,39 @@ class AddPersonToSchool extends Component {
     );
   }
 }
-export default AddPersonToSchool;
+
+const mapStateToProps = state => {
+  const {
+    fullName,
+    age,
+    birthDate,
+    mobile,
+    email,
+    did,
+    type,
+    gender,
+    department
+  } = state.admin.userData;
+  return {
+    // testingState: state.global.error,
+    fullName,
+    age,
+    birthDate,
+    mobile,
+    email,
+    did,
+    type,
+    gender,
+    department
+  };
+};
+
+const mapActionToProps = dispatch => {
+  return {
+    fetchPerson: data => {
+      dispatch(fetchPerson(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapActionToProps)(AddPersonToSchool);
