@@ -5,6 +5,9 @@ import "react-phone-input-2/lib/style.css";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import { Form, Input, Row, Col, Button, Avatar, message, Upload } from "antd";
+import { connect } from "react-redux";
+import { addAdmin } from "../../containers/Admin/actions";
+import { fetchSchool } from "../../containers/School/actions";
 
 const UserList = ["U", "Lucy", "Tom", "Edward"];
 const colorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
@@ -390,6 +393,24 @@ class StepTwo extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  const { currentSchool } = state.school.currentSchool;
+  return {
+    // testingState: state.global.error,
+  };
+};
+
+const mapActionToProps = dispatch => {
+  return {
+    addAdmin: data => {
+      dispatch(addAdmin(data));
+    },
+    fetchSchool: data => {
+      dispatch(fetchSchool(data));
+    }
+  };
+};
+
 const WrappedStepTwo = Form.create()(StepTwo);
 
-export default WrappedStepTwo;
+export default connect(mapStateToProps, mapActionToProps)(WrappedStepTwo);
