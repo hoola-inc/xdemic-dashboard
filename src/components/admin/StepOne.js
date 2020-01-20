@@ -194,9 +194,6 @@ class StepOne extends React.Component {
         <Row>
           <Col span={6} offset={4}>
             <Form.Item label="Full Name">
-              <button onClick={() => this.props.fetchSchool("hello riz!")}>
-                Click me
-              </button>
               <Input size="large" value={fullName} disabled />
             </Form.Item>
           </Col>
