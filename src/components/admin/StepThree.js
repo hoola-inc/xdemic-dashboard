@@ -44,7 +44,7 @@ const rowSelection = {
   })
 };
 
-const PRIVILEGES = ["Super Admin", "Admin", "User", "Student", "Anonymous"];
+const PRIVILEGES = ["Admin", "Employee"];
 
 // tabel data array ends
 class AddPersonToSchool extends Component {
