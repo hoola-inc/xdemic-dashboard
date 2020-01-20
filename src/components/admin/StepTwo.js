@@ -49,7 +49,6 @@ class StepTwo extends React.Component {
     };
 
     this.options = countryList().getData();
-    this.submitHandler = this.submitHandler.bind(this);
   }
 
   onChange = value => {
@@ -152,13 +151,14 @@ class StepTwo extends React.Component {
   };
 
   addNewSchool = async (obj) => {
-
-
     try {
       const schoolAdded = await this.props.addSchool(obj);
-      // do something with response
+      // getting undefined...
+      // setTimeout(() => {
+      //   console.log('School ::: ', schoolAdded);
+      // }, 3000);
     } catch (error) {
-      // do something with error
+      message.error(error.message);
     }
 
 

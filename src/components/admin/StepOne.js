@@ -2,17 +2,11 @@ import React from "react";
 import {
   Form,
   Input,
-  Tooltip,
-  Icon,
-  Cascader,
   Radio,
   Select,
   Row,
   Col,
-  Checkbox,
-  Button,
   AutoComplete,
-  DatePicker
 } from "antd";
 import { connect } from "react-redux";
 import { addAdmin } from "../../containers/Admin/actions";
@@ -20,47 +14,6 @@ import { fetchSchool } from "../../containers/School/actions";
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
-
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
-
-function onChange(date, dateString) {
-  console.log(date, dateString);
-}
-
-const residences = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men"
-          }
-        ]
-      }
-    ]
-  }
-];
 
 class StepOne extends React.Component {
   // constructor(props){

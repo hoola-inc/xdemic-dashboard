@@ -33,11 +33,12 @@ export function addSchool(data) {
 }
 
 export function addNewSchool(data) {
-  console.log('Data ::: ', data);
   return async function (dispatch) {
     try {
       const response = await HS.post("school", data);
-      return dispatch(addSchool(response));
+      const responseData = response.data.data;
+      dispatch(addSchool({ type: 'ADD_SCHOOL', data: responseData }));
+      return responseData;
     }
     catch (err) {
       return err; //console.error(err);
