@@ -9,43 +9,43 @@
 
 import produce from "immer";
 import {
-  ADD_SCHOOL,
-  EDIT_SCHOOL,
-  DELETE_SCHOOL,
-  ACCEPT_SCHOOL,
-  REJECT_SCHOOL
+  ADD_PERSON,
+  EDIT_PERSON,
+  DELETE_PERSON,
+  ACCEPT_PERSON,
+  REJECT_PERSON
 } from "./constants";
 
 // The initial state of the App
 export const initialState = {
   loading: false,
   error: false,
-  currentSchool: {},
-  schools: []
+  currentPerson: {},
+  persons: []
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const schoolReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case ADD_SCHOOL:
-        console.log("case ADD_ADMIN data is: ", action);
+      case ADD_PERSON:
+        console.log("case ADD_PERSON data is: ", action);
         draft.currentSchool = action.data;
         break;
-      case EDIT_SCHOOL:
-        console.log("case EDIT_SCHOOL data is: ", action);
+      case EDIT_PERSON:
+        console.log("case EDIT_PERSON data is: ", action);
         draft.userData = action.data;
         break;
-      case DELETE_SCHOOL:
-        console.log("case DELETE_SCHOOL data is: ", action);
+      case DELETE_PERSON:
+        console.log("case DELETE_PERSON data is: ", action);
         draft.userData = action.data;
         break;
-      case ACCEPT_SCHOOL:
-        console.log("case ACCEPT_SCHOOL data is: ", action);
+      case ACCEPT_PERSON:
+        console.log("case ACCEPT_PERSON data is: ", action);
         draft.userData = action.data;
         break;
-      case REJECT_SCHOOL:
-        console.log("case REJECT_SCHOOL data is: ", action);
+      case REJECT_PERSON:
+        console.log("case REJECT_PERSON data is: ", action);
         draft.userData = action.data;
         break;
     }

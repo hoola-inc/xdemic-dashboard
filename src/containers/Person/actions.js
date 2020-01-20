@@ -15,7 +15,7 @@
  *    }
  */
 
-import { ADD_SCHOOL } from "./constants";
+import { ADD_PERSON } from "./constants";
 import HS from "../../services/HttpService";
 
 /**
@@ -27,7 +27,7 @@ import HS from "../../services/HttpService";
 
 export function addSchool(data) {
   return {
-    type: ADD_SCHOOL,
+    type: ADD_PERSON,
     data
   };
 }

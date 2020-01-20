@@ -8,6 +8,7 @@ import { connectRouter } from "connected-react-router";
 import adminReducer from "./containers/Admin/reducer";
 // School reducer
 import schoolReducer from "./containers/School/reducer";
+import personReducer from "./containers/Person/reducer";
 
 // import history from "utils/history";
 import globalReducer from "./containers/App/reducer";
@@ -25,6 +26,7 @@ export default function createReducer(injectedReducers = {}) {
     // router: connectRouter(history),
     admin: adminReducer,
     school: schoolReducer,
+    person: personReducer,
     // user: userReducer,
     ...injectedReducers
   });
