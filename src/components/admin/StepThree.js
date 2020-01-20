@@ -20,7 +20,10 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import AddNewPerson from "../ant-modal/AddNewPersonModal";
 import { Link } from "react-router-dom";
-import { fetchPerson } from "../../containers/Person/actions";
+import {
+  fetchPerson,
+  addingUsingPersonsCSV
+} from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
 // const { SubMenu } = Menu;
@@ -470,6 +473,9 @@ const mapActionToProps = dispatch => {
   return {
     fetchPerson: data => {
       dispatch(fetchPerson(data));
+    },
+    addingUsingPersonsCSV: data => {
+      dispatch(addingUsingPersonsCSV(data));
     }
   };
 };
