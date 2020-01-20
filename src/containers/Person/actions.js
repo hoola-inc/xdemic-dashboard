@@ -15,7 +15,7 @@
  *    }
  */
 
-import { ADD_PERSON } from "./constants";
+import { ADD_PERSON, ADD_PERSONS } from "./constants";
 import HS from "../../services/HttpService";
 
 /**
@@ -28,6 +28,12 @@ import HS from "../../services/HttpService";
 export function addPerson(data) {
   return {
     type: ADD_PERSON,
+    data
+  };
+}
+export function addPersons(data) {
+  return {
+    type: ADD_PERSONS,
     data
   };
 }
@@ -44,7 +50,7 @@ export function addNewPerson(data) {
   return function(dispatch) {
     return HS.post("persons", data).then(res => {
       console.log("add new person response is: ", res);
-      dispatch(addPerson(data));
+      dispatch(addPersons(data));
     });
   };
 }
@@ -64,22 +70,18 @@ export function fetchPerson(personDid) {
     // that is passed on as the return value of the dispatch method.
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
-    return fetch(`https://www.reddit.com/r/${personDid}.json`)
-      .then(
-        response => response.json(),
 
-        // Do not use catch, because that will also catch
-        // any errors in the dispatch and resulting render,
-        // causing a loop of 'Unexpected batch number' errors.
-        // https://github.com/facebook/react/issues/6895
-        error => console.log("An error occurred.", error)
-      )
-      .then(json => {
-        console.log("calling fetchPosts then 2");
-        // We can dispatch many times!
-        // Here, we update the app state with the results of the API call.
-        // dispatch(receivePosts(personDid, json))
-      });
+    return HS.get("persons").then(res => {
+      // Do not use catch, because that will also catch
+      // any errors in the dispatch and resulting render,
+      // causing a loop of 'Unexpected batch number' errors.
+      // https://github.com/facebook/react/issues/6895
+      console.log("add new person response is: ", res);
+      // We can dispatch many times!
+      // Here, we update the app state with the results of the API call.
+      // dispatch(receivePosts(personDid, json))
+      dispatch(addPerson(res.data.data));
+    });
   };
 }
 

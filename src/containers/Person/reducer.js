@@ -10,6 +10,7 @@
 import produce from "immer";
 import {
   ADD_PERSON,
+  ADD_PERSONS,
   EDIT_PERSON,
   DELETE_PERSON,
   ACCEPT_PERSON,
@@ -30,7 +31,11 @@ const schoolReducer = (state = initialState, action) =>
     switch (action.type) {
       case ADD_PERSON:
         console.log("case ADD_PERSON data is: ", action);
-        draft.currentSchool = action.data;
+        draft.currentPerson = action.data;
+        break;
+      case ADD_PERSONS:
+        console.log("case ADD_PERSONS data is: ", action);
+        draft.persons = action.data;
         break;
       case EDIT_PERSON:
         console.log("case EDIT_PERSON data is: ", action);

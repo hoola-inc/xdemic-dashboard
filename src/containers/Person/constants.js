@@ -10,6 +10,7 @@
  */
 
 export const ADD_PERSON = "xDemicDashboard/Person/ADD_PERSON";
+export const ADD_PERSONS = "xDemicDashboard/Person/ADD_PERSONS";
 export const EDIT_PERSON = "xDemicDashboard/Person/EDIT_PERSON";
 export const DELETE_PERSON = "xDemicDashboard/Person/DELETE_PERSON";
 export const ACCEPT_PERSON = "xDemicDashboard/Person/ACCEPT_PERSON";
