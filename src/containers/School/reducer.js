@@ -30,7 +30,7 @@ const schoolReducer = (state = initialState, action) =>
     switch (action.type) {
       case ADD_SCHOOL:
         console.log("case ADD_ADMIN data is: ", action);
-        draft.userData = action.data;
+        draft.currentSchool = action.data;
         break;
       case EDIT_SCHOOL:
         console.log("case EDIT_SCHOOL data is: ", action);

@@ -16,6 +16,7 @@
  */
 
 import { ADD_SCHOOL } from "./constants";
+import axios from "axios";
 
 /**
  *
@@ -28,6 +29,18 @@ export function addSchool(data) {
   return {
     type: ADD_SCHOOL,
     data
+  };
+}
+
+export function addNewSchool(data) {
+  console.log("addNewSchool is calling with data is: ", data);
+  return function(dispatch) {
+    return axios
+      .post("https://xdemic-api.herokuapp.com/school", data)
+      .then(res => {
+        console.log("add new school response is: ", res);
+        dispatch(addSchool(data));
+      });
   };
 }
 

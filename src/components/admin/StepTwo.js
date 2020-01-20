@@ -7,7 +7,7 @@ import countryList from "react-select-country-list";
 import { Form, Input, Row, Col, Button, Avatar, message, Upload } from "antd";
 import { connect } from "react-redux";
 import { addAdmin } from "../../containers/Admin/actions";
-import { fetchSchool } from "../../containers/School/actions";
+import { fetchSchool, addNewSchool } from "../../containers/School/actions";
 
 const UserList = ["U", "Lucy", "Tom", "Edward"];
 const colorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
@@ -151,19 +151,20 @@ class StepTwo extends React.Component {
   };
 
   addNewSchool = async obj => {
-    try {
-      const createSchool = await axios.post(
-        "https://xdemic-api.herokuapp.com/school",
-        obj
-      );
-      message
-        .loading("Action in progress..", createSchool, onclose)
-        .then(afterClose => {
-          message.success("school created successfully!");
-        });
-    } catch (error) {
-      message.error(error.message);
-    }
+    this.props.addNewSchool(obj);
+    // try {
+    //   const createSchool = await axios.post(
+    //     "https://xdemic-api.herokuapp.com/school",
+    //     obj
+    //   );
+    //   message
+    //     .loading("Action in progress..", createSchool, onclose)
+    //     .then(afterClose => {
+    //       message.success("school created successfully!");
+    //     });
+    // } catch (error) {
+    //   message.error(error.message);
+    // }
   };
   handleChange = info => {
     if (info.file.status === "uploading") {
@@ -408,6 +409,9 @@ const mapActionToProps = dispatch => {
     },
     fetchSchool: data => {
       dispatch(fetchSchool(data));
+    },
+    addNewSchool: data => {
+      dispatch(addNewSchool(data));
     }
   };
 };
