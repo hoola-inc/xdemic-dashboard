@@ -33,12 +33,15 @@ export function addSchool(data) {
 }
 
 export function addNewSchool(data) {
-  console.log("addNewSchool is calling with data is: ", data);
-  return function(dispatch) {
-    return HS.post("school", data).then(res => {
-      console.log("add new school response is: ", res);
-      dispatch(addSchool(data));
-    });
+  console.log('Data ::: ', data);
+  return async function (dispatch) {
+    try {
+      const response = await HS.post("school", data);
+      return dispatch(addSchool(response));
+    }
+    catch (err) {
+      return err; //console.error(err);
+    }
   };
 }
 
@@ -47,7 +50,7 @@ export function fetchSchool(schoolDid) {
   // Thunk middleware knows how to handle functions.
   // It passes the dispatch method as an argument to the function,
   // thus making it able to dispatch actions itself.
-  return function(dispatch) {
+  return function (dispatch) {
     // First dispatch: the app state is updated to inform
     // that the API call is starting.
 

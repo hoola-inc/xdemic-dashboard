@@ -49,6 +49,7 @@ class StepTwo extends React.Component {
     };
 
     this.options = countryList().getData();
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   onChange = value => {
@@ -150,8 +151,17 @@ class StepTwo extends React.Component {
     this.addNewSchool(newObj);
   };
 
-  addNewSchool = async obj => {
-    this.props.addSchool(obj);
+  addNewSchool = async (obj) => {
+
+
+    try {
+      const schoolAdded = await this.props.addSchool(obj);
+      // do something with response
+    } catch (error) {
+      // do something with error
+    }
+
+
     // try {
     //   const createSchool = await axios.post(
     //     "https://xdemic-api.herokuapp.com/school",
@@ -223,7 +233,7 @@ class StepTwo extends React.Component {
         <Button
           size="small"
           style={{ marginLeft: 36, verticalAlign: "middle" }}
-          // onClick={this.handleChange}
+        // onClick={this.handleChange}
         >
           upload
         </Button>
