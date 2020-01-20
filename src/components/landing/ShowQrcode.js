@@ -41,7 +41,7 @@ class ShowQrcode extends React.Component {
   getQRCodeValue = async () => {
     try {
       const response = await axios.get(
-        "https://xdemic-api.herokuapp.com/adminqrcode"
+        "https://xdemic-api.herokuapp.com/admin/qrcode"
       );
       this.setState({
         qrcodeValue: response.data
