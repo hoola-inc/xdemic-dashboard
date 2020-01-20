@@ -151,7 +151,7 @@ class StepTwo extends React.Component {
   };
 
   addNewSchool = async obj => {
-    this.props.addNewSchool(obj);
+    this.props.addSchool(obj);
     // try {
     //   const createSchool = await axios.post(
     //     "https://xdemic-api.herokuapp.com/school",
@@ -410,7 +410,7 @@ const mapActionToProps = dispatch => {
     fetchSchool: data => {
       dispatch(fetchSchool(data));
     },
-    addNewSchool: data => {
+    addSchool: data => {
       dispatch(addNewSchool(data));
     }
   };
