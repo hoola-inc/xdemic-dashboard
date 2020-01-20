@@ -460,28 +460,8 @@ class AddPersonToSchool extends Component {
 }
 
 const mapStateToProps = state => {
-  const {
-    fullName,
-    age,
-    birthDate,
-    mobile,
-    email,
-    did,
-    type,
-    gender,
-    department
-  } = state.admin.userData;
   return {
     // testingState: state.global.error,
-    fullName,
-    age,
-    birthDate,
-    mobile,
-    email,
-    did,
-    type,
-    gender,
-    department
   };
 };
 
