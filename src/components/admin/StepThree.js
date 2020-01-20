@@ -69,28 +69,28 @@ class AddPersonToSchool extends Component {
 
   componentDidMount() {
     this.props.fetchPerson();
-    axios
-      .get("https://xdemic-api.herokuapp.com/persons")
-      .then(res => {
-        console.log(res);
-        if (res.data.status) {
-          this.setState({ loading: false });
-          this.setState({
-            uploading: false,
-            tableData: res.data.data
-          });
-        } else {
-          Swal.fire("Oho...", "Something went wrong!", "error");
-          this.handleCancel();
-          this.setState({ loading: false });
-        }
-      })
-      .catch(err => {
-        console.log("An Error occured while sending Email ::: ", err.message);
-        Swal.fire("Error", err.message, "error");
-        // this.setState({ loading: false });
-        // this.handle.onCancel();
-      });
+    // axios
+    //   .get("https://xdemic-api.herokuapp.com/persons")
+    //   .then(res => {
+    //     console.log(res);
+    //     if (res.data.status) {
+    //       this.setState({ loading: false });
+    //       this.setState({
+    //         uploading: false,
+    //         tableData: res.data.data
+    //       });
+    //     } else {
+    //       Swal.fire("Oho...", "Something went wrong!", "error");
+    //       this.handleCancel();
+    //       this.setState({ loading: false });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log("An Error occured while sending Email ::: ", err.message);
+    //     Swal.fire("Error", err.message, "error");
+    //     // this.setState({ loading: false });
+    //     // this.handle.onCancel();
+    //   });
   }
   onChange = value => {
     console.log(`onChange selected ${value}`);
@@ -421,7 +421,7 @@ class AddPersonToSchool extends Component {
             align="center"
             rowSelection={rowSelection}
             columns={this.columns}
-            dataSource={this.state.tableData}
+            dataSource={this.props.tableData}
           />
         </Row>
         <Modal
@@ -462,6 +462,7 @@ class AddPersonToSchool extends Component {
 const mapStateToProps = state => {
   return {
     // testingState: state.global.error,
+    tableData: state.person.persons
   };
 };
 
