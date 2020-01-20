@@ -85,7 +85,7 @@ export function fetchPerson(personDid) {
   };
 }
 
-export function addingUsingPersonsCSV() {
+export function addingUsingPersonsCSV(personList) {
   return function(dispatch) {
     // First dispatch: the app state is updated to inform
     // that the API call is starting.
@@ -97,7 +97,7 @@ export function addingUsingPersonsCSV() {
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
 
-    return HS.get("person/csv").then(res => {
+    return HS.post("person/csv", personList).then(res => {
       // Do not use catch, because that will also catch
       // any errors in the dispatch and resulting render,
       // causing a loop of 'Unexpected batch number' errors.

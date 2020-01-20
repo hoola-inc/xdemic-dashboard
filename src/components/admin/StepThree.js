@@ -121,37 +121,37 @@ class AddPersonToSchool extends Component {
     this.setState({
       uploading: true
     });
-
-    axios({
-      method: "post",
-      url: "https://xdemic-api.herokuapp.com/person/csv",
-      data: formData
-    })
-      .then(response => {
-        // Table Columns ENd data array start
-        const data = [];
-        // const tags = response.data.data[0].tags
-        //handle success
-        console.log("table csv data is: ", response.data.data);
-        data.push(response.data.data);
-        console.log("UPDATED RECORD::", data);
-        message.success("file loaded successfully...");
-        this.setState({
-          uploading: false,
-          showmodal: false,
-          tableData: response.data.data,
-          fileList: []
-        });
-        console.log("after state is : ", response.data.data);
-      })
-      .catch(response => {
-        //handle error
-        console.log(response);
-        message.error("shit fuck");
-        this.setState({
-          uploading: false
-        });
-      });
+    this.props.addingUsingPersonsCSV(formData);
+    // axios({
+    //   method: "post",
+    //   url: "https://xdemic-api.herokuapp.com/person/csv",
+    //   data: formData
+    // })
+    //   .then(response => {
+    //     // Table Columns ENd data array start
+    //     const data = [];
+    //     // const tags = response.data.data[0].tags
+    //     //handle success
+    //     console.log("table csv data is: ", response.data.data);
+    //     data.push(response.data.data);
+    //     console.log("UPDATED RECORD::", data);
+    //     message.success("file loaded successfully...");
+    //     this.setState({
+    //       uploading: false,
+    //       showmodal: false,
+    //       tableData: response.data.data,
+    //       fileList: []
+    //     });
+    //     console.log("after state is : ", response.data.data);
+    //   })
+    //   .catch(response => {
+    //     //handle error
+    //     console.log(response);
+    //     message.error("shit fuck");
+    //     this.setState({
+    //       uploading: false
+    //     });
+    //   });
   };
 
   /// Tabel COlumns start
@@ -474,8 +474,8 @@ const mapActionToProps = dispatch => {
     fetchPerson: data => {
       dispatch(fetchPerson(data));
     },
-    addingUsingPersonsCSV: data => {
-      dispatch(addingUsingPersonsCSV(data));
+    addingUsingPersonsCSV: formData => {
+      dispatch(addingUsingPersonsCSV(formData));
     }
   };
 };
