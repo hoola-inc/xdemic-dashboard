@@ -397,6 +397,7 @@ const mapStateToProps = state => {
   const { currentSchool } = state.school.currentSchool;
   return {
     // testingState: state.global.error,
+    currentSchool
   };
 };
 
