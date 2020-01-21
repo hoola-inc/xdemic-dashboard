@@ -25,7 +25,8 @@ import {
   fetchPerson,
   addingUsingPersonsCSV,
   editSinglePerson,
-  deleteSinglePerson
+  deleteSinglePerson,
+  setUserPrivilegeSinglePerson
 } from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
@@ -99,18 +100,22 @@ class AddPersonToSchool extends Component {
     //     // this.handle.onCancel();
     //   });
   }
-  onChange = value => {
-    console.log(`set privilige onChange selected ${value}`);
-    this.setState({ selectedValue: value });
-    console.log("set privilige onChange this.state is: ", this.state);
+  onChange = (e, record) => {
+    console.log("set privilige e selected: ", e);
+    console.log("set privilige record selected", record.mobile);
+    record.role = e;
+    this.props.setUserPrivilegeSinglePerson(record);
+    // console.log(`set privilige onChange text selected ${text}`);
+    this.setState({ selectedValue: e });
+    // console.log("set privilige onChange this.state is: ", this.state);
   };
 
-  onBlur = () => {
-    console.log("blur");
+  onBlur = data => {
+    console.log("blur data is: ", data);
   };
 
-  onFocus = () => {
-    console.log("focus");
+  onFocus = data => {
+    console.log("focus data is: ", data);
   };
 
   onSearch = val => {
@@ -195,7 +200,8 @@ class AddPersonToSchool extends Component {
             placeholder="Select a Privilege"
             // optionFilterProp="children"
             // defaultValue={this.state.selectedValue}
-            onChange={this.onChange}
+            // defaultValue={{ key: record.role }}
+            onChange={e => this.onChange(e, record)}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             onSearch={this.onSearch}
@@ -504,6 +510,9 @@ const mapActionToProps = dispatch => {
     },
     deleteSinglePerson: personInfo => {
       dispatch(deleteSinglePerson(personInfo));
+    },
+    setUserPrivilegeSinglePerson: personInfo => {
+      dispatch(setUserPrivilegeSinglePerson(personInfo));
     }
   };
 };

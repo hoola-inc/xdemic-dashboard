@@ -138,7 +138,7 @@ export function deleteSinglePerson(personInfo) {
 }
 
 export function setUserPrivilegeSinglePerson(personInfo) {
-  console.log("edit editSinglePerson info is: ", personInfo);
+  console.log("edit setUserPrivilegeSinglePerson info is: ", personInfo);
   return function(dispatch) {
     // First dispatch: the app state is updated to inform
     // that the API call is starting.
@@ -150,17 +150,19 @@ export function setUserPrivilegeSinglePerson(personInfo) {
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
 
-    return HS.put(`person/role/${personInfo.mobile}`, personInfo).then(res => {
-      // Do not use catch, because that will also catch
-      // any errors in the dispatch and resulting render,
-      // causing a loop of 'Unexpected batch number' errors.
-      // https://github.com/facebook/react/issues/6895
-      console.log("setUserPrivilegeSinglePerson response is: ", res);
-      // We can dispatch many times!
-      // Here, we update the app state with the results of the API call.
-      // dispatch(receivePosts(personDid, json))
-      // fetchPerson();
-      // dispatch(addPersons(res.data.data));
-    });
+    return HS.patch(`person/role/${personInfo.mobile}`, personInfo).then(
+      res => {
+        // Do not use catch, because that will also catch
+        // any errors in the dispatch and resulting render,
+        // causing a loop of 'Unexpected batch number' errors.
+        // https://github.com/facebook/react/issues/6895
+        console.log("setUserPrivilegeSinglePerson response is: ", res);
+        // We can dispatch many times!
+        // Here, we update the app state with the results of the API call.
+        // dispatch(receivePosts(personDid, json))
+        // fetchPerson();
+        // dispatch(addPersons(res.data.data));
+      }
+    );
   };
 }
