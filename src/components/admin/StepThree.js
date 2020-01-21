@@ -98,9 +98,9 @@ class AddPersonToSchool extends Component {
     //   });
   }
   onChange = value => {
-    console.log(`onChange selected ${value}`);
+    console.log(`set privilige onChange selected ${value}`);
     this.setState({ selectedValue: value });
-    console.log("onChange this.state is: ", this.state);
+    console.log("set privilige onChange this.state is: ", this.state);
   };
 
   onBlur = () => {
