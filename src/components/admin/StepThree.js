@@ -16,6 +16,7 @@ import {
   Divider
 } from "antd";
 import Swal from "sweetalert2";
+import UpdatePersonModal from '../ant-modal/UpdatePersonModal';
 
 import axios from "axios";
 import AddNewPerson from "../ant-modal/AddNewPersonModal";
@@ -407,6 +408,7 @@ class AddPersonToSchool extends Component {
               </Form.Item>
               <Form.Item>
                 <AddNewPerson name={"Person"} />
+                <UpdatePersonModal />
                 {/* <Button
                 type="primary"
                 onClick={this.handleUpload}
