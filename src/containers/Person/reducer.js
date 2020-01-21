@@ -26,7 +26,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const schoolReducer = (state = initialState, action) =>
+const personReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case ADD_PERSON:
@@ -56,4 +56,4 @@ const schoolReducer = (state = initialState, action) =>
     }
   });
 
-export default schoolReducer;
+export default personReducer;
