@@ -22,7 +22,8 @@ import AddNewPerson from "../ant-modal/AddNewPersonModal";
 import { Link } from "react-router-dom";
 import {
   fetchPerson,
-  addingUsingPersonsCSV
+  addingUsingPersonsCSV,
+  editSinglePerson
 } from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
@@ -271,7 +272,10 @@ class AddPersonToSchool extends Component {
               onClick={() => this.handleReject(record)}
             />
             <Divider type="vertical" />
-            <Icon type="edit" onClick={() => this.handleEdit(record)} />
+            <Icon
+              type="edit"
+              onClick={() => this.props.editSinglePerson(record)}
+            />
             <Divider type="vertical" />
             <Icon
               type="close-circle"
@@ -476,6 +480,9 @@ const mapActionToProps = dispatch => {
     },
     addingUsingPersonsCSV: formData => {
       dispatch(addingUsingPersonsCSV(formData));
+    },
+    editSinglePerson: personInfo => {
+      dispatch(editSinglePerson(personInfo));
     }
   };
 };
