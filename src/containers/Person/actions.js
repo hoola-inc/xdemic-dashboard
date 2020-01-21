@@ -15,7 +15,14 @@
  *    }
  */
 
-import { ADD_PERSON, ADD_PERSONS } from "./constants";
+import {
+  ADD_PERSON,
+  ADD_PERSONS,
+  DELETE_PERSON,
+  EDIT_PERSON,
+  ACCEPT_PERSON,
+  REJECT_PERSON
+} from "./constants";
 import HS from "../../services/HttpService";
 
 /**
@@ -31,9 +38,38 @@ export function addPerson(data) {
     data
   };
 }
+
 export function addPersons(data) {
   return {
     type: ADD_PERSONS,
+    data
+  };
+}
+
+export function deletePerson(data) {
+  return {
+    type: DELETE_PERSON,
+    data
+  };
+}
+
+export function editPerson(data) {
+  return {
+    type: EDIT_PERSON,
+    data
+  };
+}
+
+export function acceptPerson(data) {
+  return {
+    type: ACCEPT_PERSON,
+    data
+  };
+}
+
+export function rejectPerson(data) {
+  return {
+    type: REJECT_PERSON,
     data
   };
 }
@@ -103,6 +139,32 @@ export function addingUsingPersonsCSV(personList) {
       // causing a loop of 'Unexpected batch number' errors.
       // https://github.com/facebook/react/issues/6895
       console.log("add new person response is: ", res);
+      // We can dispatch many times!
+      // Here, we update the app state with the results of the API call.
+      // dispatch(receivePosts(personDid, json))
+      dispatch(addPersons(res.data.data));
+    });
+  };
+}
+
+export function editSinglePerson(personInfo) {
+  return function(dispatch) {
+    // First dispatch: the app state is updated to inform
+    // that the API call is starting.
+
+    // dispatch(requestPosts(personDid));
+
+    // The function called by the thunk middleware can return a value,
+    // that is passed on as the return value of the dispatch method.
+    // In this case, we return a promise to wait for.
+    // This is not required by thunk middleware, but it is convenient for us.
+
+    return HS.post("person/csv", personInfo).then(res => {
+      // Do not use catch, because that will also catch
+      // any errors in the dispatch and resulting render,
+      // causing a loop of 'Unexpected batch number' errors.
+      // https://github.com/facebook/react/issues/6895
+      console.log("edit editSinglePerson response is: ", res);
       // We can dispatch many times!
       // Here, we update the app state with the results of the API call.
       // dispatch(receivePosts(personDid, json))
