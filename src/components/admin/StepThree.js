@@ -16,7 +16,7 @@ import {
   Divider
 } from "antd";
 import Swal from "sweetalert2";
-import UpdatePersonModal from '../ant-modal/UpdatePersonModal';
+import UpdatePersonModal from "../ant-modal/UpdatePersonModal";
 
 import axios from "axios";
 import AddNewPerson from "../ant-modal/AddNewPersonModal";
@@ -66,6 +66,7 @@ class AddPersonToSchool extends Component {
       showmodal: false,
       collapsed: false,
       selectedValue: "",
+      showPersonModal: false,
 
       fileList: [],
       uploading: false,
@@ -277,7 +278,10 @@ class AddPersonToSchool extends Component {
             <Icon
               type="edit"
               onClick={() => {
-                this.props.editSinglePerson(record);
+                // this.props.editSinglePerson(record);
+                this.setState({
+                  showPersonModal: true
+                });
                 setTimeout(() => {
                   this.props.fetchPerson();
                 }, 1000);
@@ -408,7 +412,7 @@ class AddPersonToSchool extends Component {
               </Form.Item>
               <Form.Item>
                 <AddNewPerson name={"Person"} />
-                <UpdatePersonModal />
+                <UpdatePersonModal showModal={this.state.showPersonModal} />
                 {/* <Button
                 type="primary"
                 onClick={this.handleUpload}
