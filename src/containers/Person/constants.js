@@ -15,3 +15,5 @@ export const EDIT_PERSON = "xDemicDashboard/Person/EDIT_PERSON";
 export const DELETE_PERSON = "xDemicDashboard/Person/DELETE_PERSON";
 export const ACCEPT_PERSON = "xDemicDashboard/Person/ACCEPT_PERSON";
 export const REJECT_PERSON = "xDemicDashboard/Person/REJECT_PERSON";
+export const SET_PRIVILEGE_PERSON =
+  "xDemicDashboard/PersonSET_PRIVILEGE_PERSON/SET_PRIVILEGE_PERSON";

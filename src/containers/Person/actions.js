@@ -21,7 +21,8 @@ import {
   DELETE_PERSON,
   EDIT_PERSON,
   ACCEPT_PERSON,
-  REJECT_PERSON
+  REJECT_PERSON,
+  SET_PRIVILEGE_PERSON
 } from "./constants";
 import HS from "../../services/HttpService";
 
@@ -74,6 +75,13 @@ export function rejectPerson(data) {
   };
 }
 
+export function setPersonPrivilegeUser(data) {
+  return {
+    type: SET_PRIVILEGE_PERSON,
+    data
+  };
+}
+
 /**
  *
  * @param  {object} data The data of new person
@@ -93,29 +101,9 @@ export function addNewPerson(data) {
 
 export function fetchPerson(personDid) {
   console.log("fetchPerson person Did is: ", personDid);
-  // Thunk middleware knows how to handle functions.
-  // It passes the dispatch method as an argument to the function,
-  // thus making it able to dispatch actions itself.
   return function(dispatch) {
-    // First dispatch: the app state is updated to inform
-    // that the API call is starting.
-
-    // dispatch(requestPosts(personDid));
-
-    // The function called by the thunk middleware can return a value,
-    // that is passed on as the return value of the dispatch method.
-    // In this case, we return a promise to wait for.
-    // This is not required by thunk middleware, but it is convenient for us.
-
     return HS.get("persons").then(res => {
-      // Do not use catch, because that will also catch
-      // any errors in the dispatch and resulting render,
-      // causing a loop of 'Unexpected batch number' errors.
-      // https://github.com/facebook/react/issues/6895
       console.log("add new person response is: ", res);
-      // We can dispatch many times!
-      // Here, we update the app state with the results of the API call.
-      // dispatch(receivePosts(personDid, json))
       dispatch(addPersons(res.data.data));
     });
   };
@@ -123,25 +111,8 @@ export function fetchPerson(personDid) {
 
 export function addingUsingPersonsCSV(personList) {
   return function(dispatch) {
-    // First dispatch: the app state is updated to inform
-    // that the API call is starting.
-
-    // dispatch(requestPosts(personDid));
-
-    // The function called by the thunk middleware can return a value,
-    // that is passed on as the return value of the dispatch method.
-    // In this case, we return a promise to wait for.
-    // This is not required by thunk middleware, but it is convenient for us.
-
     return HS.post("person/csv", personList).then(res => {
-      // Do not use catch, because that will also catch
-      // any errors in the dispatch and resulting render,
-      // causing a loop of 'Unexpected batch number' errors.
-      // https://github.com/facebook/react/issues/6895
       console.log("add new person response is: ", res);
-      // We can dispatch many times!
-      // Here, we update the app state with the results of the API call.
-      // dispatch(receivePosts(personDid, json))
       dispatch(addPersons(res.data.data));
     });
   };
@@ -149,36 +120,25 @@ export function addingUsingPersonsCSV(personList) {
 
 export function editSinglePerson(personInfo) {
   console.log("edit editSinglePerson info is: ", personInfo);
-  personInfo.gender = "Male";
   return function(dispatch) {
-    // First dispatch: the app state is updated to inform
-    // that the API call is starting.
-
-    // dispatch(requestPosts(personDid));
-
-    // The function called by the thunk middleware can return a value,
-    // that is passed on as the return value of the dispatch method.
-    // In this case, we return a promise to wait for.
-    // This is not required by thunk middleware, but it is convenient for us.
-
-    return HS.put(`person/${personInfo.did}`, personInfo).then(res => {
-      // Do not use catch, because that will also catch
-      // any errors in the dispatch and resulting render,
-      // causing a loop of 'Unexpected batch number' errors.
-      // https://github.com/facebook/react/issues/6895
+    return HS.put(`person/${personInfo.mobile}`, personInfo).then(res => {
       console.log("edit editSinglePerson response is: ", res);
-      // We can dispatch many times!
-      // Here, we update the app state with the results of the API call.
-      // dispatch(receivePosts(personDid, json))
-      this.fetchPerson();
-      // dispatch(addPersons(res.data.data));
+      fetchPerson();
     });
   };
 }
 
 export function deleteSinglePerson(personInfo) {
   console.log("edit editSinglePerson info is: ", personInfo);
-  personInfo.gender = "Male";
+  return function(dispatch) {
+    return HS.delete(`person/${personInfo.mobile}`).then(res => {
+      console.log("deleteSinglePerson response is: ", res);
+    });
+  };
+}
+
+export function setUserPrivilegeSinglePerson(personInfo) {
+  console.log("edit editSinglePerson info is: ", personInfo);
   return function(dispatch) {
     // First dispatch: the app state is updated to inform
     // that the API call is starting.
@@ -190,7 +150,7 @@ export function deleteSinglePerson(personInfo) {
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
 
-    return HS.put(`person/${personInfo.did}`, personInfo).then(res => {
+    return HS.put(`person/${personInfo.mobile}`, personInfo).then(res => {
       // Do not use catch, because that will also catch
       // any errors in the dispatch and resulting render,
       // causing a loop of 'Unexpected batch number' errors.
@@ -199,7 +159,7 @@ export function deleteSinglePerson(personInfo) {
       // We can dispatch many times!
       // Here, we update the app state with the results of the API call.
       // dispatch(receivePosts(personDid, json))
-      this.fetchPerson();
+      fetchPerson();
       // dispatch(addPersons(res.data.data));
     });
   };

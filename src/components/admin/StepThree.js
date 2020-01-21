@@ -23,7 +23,8 @@ import { Link } from "react-router-dom";
 import {
   fetchPerson,
   addingUsingPersonsCSV,
-  editSinglePerson
+  editSinglePerson,
+  deleteSinglePerson
 } from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
@@ -221,8 +222,8 @@ class AddPersonToSchool extends Component {
     },
     {
       title: "Phone",
-      dataIndex: "phone",
-      key: "phone"
+      dataIndex: "mobile",
+      key: "mobile"
     },
     {
       title: "Email",
@@ -274,7 +275,12 @@ class AddPersonToSchool extends Component {
             <Divider type="vertical" />
             <Icon
               type="edit"
-              onClick={() => this.props.editSinglePerson(record)}
+              onClick={() => {
+                this.props.editSinglePerson(record);
+                setTimeout(() => {
+                  this.props.fetchPerson();
+                }, 1000);
+              }}
             />
             <Divider type="vertical" />
             <Icon
@@ -284,7 +290,13 @@ class AddPersonToSchool extends Component {
             <Divider type="vertical" />
             <Popconfirm
               title="Sure to delete?"
-              onConfirm={() => this.handleDelete(record._id)}
+              onConfirm={() => {
+                this.handleDelete(record);
+                this.props.deleteSinglePerson(record);
+                setTimeout(() => {
+                  this.props.fetchPerson();
+                }, 1000);
+              }}
             >
               {/* <a>Delete</a> */}
               <Icon type="delete" />
@@ -483,6 +495,9 @@ const mapActionToProps = dispatch => {
     },
     editSinglePerson: personInfo => {
       dispatch(editSinglePerson(personInfo));
+    },
+    deleteSinglePerson: personInfo => {
+      dispatch(deleteSinglePerson(personInfo));
     }
   };
 };
