@@ -148,6 +148,7 @@ export function addingUsingPersonsCSV(personList) {
 }
 
 export function editSinglePerson(personInfo) {
+  console.log("edit editSinglePerson info is: ", personInfo);
   return function(dispatch) {
     // First dispatch: the app state is updated to inform
     // that the API call is starting.
@@ -159,7 +160,10 @@ export function editSinglePerson(personInfo) {
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
 
-    return HS.post("person/csv", personInfo).then(res => {
+    return HS.post(
+      `person/did:ethr:0x42568875b3d7c0fbf1ba430fd6e7c716f1bb297c`,
+      personInfo
+    ).then(res => {
       // Do not use catch, because that will also catch
       // any errors in the dispatch and resulting render,
       // causing a loop of 'Unexpected batch number' errors.
