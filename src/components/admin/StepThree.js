@@ -200,7 +200,7 @@ class AddPersonToSchool extends Component {
             placeholder="Select a Privilege"
             // optionFilterProp="children"
             // defaultValue={this.state.selectedValue}
-            // defaultValue={{ key: record.role }}
+            defaultValue={record.role}
             onChange={e => this.onChange(e, record)}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
