@@ -413,6 +413,7 @@ class AddPersonToSchool extends Component {
                   showModal={this.state.showPersonModal}
                   onCancel={this.onHandleCancel}
                   onOk={this.onHandleOK}
+                  title={"Update Person"}
                   data={this.state.showPersonModalData}
                 />
               </Form.Item>

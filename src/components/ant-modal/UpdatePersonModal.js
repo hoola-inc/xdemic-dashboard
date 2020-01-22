@@ -40,6 +40,7 @@ class UpdatePersonModal extends Component {
   };
 
   render() {
+    const { handleOk, onCancel, title, showModal } = this.props;
     const { fullName, birthDate, gender, email } = this.props.data;
     console.log(
       "update person modal showModal this.props is: ",
@@ -52,10 +53,10 @@ class UpdatePersonModal extends Component {
           Update Person
         </Button> */}
         <Modal
-          title="Person"
-          visible={this.props.showModal}
-          onOk={() => this.props.handleOk()}
-          onCancel={() => this.props.onCancel()}
+          title={title}
+          visible={showModal}
+          onOk={() => handleOk()}
+          onCancel={() => onCancel()}
         >
           <Form onSubmit={this.submitHandler}>
             <Form.Item label="Name">
