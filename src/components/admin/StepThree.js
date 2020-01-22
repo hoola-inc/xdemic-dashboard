@@ -456,7 +456,7 @@ class AddPersonToSchool extends Component {
           />
         </Row>
         <Modal
-          title="Basic Modal"
+          title="Select CSV File"
           visible={this.state.showmodal}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
