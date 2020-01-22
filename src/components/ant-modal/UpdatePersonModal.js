@@ -40,7 +40,11 @@ class UpdatePersonModal extends Component {
   };
 
   render() {
-    console.log("update person modal showModal this.props is: ", this.props);
+    const { fullName, birthDate, gender, email } = this.props.data;
+    console.log(
+      "update person modal showModal this.props is: ",
+      this.props.data
+    );
     // this.showModal();
     return (
       <div>
@@ -55,7 +59,12 @@ class UpdatePersonModal extends Component {
         >
           <Form onSubmit={this.submitHandler}>
             <Form.Item label="Name">
-              <Input placeholder={`Enter name`} allowClear name="name" />
+              <Input
+                placeholder={`Enter name`}
+                allowClear
+                name="name"
+                value={fullName}
+              />
             </Form.Item>
 
             <Form.Item label="Date of birth">
@@ -63,15 +72,26 @@ class UpdatePersonModal extends Component {
                 placeholder={`Enter date of birth`}
                 allowClear
                 name="birthDate"
+                value={birthDate}
               />
             </Form.Item>
 
             <Form.Item label="Gender">
-              <Input placeholder={`Enter gender`} allowClear name="gender" />
+              <Input
+                placeholder={`Enter gender`}
+                allowClear
+                name="gender"
+                value={gender}
+              />
             </Form.Item>
 
             <Form.Item label="Email">
-              <Input placeholder={`Enter email`} allowClear name="email" />
+              <Input
+                placeholder={`Enter email`}
+                allowClear
+                name="email"
+                value={email}
+              />
             </Form.Item>
 
             <Button type="primary" ghost>

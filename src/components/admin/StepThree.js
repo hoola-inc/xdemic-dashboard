@@ -68,6 +68,7 @@ class AddPersonToSchool extends Component {
       collapsed: false,
       selectedValue: "",
       showPersonModal: false,
+      showPersonModalData: {},
 
       fileList: [],
       uploading: false,
@@ -285,8 +286,10 @@ class AddPersonToSchool extends Component {
               type="edit"
               onClick={() => {
                 // this.props.editSinglePerson(record);
+
                 this.setState({
-                  showPersonModal: !this.state.showPersonModal
+                  showPersonModal: !this.state.showPersonModal,
+                  showPersonModalData: record
                 });
                 setTimeout(() => {
                   // this.props.fetchPerson();
@@ -410,6 +413,7 @@ class AddPersonToSchool extends Component {
                   showModal={this.state.showPersonModal}
                   onCancel={this.onHandleCancel}
                   onOk={this.onHandleOK}
+                  data={this.state.showPersonModalData}
                 />
               </Form.Item>
             </Form>
