@@ -4,10 +4,11 @@ import { Modal, Button, Input, Form, message } from "antd";
 class UpdatePersonModal extends Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false };
+    this.state = { visible: props.showModal };
   }
 
   showModal = () => {
+    console.log("calling show modal");
     this.setState({
       visible: true
     });
@@ -39,16 +40,18 @@ class UpdatePersonModal extends Component {
   };
 
   render() {
+    console.log("update person modal showModal this.props is: ", this.props);
+    // this.showModal();
     return (
       <div>
-        <Button type="primary" onClick={this.showModal}>
+        {/* <Button type="primary" onClick={this.showModal}>
           Update Person
-        </Button>
+        </Button> */}
         <Modal
           title="Person"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          visible={this.props.showModal}
+          onOk={() => this.props.handleOk()}
+          onCancel={() => this.props.onCancel()}
         >
           <Form onSubmit={this.submitHandler}>
             <Form.Item label="Name">

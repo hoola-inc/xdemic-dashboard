@@ -286,10 +286,10 @@ class AddPersonToSchool extends Component {
               onClick={() => {
                 // this.props.editSinglePerson(record);
                 this.setState({
-                  showPersonModal: true
+                  showPersonModal: !this.state.showPersonModal
                 });
                 setTimeout(() => {
-                  this.props.fetchPerson();
+                  // this.props.fetchPerson();
                 }, 1000);
               }}
             />
@@ -340,6 +340,12 @@ class AddPersonToSchool extends Component {
   };
   handleCancel = () => {
     this.setState({ showmodal: false });
+  };
+  onHandleCancel = () => {
+    this.setState({ showPersonModal: false });
+  };
+  onHandleOK = () => {
+    this.setState({ showPersonModal: false });
   };
 
   sendInvite = () => {
@@ -400,6 +406,11 @@ class AddPersonToSchool extends Component {
               </Form.Item>
               <Form.Item>
                 <AddNewPerson name={"Person"} />
+                <UpdatePersonModal
+                  showModal={this.state.showPersonModal}
+                  onCancel={this.onHandleCancel}
+                  onOk={this.onHandleOK}
+                />
               </Form.Item>
             </Form>
           </Col>
@@ -410,39 +421,10 @@ class AddPersonToSchool extends Component {
                 <Button onClick={this.createModal}>
                   <Icon type="upload" /> Select CSV File
                 </Button>
-                {/* <Upload {...props}>
-                  <Button>
-                  <Icon type="upload" /> Select File
-                  </Button>
-                  </Upload> */}
               </Form.Item>
               <Form.Item>
                 <AddNewPerson name={"Person"} />
-                <UpdatePersonModal showModal={this.state.showPersonModal} />
-                {/* <Button
-                type="primary"
-                onClick={this.handleUpload}
-                disabled={fileList.length === 0}
-                loading={uploading}
-                >
-                {uploading ? "Uploading" : "Start Upload"}
-                </Button> */}
               </Form.Item>
-              {/* <FormItem>
-                <Search placeholder="Search Name" size="small" />
-              </FormItem> */}
-              {/* <FormItem>
-                <Search placeholder="Search Name" />
-              </FormItem> */}
-              {/* <FormItem>
-                <RangePicker onChange={onChange} />
-              </FormItem> */}
-              {/* <FormItem>
-                <Button type="primary">Search</Button>
-              </FormItem> */}
-              {/* <FormItem>
-                <Button type="default">Reset</Button>
-                </FormItem> */}
             </Form>
           </Col>
         </Row>
