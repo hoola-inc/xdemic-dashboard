@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Form,
-  Input,
-  Radio,
-  Select,
-  Row,
-  Col,
-  AutoComplete,
-} from "antd";
+import { Form, Input, Radio, Select, Row, Col, AutoComplete } from "antd";
 import { connect } from "react-redux";
 import { addAdmin } from "../../containers/Admin/actions";
 import { fetchSchool } from "../../containers/School/actions";
@@ -26,17 +18,17 @@ class StepOne extends React.Component {
   };
 
   componentDidMount() {
-    this.props.addAdmin({
-      fullName: "rizwan zaheer",
-      age: 36,
-      birthDate: "30-sep-1992",
-      mobile: "03135561765",
-      email: "rizwan@hoola.tech",
-      did: "this is did",
-      type: "dev",
-      gender: "Male",
-      department: "Software Engineer"
-    });
+    // this.props.addAdmin({
+    //   fullName: "rizwan zaheer",
+    //   age: 36,
+    //   birthDate: "30-sep-1992",
+    //   mobile: "03135561765",
+    //   email: "rizwan@hoola.tech",
+    //   did: "this is did",
+    //   type: "dev",
+    //   gender: "Male",
+    //   department: "Software Engineer"
+    // });
   }
   onGenderChange = e => {
     console.log("radio checked", e.target.value);
