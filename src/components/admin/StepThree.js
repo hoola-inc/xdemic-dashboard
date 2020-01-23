@@ -411,12 +411,12 @@ class AddPersonToSchool extends Component {
             {/* to do add ad stuent modal here*/}
             <Form layout="inline">
               <Form.Item>
-                <Button onClick={this.createModal}>
+                {/* <Button onClick={this.createModal}>
                   <Icon type="upload" /> Select CSV File
-                </Button>
+                </Button> */}
               </Form.Item>
               <Form.Item>
-                <AddNewPerson name={"Person"} />
+                {/* <AddNewPerson name={"Person"} /> */}
                 <UpdatePersonModal
                   showModal={this.state.showPersonModal}
                   onCancel={this.onHandleCancel}
