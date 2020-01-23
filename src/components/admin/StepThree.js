@@ -132,6 +132,14 @@ class AddPersonToSchool extends Component {
       uploading: true
     });
     this.props.addingUsingPersonsCSV(formData);
+    setTimeout(() => {
+      this.setState({
+        uploading: false,
+        showmodal: false,
+        // tableData: response.data.data,
+        fileList: []
+      });
+    }, 2000);
     // axios({
     //   method: "post",
     //   url: "https://xdemic-api.herokuapp.com/person/csv",
