@@ -27,7 +27,8 @@ import {
   editSinglePerson,
   deleteSinglePerson,
   setUserPrivilegeSinglePerson,
-  sendInvite
+  sendInvite,
+  blockPerson
 } from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
@@ -351,6 +352,14 @@ class AddPersonToSchool extends Component {
   };
   handleReject = key => {
     console.log("handleReject is calling ", key);
+    this.props.blockPerson(key);
+    const hide = message
+      .loading("Block user inprogress..", 2, onclose)
+      .then(afterClose => {
+        // setTimeout(() => {
+        message.success("Block user Successfully :)");
+        // }, 2500);
+      });
     // const dataSource = [...this.state.dataSource];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
@@ -520,6 +529,9 @@ const mapActionToProps = dispatch => {
     },
     sendInviteToPerson: email => {
       dispatch(sendInvite(email));
+    },
+    blockPerson: personInfo => {
+      dispatch(blockPerson(personInfo));
     }
   };
 };

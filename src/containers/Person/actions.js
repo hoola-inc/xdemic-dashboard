@@ -146,6 +146,18 @@ export function sendInvite(email) {
   };
 }
 
+export function blockPerson(personInfo) {
+  console.log("block Person info is: ", personInfo);
+  return function(dispatch) {
+    return HS.patch(`person/${personInfo.mobile}`, { isBlocked: true }).then(
+      res => {
+        dispatch(rejectPerson(res.data));
+        console.log("block Person Person response is: ", res);
+      }
+    );
+  };
+}
+
 export function setUserPrivilegeSinglePerson(personInfo) {
   console.log("edit setUserPrivilegeSinglePerson info is: ", personInfo);
   return function(dispatch) {
