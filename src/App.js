@@ -11,6 +11,7 @@ import Student from "./components/student/Student";
 import Home from "./components/home/Home";
 import AdminMain from "./components/admin/Main.admin";
 import ShowQrcode from "./components/landing/ShowQrcode";
+import Profile from "./containers/Profile";
 
 class App extends React.Component {
   render() {
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Route path="/course" component={Course} />
           <Route path="/admin" component={AdminMain} />
           <Route path="/qrcode" component={ShowQrcode} />
+          <Route path="/profile" component={Profile} />
         </Switch>
       </BrowserRouter>
     );
