@@ -30,6 +30,8 @@ class ShowQrcode extends React.Component {
         // route the app on "/admin" route
         setTimeout(() => {
           this.props.addAdmin(data.data);
+          localStorage.setItem("userData", JSON.stringify(data.data));
+          // console.log(JSON.parse(localStorage.getItem("userData")));
           hide();
           console.log("after action trigger ");
           this.props.history.push("/admin");
