@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Layout,
   Menu,
@@ -188,8 +189,10 @@ class Headers extends React.Component {
   menu = (
     <Menu onClick={this.handleMenuClick}>
       <Menu.Item key="1">
-        <Icon type="profile" />
-        Profile
+        <Link to="/profile">
+          <Icon type="profile" />
+          Profile
+        </Link>
       </Menu.Item>
       <Menu.Item key="2">
         <Icon type="setting" />
