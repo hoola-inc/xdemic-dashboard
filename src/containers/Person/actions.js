@@ -137,6 +137,15 @@ export function deleteSinglePerson(personInfo) {
   };
 }
 
+export function sendInvite(email) {
+  console.log("sendInvite Person info is: ", email);
+  return function(dispatch) {
+    return HS.post("email", { email }).then(res => {
+      console.log("sendInvite Person response is: ", res);
+    });
+  };
+}
+
 export function setUserPrivilegeSinglePerson(personInfo) {
   console.log("edit setUserPrivilegeSinglePerson info is: ", personInfo);
   return function(dispatch) {

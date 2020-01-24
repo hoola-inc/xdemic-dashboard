@@ -26,7 +26,8 @@ import {
   addingUsingPersonsCSV,
   editSinglePerson,
   deleteSinglePerson,
-  setUserPrivilegeSinglePerson
+  setUserPrivilegeSinglePerson,
+  sendInvite
 } from "../../containers/Person/actions";
 
 const { Dragger } = Upload;
@@ -257,9 +258,13 @@ class AddPersonToSchool extends Component {
       title: "Status",
       key: "tags",
       dataIndex: "status",
-      render: () => (
+      render: (text, record) => (
         <span>
-          <Button type="primary" ghost onClick={this.sendInvite}>
+          <Button
+            type="primary"
+            ghost
+            onClick={() => this.sendInvite(record.email)}
+          >
             Send
           </Button>
         </span>
@@ -359,11 +364,15 @@ class AddPersonToSchool extends Component {
     this.setState({ showPersonModal: false });
   };
 
-  sendInvite = () => {
+  sendInvite = email => {
+    console.log("sendInviteToPerson email is: ", email);
+    this.props.sendInviteToPerson(email);
     const hide = message
       .loading("Action in progress..", 2, onclose)
       .then(afterClose => {
-        message.success("invite sent!");
+        setTimeout(() => {
+          message.success("Invite sent :)");
+        }, 2500);
       });
   };
 
@@ -508,6 +517,9 @@ const mapActionToProps = dispatch => {
     },
     setUserPrivilegeSinglePerson: personInfo => {
       dispatch(setUserPrivilegeSinglePerson(personInfo));
+    },
+    sendInviteToPerson: email => {
+      dispatch(sendInvite(email));
     }
   };
 };
