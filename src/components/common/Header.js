@@ -188,10 +188,10 @@ class Headers extends React.Component {
 
   menu = (
     <Menu onClick={this.handleMenuClick}>
-      <Menu.Item key="1">
+      <Menu.Item key="/profile">
         <Link to="/profile">
           <Icon type="profile" />
-          Profile
+          <span>Profile</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="2">
