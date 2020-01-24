@@ -17,7 +17,6 @@ class MainAdmin extends React.Component {
             <Col span={22} offset={1}>
               <div style={{ margin: 30 }}>
                 <h1 style={{ textTransform: "capitalize" }}>
-                  {" "}
                   Welcome {this.props.name}
                 </h1>
                 <p> Journey begins here </p>
