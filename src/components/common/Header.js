@@ -227,7 +227,6 @@ class Headers extends React.Component {
     const done = this.handleCancel;
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
-
         <Modal
           title="Students credentials"
           visible={this.state.visible}
@@ -243,7 +242,12 @@ class Headers extends React.Component {
         <div>
           <Row gutter={16}>
             <Col span={4}>
-              <Title level={4} type='secondary' underline={true} style={{padding: 20}}>
+              <Title
+                level={4}
+                type="secondary"
+                underline={true}
+                style={{ padding: 20, textTransform: "capitalize" }}
+              >
                 Welcome {this.props.name}
               </Title>
               {/* <h1 style={{ textTransform: "capitalize", paddingLeft: 30 }}>
