@@ -9,6 +9,7 @@ import adminReducer from "./containers/Admin/reducer";
 // School reducer
 import schoolReducer from "./containers/School/reducer";
 import personReducer from "./containers/Person/reducer";
+import profileReducer from "./containers/Profile/reducer";
 
 // import history from "utils/history";
 import globalReducer from "./containers/App/reducer";
@@ -27,6 +28,7 @@ export default function createReducer(injectedReducers = {}) {
     admin: adminReducer,
     school: schoolReducer,
     person: personReducer,
+    profile: profileReducer,
     // user: userReducer,
     ...injectedReducers
   });
