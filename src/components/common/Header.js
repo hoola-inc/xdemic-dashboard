@@ -4,7 +4,6 @@ import {
   Layout,
   Menu,
   Dropdown,
-  Button,
   Icon,
   message,
   Avatar,
@@ -14,17 +13,15 @@ import {
   AutoComplete,
   Badge,
   Modal,
-  Steps,
-  Form,
-  Select,
-  List,
   Typography
 } from "antd";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import socketIOClient from "socket.io-client";
 import StudentStepForm from "../student/StudentStepForm";
 
 const { Header } = Layout;
-
+const { Title } = Typography;
 const { Option, OptGroup } = AutoComplete;
 
 const children = [];
@@ -230,15 +227,6 @@ class Headers extends React.Component {
     const done = this.handleCancel;
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
-        {/* <div style={{ textAlign: "center" }}>
-                    {response
-                        ? <p>
-                            The temperature in Florence is: {response} °F
-                        </p>
-                        : <p>Loading...</p>}
-                </div> */}
-
-        {/* Model */}
 
         <Modal
           title="Students credentials"
@@ -254,7 +242,17 @@ class Headers extends React.Component {
 
         <div>
           <Row gutter={16}>
-            <Col span={3} offset={18}>
+            <Col span={4}>
+              <Title level={4} type='secondary' underline={true} style={{padding: 20}}>
+                Welcome {this.props.name}
+              </Title>
+              {/* <h1 style={{ textTransform: "capitalize", paddingLeft: 30 }}>
+                {" "}
+                Welcome {this.props.name}
+              </h1> */}
+            </Col>
+
+            <Col span={3} offset={14}>
               <AutoComplete
                 className="certain-category-search"
                 dropdownClassName="certain-category-search-dropdown"
@@ -310,4 +308,19 @@ class Headers extends React.Component {
   }
 }
 
-export default Headers;
+const mapStateToProps = state => {
+  const localUserData = JSON.parse(localStorage.getItem("userData"));
+  return {
+    name: state.admin.userData.fullName || localUserData.fullName
+  };
+};
+
+const mapActionToProps = dispatch =>
+  bindActionCreators(
+    {
+      // fetchProducts: fetchProductsAction
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapActionToProps)(Headers);
