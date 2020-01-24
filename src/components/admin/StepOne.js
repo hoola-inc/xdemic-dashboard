@@ -217,17 +217,18 @@ const mapStateToProps = state => {
     gender,
     department
   } = state.admin.userData;
+  const localUserData = JSON.parse(localStorage.getItem("userData"));
   return {
     // testingState: state.global.error,
-    fullName,
-    age,
-    birthDate,
-    mobile,
-    email,
-    did,
-    type,
-    gender,
-    department
+    fullName: fullName || localUserData.fullName,
+    age: age || localUserData.age,
+    birthDate: birthDate || localUserData.birthDate,
+    mobile: mobile || localUserData.mobile,
+    email: email || localUserData.email,
+    did: did || localUserData.did,
+    type: type || localUserData.type,
+    gender: gender || localUserData.gender,
+    department: department || localUserData.department
   };
 };
 
